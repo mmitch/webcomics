@@ -98,9 +98,15 @@
 					 "home" => "http://www.dorktower.com"
 					 ),
 		    "userfriendly" => array (
-					 "name" => "Userfriendly 2004",
+					 "name" => "Userfriendly 2005",
 					 "href" => "$netpath/www.userfriendly.org",
 					 "file" => "$localpath/www.userfriendly.org",
+					 "home" => "http://www.userfriendly.org"
+					 ),
+		    "userfriendly2004" => array (
+					 "name" => "Userfriendly 2004",
+					 "href" => "$netpath/www.userfriendly.org/2004",
+					 "file" => "$localpath/www.userfriendly.org/2004",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2003" => array (
@@ -167,6 +173,12 @@
 					 "name" => "Penny Arcade",
 					 "href" => "$netpath/www.penny-arcade.com",
 					 "file" => "$localpath/www.penny-arcade.com",
+					 "home" => "http://www.penny-arcade.com"
+					 ),
+		    "penny-arcade2004" => array (
+					 "name" => "Penny Arcade 2004",
+					 "href" => "$netpath/www.penny-arcade.com/2004",
+					 "file" => "$localpath/www.penny-arcade.com/2004",
 					 "home" => "http://www.penny-arcade.com"
 					 ),
 		    "penny-arcade2003" => array (
@@ -416,6 +428,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.28 $<br>$Date: 2004-11-05 22:55:08 $</small></p>
+    <p><small>$Revision: 1.29 $<br>$Date: 2005-02-21 22:45:19 $</small></p>
   </body>
 </html>
