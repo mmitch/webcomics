@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{6}.gif' | tail -1 | cut -c 1-8)
+LATEST=$(ls | egrep '[0-9]{6}.[gif|jpg]' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
     LATEST=20021023  # first strip ever
 fi
