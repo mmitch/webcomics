@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2001-12-23 10:28:29 mitch Exp $
+# $Id: batch.sh,v 1.5 2002-01-12 12:10:58 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.4  2001-12-23 10:28:29  mitch
+# Revision 1.5  2002-01-12 12:10:58  mitch
+# Jetzt werden auch .jpg-Bilder erkannt
+#
+# Revision 1.4  2001/12/23 10:28:29  mitch
 # Cronjob-Fehlermeldung hoffentlich beseitigt
 # (warum tritt die Meldung beim händischen Start nicht auf?)
 #
@@ -18,7 +21,7 @@
 # Initial revision
 #
 
-LATEST=$(ls | egrep '[0-9]{8}.gif' | tail -1 | cut -c 1-8)
+LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
     LATEST=20000707  # first strip ever
 fi
@@ -45,15 +48,25 @@ while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-    FILE=${DATE}.gif
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.gif 2> /dev/null
+    EXT=gif
+    FILE=${DATE}.${EXT}
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.${EXT} 2> /dev/null
 
     if [ -s ${FILE} ]; then
 	echo OK
 	chmod -w ${FILE}
     else
 	test -w ${FILE} && rm ${FILE}
-	echo nok
+	EXT=jpg
+	FILE=${DATE}.${EXT}
+	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.${EXT} 2> /dev/null
+	if [ -s ${FILE} ]; then
+	    echo OK
+	    chmod -w ${FILE}
+	else
+	    test -w ${FILE} && rm ${FILE}
+	    echo nok
+	fi
     fi
     
     if [ ${DATE} = ${YE}${ME}${DE} ]; then
