@@ -4,19 +4,6 @@
     }
 ?>
 
-<?
-    # Edit these variables for your system.
-    #
-    # Where are the files stored locally?
-    $localpath="/home/mitch/pub/MIRROR";
-    #
-    # How can the files accessed by http?
-    $netpath="/MIRROR";
-    #
-    # How can this very file be accessed by http?
-    $myhref="$netpath/php/index.php";
-?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -24,10 +11,9 @@
   </head>
 
   <body>
-<!--    <h1>Mitchs PHP Comicbrowser</h1> -->
-
 
 <?
+    include_once('config.inc');
 
     # dynamically create $comics array
     $filesfound = popen("find $localpath -type f -name COMIC", "r");
@@ -246,6 +232,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.35 $<br>$Date: 2005-03-05 00:39:44 $</small></p>
+    <p><small>$Revision: 1.36 $<br>$Date: 2005-03-06 11:32:06 $</small></p>
   </body>
 </html>

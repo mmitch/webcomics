@@ -1,0 +1,15 @@
+<?
+# $Id: config.inc.template,v 1.1 2005-03-06 11:32:06 mitch Exp $
+#
+# config template for the webcomic PHP browser
+# copy to config.inc and edit to your needs
+
+# Where are the files stored locally?
+$localpath="/home/mitch/pub/MIRROR";
+
+# How can the files accessed by http?
+$netpath="/MIRROR";
+
+# How can this very file be accessed by http?
+$myhref="$netpath/php/index.php";
+?>
