@@ -49,51 +49,51 @@
 					 ),
 		    "userfriendly" => array (
 					 "name" => "Userfriendly 2002",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2001" => array (
 					 "name" => "Userfriendly 2001",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2001",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/2001",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2001",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2000" => array (
 					 "name" => "Userfriendly 2000",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2000",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/2000",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2000",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1999" => array (
 					 "name" => "Userfriendly 1999",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1999",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1999",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1999",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1998" => array (
 					 "name" => "Userfriendly 1998",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1998",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1998",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1998",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1997" => array (
 					 "name" => "Userfriendly 1997",
-					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1997",
+					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1997",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1997",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "freefall" => array (
 					 "name" => "Freefall 500-",
-					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall",
-					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall",
-					 "home" => "http://www.purrsia.com/freefall/"
+					 "href" => "/pub/mitch/MIRROR/freefall.purrsia.com",
+					 "file" => "/home/pub/mitch/MIRROR/freefall.purrsia.com",
+					 "home" => "http://freefall.purrsia.com"
 					 ),
 		    "freefallupto500" => array (
 					 "name" => "Freefall 1-499",
-					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall/under500",
-					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall/under500",
-					 "home" => "http://www.purrsia.com/freefall/"
+					 "href" => "/pub/mitch/MIRROR/freefall.purrsia.com/under500",
+					 "file" => "/home/pub/mitch/MIRROR/freefall.purrsia.com/under500",
+					 "home" => "http://freefall.purrsia.com"
 					 )
 		    );
 
@@ -250,6 +250,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.6 $<br>$Date: 2002-12-04 16:03:32 $</small></p>
+    <p><small>$Revision: 1.7 $<br>$Date: 2002-12-04 16:12:04 $</small></p>
   </body>
 </html>
