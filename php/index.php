@@ -20,57 +20,68 @@
     $comics = array("megatokyo" => array(
 					 "name" => "Megatokyo",
 					 "href" => "/pub/mitch/MIRROR/www.megatokyo.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.megatokyo.com"
+					 "file" => "/home/pub/mitch/MIRROR/www.megatokyo.com",
+					 "home" => "http://www.megatokyo.com"
 					 ),
 		    "sexylosers" => array (
 					 "name" => "Sexy Losers",
 					 "href" => "/pub/mitch/MIRROR/www.sexylosers.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.sexylosers.com"
+					 "file" => "/home/pub/mitch/MIRROR/www.sexylosers.com",
+					 "home" => "http://www.sexylosers.com"
 					 ),
 		    "azumanga" => array (
 					 "name" => "Azumanga Daioh",
 					 "href" => "/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net",
-					 "file" => "/home/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net"
+					 "file" => "/home/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net",
+					 "home" => "http://www.manga-takarajima.mangafan.net/azumanga_daiou.htm"
 					 ),
 		    "userfriendly" => array (
 					 "name" => "Userfriendly 2002",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2001" => array (
 					 "name" => "Userfriendly 2001",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2001",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2001"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2001",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2000" => array (
 					 "name" => "Userfriendly 2000",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2000",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2000"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2000",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1999" => array (
 					 "name" => "Userfriendly 1999",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1999",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1999"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1999",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1998" => array (
 					 "name" => "Userfriendly 1998",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1998",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1998"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1998",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1997" => array (
 					 "name" => "Userfriendly 1997",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1997",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1997"
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1997",
+					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "freefall" => array (
 					 "name" => "Freefall 500-",
 					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall",
-					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall"
+					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall",
+					 "home" => "http://www.purrsia.com/freefall/"
 					 ),
 		    "freefallupto500" => array (
 					 "name" => "Freefall 1-499",
 					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall/under500",
-					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall/under500"
+					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall/under500",
+					 "home" => "http://www.purrsia.com/freefall/"
 					 )
 		    );
 
@@ -125,7 +136,7 @@ if ($comics[$comic]) {
 	    $id = $premax;
 	}
 
-	echo "<h2>$me[name] <small><small>[$id/$premax]</small></small><br>$titles[$id]</h2>\n";
+	echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
 
 	echo "<table><tr><td align=\"center\">";
 	if ($id > 0) {
@@ -227,6 +238,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.4 $<br>$Date: 2002-09-03 23:15:58 $</small></p>
+    <p><small>$Revision: 1.5 $<br>$Date: 2002-10-05 14:03:47 $</small></p>
   </body>
 </html>
