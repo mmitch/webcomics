@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.11 2002-12-22 12:50:16 mitch Exp $
+# $Id: batch.sh,v 1.12 2002-12-22 21:01:00 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.11  2002-12-22 12:50:16  mitch
+# Revision 1.12  2002-12-22 21:01:00  mitch
+# Keine ###PICPATH###-Platzhalter mehr, stattdessen originale Dateinamen
+#
+# Revision 1.11  2002/12/22 12:50:16  mitch
 # Textblöcke werden in .htm gespeichert, nicht .html
 #
 # Revision 1.10  2002/12/22 12:48:39  mitch
@@ -98,7 +101,7 @@ while true; do
 	)
 
 	echo ${LINE} \
-	    | sed -e "s,${IMGDIR}/,###PICPATH###${NR}-,g" \
+	    | sed -e "s,${IMGDIR}/,pic${X}-,g" \
 	    > pic${X}.${EXT}
 
 	echo "${X}.${EXT} --> OK"
