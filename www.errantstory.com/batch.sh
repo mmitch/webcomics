@@ -1,8 +1,12 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2002-01-12 12:10:58 mitch Exp $
+# $Id: batch.sh,v 1.6 2002-12-04 16:33:58 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2002-01-12 12:10:58  mitch
+# Revision 1.6  2002-12-04 16:33:58  mitch
+# Umgeschrieben auf Errant Story
+# Kopierquelle: Exploitation Now
+#
+# Revision 1.5  2002/01/12 12:10:58  mitch
 # Jetzt werden auch .jpg-Bilder erkannt
 #
 # Revision 1.4  2001/12/23 10:28:29  mitch
@@ -23,7 +27,7 @@
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
-    LATEST=20000707  # first strip ever
+    LATEST=20021101  # first strip ever
 fi
 
 YS=$(echo ${LATEST} | cut -c 1-4)
@@ -36,8 +40,8 @@ DE=$(date +%d)
 
 echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
 
-PAGEBASE="http://www.exploitationnow.com/d/"
-PICBASE="http://www.exploitationnow.com/comics/rb"
+PAGEBASE="http://www.errantstory.com/d/"
+PICBASE="http://www.errantstory.com/comics/es"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 YS=$(echo ${YS} | sed 's/^0*//')
