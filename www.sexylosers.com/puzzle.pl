@@ -1,12 +1,15 @@
 #!/usr/bin/perl
 
-# $Id: puzzle.pl,v 1.2 2002-12-22 22:00:21 mitch Exp $
+# $Id: puzzle.pl,v 1.3 2002-12-22 22:07:24 mitch Exp $
 
 # Dieses Programm "rendert" kleine HTML-Tabellen mit Bildern in ein
 # grossen Bild.
 
 # $Log: puzzle.pl,v $
-# Revision 1.2  2002-12-22 22:00:21  mitch
+# Revision 1.3  2002-12-22 22:07:24  mitch
+# Erkennt alle bis jetzt erschienenen Varianten ohne Fehler.
+#
+# Revision 1.2  2002/12/22 22:00:21  mitch
 # JPEG-Qualitaet erhoeht
 #
 # Revision 1.1  2002/12/22 21:41:14  mitch
@@ -51,14 +54,20 @@ foreach ( @lines ) {
 # create a cursor, walk over images and determine position
 my $cx = 0; # cursor X
 my $cy = 0; # cursor Y
+my $lw = 0; # last width
 my $lh = 0; # last heigth
 my $th = 0; # total heigth
+my $mx = 0; # minimum x
 foreach my $img (@img) {
-    if ( $cx + $img->{W} > $tw) {
+    if ( $cx + $img->{W} == $tw and $lh >= 909) {
+	$th = 0;
+	$mx = $lw;
+    } elsif ( $cx + $img->{W} > $tw) {
 	$th += $lh;
 	$cy += $lh;
-	$cx = 0;
+	$cx  = $mx;
     }
+    $lw = $img->{W};
     $lh = $img->{H};
     $img->{X} = $cx;
     $img->{Y} = $cy;
