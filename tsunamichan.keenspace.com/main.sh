@@ -1,8 +1,11 @@
 #!/bin/bash
-# $Id: main.sh,v 1.2 2003-03-06 19:32:27 mitch Exp $
+# $Id: main.sh,v 1.3 2003-03-07 21:30:34 mitch Exp $
 
 # $Log: main.sh,v $
-# Revision 1.2  2003-03-06 19:32:27  mitch
+# Revision 1.3  2003-03-07 21:30:34  mitch
+# Download der Liner's Notes.
+#
+# Revision 1.2  2003/03/06 19:32:27  mitch
 # Angepasst auf tsunamichan
 #
 # Revision 1.1  2003/03/06 18:52:30  mitch
@@ -38,13 +41,14 @@ wget -O - http://tsunamichan.keenspace.com/archive/${INDEXURL}.html 2>/dev/null 
 	    exit ${EXITCODE}
 	fi
 	
+	TEXT=${DATE}.txt
+
 	if [ -s ${DATE}.[gj][ip][fg] ]; then
 	    echo "[${DATE}] skipped"
 	else
 	    echo -n "[${DATE}]: fetching $TITLE   "
 	    
 	    FILE=${DATE}.jpg
-	    TEXT=${DATE}.txt
 	    wget -O ${FILE} --referer=http://tsunamichan.keenspace.com/d/${DATE}.html\
 		http://tsunamichan.keenspace.com/comics/${DATE}.jpg 2>/dev/null
 	    if [ -s ${FILE} ]; then
@@ -67,6 +71,23 @@ wget -O - http://tsunamichan.keenspace.com/archive/${INDEXURL}.html 2>/dev/null 
 		fi
 	    fi
 	fi
+
+	if [ -e ${TEXT} ]; then
+	    HTML=${DATE}.htm
+
+	    if [ ! -s ${HTML} ]; then
+		echo -n "[${DATE}]: fetching liner's notes   "
+		wget -O - http://tsunamichan.keenspace.com/d/${DATE}.html 2>/dev/null \
+		    | perl ../extract.pl ${DATE} > ${HTML}
+		if [ -s ${HTML} ]; then
+		    echo "OK"
+		else
+		    rm -f ${HTML}
+		    echo "failed!!!"
+		fi
+	    fi
+	fi
+
     done
     
     exit ${EXITCODE}
