@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2002-12-24 13:18:50 mitch Exp $
+# $Id: batch.sh,v 1.6 2002-12-24 13:34:24 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2002-12-24 13:18:50  mitch
+# Revision 1.6  2002-12-24 13:34:24  mitch
+# Ordentliche Abbruchbedingung
+#
+# Revision 1.5  2002/12/24 13:18:50  mitch
 # Holt automatisch alle Comics ab Beginn
 #
 # Revision 1.4  2002/07/27 17:40:13  mitch
@@ -26,8 +29,9 @@ if [ -z ${LATEST} ]; then
 fi
 
 X=${LATEST}
+TODAY=$(date +%Y%m%d)
 
-while true; do
+while [ "${TODAY}" -gt "${X}" ] ; do
 
     X=$(date -d "${X} + 1 day" +%Y%m%d)
 
@@ -55,3 +59,5 @@ while true; do
     fi
 
 done
+
+exit ${EXITCODE}
