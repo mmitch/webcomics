@@ -1,4 +1,10 @@
 <?
+    if (isset($comic) && isset($id)) {
+	setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
+    }
+?>
+
+<?
     # Edit these variables for your system.
     #
     # Where are the files stored locally?
@@ -9,12 +15,6 @@
     #
     # How can this very file be accessed by http?
     $myhref="$netpath/php/index.php";
-?>
-
-<?
-    if (isset($comic) && isset($id)) {
-	setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
-    }
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -270,6 +270,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.8 $<br>$Date: 2002-12-24 11:48:09 $</small></p>
+    <p><small>$Revision: 1.9 $<br>$Date: 2002-12-24 11:49:06 $</small></p>
   </body>
 </html>
