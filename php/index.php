@@ -242,6 +242,7 @@ if ($comics[$comic]) {
 
 	echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
 
+	# upper navigation
 	echo "<table><tr><td align=\"left\">";
 	if ($id > 0) {
 	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
@@ -255,6 +256,7 @@ if ($comics[$comic]) {
 	}
 	echo "<br>\n";
 	
+	# picture
 	if ($id < $premax) {
 	    echo "<a href=\"$nextref\">";
 	} else {
@@ -263,6 +265,30 @@ if ($comics[$comic]) {
 	echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" title=\"$titles[$id]\" border=\"0\">";
 	echo "</a>\n";
 
+	# liner's notes
+        $file = preg_replace("/^.*\/([^\/]+)$/", "$1", $files[$id]);
+        $file = preg_replace("/\.[^.]*$/", ".htm", $file);
+	$file = "$me[file]/$file";
+
+	if ( file_exists($file) ) {
+	    $fp = fopen("$file", "r");
+
+	    if ($fp) {
+		echo "<p>\n";
+		while (! feof($fp)) {
+		    echo fgets($fp, 8192); # max 8k per line
+		}
+		echo "</p>\n";
+
+		if (! fclose($fp)) {
+		    echo "<p><b>Error closing liner's notes!</b></p>\n";
+		}
+	    } else {
+		echo "<p><b>Error closing liner's notes!</b></p>\n";
+	    }
+	}
+
+	# lower navigation
 	echo "<br><br>";
 	if ($id > 0) {
 	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
@@ -281,7 +307,7 @@ if ($comics[$comic]) {
 	
         #
         # List of one Comic
-        # THIS VIEW IS CRAP AND THUS NOT REACHABLE VIA COMIC MENU!
+        # THIS VIEW IS CRAP
 	#
 
 	echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
@@ -342,6 +368,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.16 $<br>$Date: 2003-03-06 19:55:58 $</small></p>
+    <p><small>$Revision: 1.17 $<br>$Date: 2003-03-08 14:12:08 $</small></p>
   </body>
 </html>
