@@ -1,61 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.17 2003-01-11 18:32:41 mitch Exp $
-
-# $Log: batch.sh,v $
-# Revision 1.17  2003-01-11 18:32:41  mitch
-# Workaround für Fehler in Comic #160: Im HTML-Quellcode fehlt ein
-# schließendes Tag.
-#
-# Revision 1.16  2002/12/24 13:53:06  mitch
-# `wget -q' statt `wget 2>/dev/null'
-#
-# Revision 1.15  2002/12/24 12:02:02  mitch
-# --use-proxy=off bei wget entfernt.
-#
-# Revision 1.14  2002/12/24 11:58:22  mitch
-# Ende mit RC=2, wenn kein neues Bild geladen wurde.
-#
-# Revision 1.13  2002/12/22 21:40:52  mitch
-# Die Einzelbilder werden zusammengebastelt.
-#
-# Revision 1.12  2002/12/22 21:01:00  mitch
-# Keine ###PICPATH###-Platzhalter mehr, stattdessen originale Dateinamen
-#
-# Revision 1.11  2002/12/22 12:50:16  mitch
-# Textblöcke werden in .htm gespeichert, nicht .html
-#
-# Revision 1.10  2002/12/22 12:48:39  mitch
-# Abbruchbedingung eingebaut
-#
-# Revision 1.9  2002/12/22 12:44:46  mitch
-# Auch das neue Format mit den geteilten Bildern stellt kein Problem
-# mehr dar :->
-#
-# Revision 1.8  2002/09/18 11:42:49  mitch
-# Keenspace wollte wieder dazwischenfunken, Skript angepasst
-#
-# Revision 1.7  2002/08/21 21:28:49  mitch
-# Automatisches Herunter aller noch nicht geladenen Bilder auf einen Schlag
-#
-# Revision 1.6  2002/02/17 20:34:33  mitch
-# Läuft wieder nach Umzug zu keenspace
-#
-# Revision 1.5  2001/12/20 17:25:22  mitch
-# Tarnung: "wget" wird nicht mehr als User-Agent akzeptiert, wir sind
-#          jetzt "Opera"
-#
-# Revision 1.4  2001/10/29 20:31:15  mitch
-# Es bleiben keine leeren Dateien mehr übrig
-#
-# Revision 1.3  2001/10/20 17:25:06  mitch
-# printf gespart (wir haben GNU seq)
-#
-# Revision 1.2  2001/10/20 16:52:58  mitch
-# JPG-if-Abfrage war falschrum
-#
-# Revision 1.1  2001/10/20 16:33:01  mitch
-# Initial revision
-#
+# $Id: batch.sh,v 1.18 2003-07-17 16:15:00 mitch Exp $
 
 EXITCODE=2
 
@@ -75,7 +19,7 @@ while true; do
     PICTURE=$(
     	wget --user-agent="${USERAGENT}" --referer=${REFBASE} -qO- ${REFBASE}${X}.html \
     	    | grep sl${X} \
-    	    | sed -e 's/^.*SRC="http:/http:/' -e 's/".*$//'
+    	    | sed -e 's/^.*SRC.\?=.\?"http:/http:/' -e 's/".*$//'
     )
 
     if [ -z "${PICTURE}" ] ; then
