@@ -51,9 +51,9 @@
 					 ),
 		    "ctrlaltdel" => array (
 					 "name" => "Ctrl+Alt+Del",
-					 "href" => "$netpath/www.crtaltdel-online.com",
-					 "file" => "$localpath/www.crtaltdel-online.com",
-					 "home" => "http://www.crtaltdel-online.com"
+					 "href" => "$netpath/www.ctrlaltdel-online.com",
+					 "file" => "$localpath/www.ctrlaltdel-online.com",
+					 "home" => "http://www.ctrlaltdel-online.com"
 					 ),
 		    "queenofwands" => array (
 					 "name" => "Queen of Wands",
@@ -416,6 +416,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.27 $<br>$Date: 2004-11-04 23:01:51 $</small></p>
+    <p><small>$Revision: 1.28 $<br>$Date: 2004-11-05 22:55:08 $</small></p>
   </body>
 </html>
