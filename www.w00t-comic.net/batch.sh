@@ -30,7 +30,7 @@ while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-    EXT=gif
+    EXT=png
     FILE=${DATE}.${EXT}
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
@@ -44,8 +44,18 @@ while true; do
 	    chmod -w ${FILE}
 	    EXITCODE=0
 	else
-	    test -w ${FILE} && rm ${FILE}
-	    echo nok
+	    EXT=gif
+
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}.${EXT}
+	
+	    if [ -s ${FILE} ]; then
+		echo OK
+		chmod -w ${FILE}
+		EXITCODE=0
+	    else
+		test -w ${FILE} && rm ${FILE}
+		echo nok
+	    fi
 	fi
     fi
     
