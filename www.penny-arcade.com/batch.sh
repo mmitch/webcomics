@@ -1,8 +1,12 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.5 2003-02-12 13:25:21 ikari Exp $
+# $Id: batch.sh,v 1.6 2003-02-16 13:24:40 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2003-02-12 13:25:21  ikari
+# Revision 1.6  2003-02-16 13:24:40  mitch
+# .txt-Datei braucht das Datum nicht zu enthalten, ist sonst doppelt
+# Runterladen der hochqualitativen Bilder statt der kleinen (h statt l).
+#
+# Revision 1.5  2003/02/12 13:25:21  ikari
 # Bugfix: Versehentlich die falsche Datei committet.
 #
 # Revision 1.6  2002/12/24 12:02:01  mitch
@@ -46,9 +50,9 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 	FILE=${DATE}.gif
 	TEXT=${DATE}.txt
 	wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-             http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif 2>/dev/null
+             http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif 2>/dev/null
 	if [ -s ${FILE} ]; then
-	    echo "$DATE2 $TITLE" > ${TEXT}
+	    echo "$TITLE" > ${TEXT}
 	    echo "OK"
 	    EXITCODE=0
 	else
@@ -56,9 +60,9 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 	    # Try .jpg
 	    FILE=${DATE}.jpg
 	    wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-                  http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg 2>/dev/null
+                  http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg 2>/dev/null
 	    if [ -s ${FILE} ]; then
-		echo "$DATE2 $TITLE" > ${TEXT}
+		echo "$TITLE" > ${TEXT}
 		echo "OK"
 		EXITCODE=0
 	    else
