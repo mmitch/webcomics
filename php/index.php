@@ -38,12 +38,12 @@
 #					 ),
 		
     # dynamically create $comics array
-    $files = popen("find $localpath -type f -name COMIC", "r");
-    if ($files) {
-    	while (! feof($files)) {
+    $filesfound = popen("find $localpath -type f -name COMIC", "r");
+    if ($filesfound) {
+    	while (! feof($filesfound)) {
 
 	    # parse COMIC file
-	    $file = rtrim(fgets($files, 8192)); # max 8k per line
+	    $file = rtrim(fgets($filesfound, 8192)); # max 8k per line
 	    $newcomic = array();
 	    $fp = fopen($file, "r");
 	    $tag = 0;
@@ -69,7 +69,7 @@
 		fclose($fp);
 	    }
 	}
-        pclose($files);
+        pclose($filesfound);
     }
 
     # Because there are so many comics, some of the comic strips have
@@ -482,6 +482,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.32 $<br>$Date: 2005-03-05 00:06:20 $</small></p>
+    <p><small>$Revision: 1.33 $<br>$Date: 2005-03-05 00:14:44 $</small></p>
   </body>
 </html>
