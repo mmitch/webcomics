@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.3 2002-07-14 10:14:12 mitch Exp $
+# $Id: batch.sh,v 1.4 2002-07-27 17:26:48 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.3  2002-07-14 10:14:12  mitch
+# Revision 1.4  2002-07-27 17:26:48  mitch
+# leere .gif-Dateien werden gelöscht
+#
+# Revision 1.3  2002/07/14 10:14:12  mitch
 # liest jetzt auch die .jpg-Dateien ein
 #
 # Revision 1.2  2002/01/25 15:43:45  mitch
@@ -34,6 +37,7 @@ wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
 	    echo "[$NR] $DATE $TITLE" > ${TEXT}
 	    echo "OK"
 	else
+	    rm -f ${FILE}
 	    # Try .jpg
 	    FILE=${NR}.jpg
 	    wget --use-proxy=off -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
