@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2003-07-28 10:34:54 mitch Exp $
+# $Id: batch.sh,v 1.2 2003-07-29 16:35:15 mitch Exp $
 
 EXITCODE=2
 
@@ -14,8 +14,8 @@ DS=${LATEST:4:2}
 
 TODAY=$(date +%y%m%d)
 YE=${TODAY:0:2}
-ME=${LATEST:2:2}
-DE=${LATEST:4:2}
+ME=${TODAY:2:2}
+DE=${TODAY:4:2}
 
 echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
 
