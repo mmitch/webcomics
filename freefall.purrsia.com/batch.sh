@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2001-12-22 13:14:28 mitch Exp $
+# $Id: batch.sh,v 1.2 2001-12-22 13:15:10 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.1  2001-12-22 13:14:28  mitch
+# Revision 1.2  2001-12-22 13:15:10  mitch
+# STDERR von wget ausgeschaltet
+#
+# Revision 1.1  2001/12/22 13:14:28  mitch
 # Initial revision
 #
 
@@ -26,7 +29,7 @@ for X in $(seq -f %05g $1 $2); do
     echo -n "fetching $X: "
     FOLDER=ff$(( $( echo $X | cut -c 3 ) +1 ))00
     FILE=pic${X}.gif
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}/${FOLDER}/fv${X}.htm -O ${FILE} ${GETBASE}/${FOLDER}/fv${X}.gif # 2> /dev/null
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}/${FOLDER}/fv${X}.htm -O ${FILE} ${GETBASE}/${FOLDER}/fv${X}.gif 2> /dev/null
     if [ -s ${FILE} ]; then
 	echo "OK"
 	chmod -w ${FILE}
