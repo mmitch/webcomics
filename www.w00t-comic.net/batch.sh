@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{6}.gif' | tail -1 | cut -c 1-6)
+LATEST=$(ls | egrep '[0-9]{6}.gif' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
     LATEST=20021204  # first strip ever
 fi
@@ -11,12 +11,12 @@ YS=${LATEST:0:4}
 MS=${LATEST:4:2}
 DS=${LATEST:6:2}
 
-TODAY=$(date +%y%m%d)
+TODAY=$(date +%Y%m%d)
 YE=${TODAY:0:4}
 ME=${TODAY:4:2}
 DE=${TODAY:6:2}
 
-echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
+echo reading from ${YS}-${MS}-${DS} up to  ${YE}-${ME}-${DE}
 
 PAGEBASE="http://www.w00t-comic.net/"
 PICBASE="http://www.w00t-comic.net/images/strip"
@@ -38,7 +38,7 @@ while true; do
     else
 
 	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}.${EXT}
-	echo "${FILE} ${PICBASE}/${DATE}.${EXT}"
+
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
