@@ -127,6 +127,12 @@
 					 "file" => "$localpath/freefall.purrsia.com/under500",
 					 "home" => "http://freefall.purrsia.com"
 					 ),
+		    "apllegeeks" => array (
+					 "name" => "Apple Geeks",
+					 "href" => "$netpath/www.applegeeks.com",
+					 "file" => "$localpath/www.applegeeks.com",
+					 "home" => "http://www.applegeeks.com"
+					 ),
 		    "penny-arcade" => array (
 					 "name" => "Penny Arcade",
 					 "href" => "$netpath/www.penny-arcade.com",
@@ -196,7 +202,7 @@
 		    );
 
 if ($comics[$comic]) {
-    
+
     $me = $comics[$comic];
 
     #
@@ -225,12 +231,12 @@ if ($comics[$comic]) {
     } else {
 	echo "<p><b>Error opening index file!</b></p>\n";
     }
-    
+
     if (isset($id)) {
 
         #
-        # Single Image   
-        #   
+        # Single Image
+        #
 
 	if ($id < 0) {
 	    $id = 0;
@@ -374,6 +380,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.19 $<br>$Date: 2003-07-28 10:37:21 $</small></p>
+    <p><small>$Revision: 1.20 $<br>$Date: 2003-10-05 15:13:50 $</small></p>
   </body>
 </html>
