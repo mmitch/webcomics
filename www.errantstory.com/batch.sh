@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2001-12-20 18:50:02 mitch Exp $
+# $Id: batch.sh,v 1.3 2001-12-22 12:47:01 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.2  2001-12-20 18:50:02  mitch
+# Revision 1.3  2001-12-22 12:47:01  mitch
+# Fertig geladene Bilder werden scheibgeschützt
+#
+# Revision 1.2  2001/12/20 18:50:02  mitch
 # Lädt automatisch alles ab dem letzten (bzw. ersten) Strip herunter
 #
 # Revision 1.1  2001/12/20 18:28:31  mitch
@@ -36,12 +39,14 @@ while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${PAGEBASE}${DATE}.html -O ${DATE}.gif ${PICBASE}${DATE}.gif 2> /dev/null
+    FILE=${DATE}.gif
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.gif 2> /dev/null
 
-    if [ -s ${DATE}.gif ]; then
+    if [ -s ${FILE} ]; then
 	echo OK
+	chmod -w ${FILE}
     else
-	rm ${DATE}.gif
+	rm ${FILE}
 	echo nok
     fi
     
