@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.12 2002-12-22 21:01:00 mitch Exp $
+# $Id: batch.sh,v 1.13 2002-12-22 21:40:52 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.12  2002-12-22 21:01:00  mitch
+# Revision 1.13  2002-12-22 21:40:52  mitch
+# Die Einzelbilder werden zusammengebastelt.
+#
+# Revision 1.12  2002/12/22 21:01:00  mitch
 # Keine ###PICPATH###-Platzhalter mehr, stattdessen originale Dateinamen
 #
 # Revision 1.11  2002/12/22 12:50:16  mitch
@@ -41,7 +44,7 @@
 # Initial revision
 #
 
-X=$(ls | egrep 'pic[0-9]{3}.(gif|jpg|htm)' | tail -1 | cut -c 4-6)
+X=$(ls | egrep 'pic[0-9]{3}.(gif|jpg)' | tail -1 | cut -c 4-6)
 if [ -z ${X} ]; then
     X=000  # first strip ever (1 is added before downloading!)
 fi
@@ -103,6 +106,12 @@ while true; do
 	echo ${LINE} \
 	    | sed -e "s,${IMGDIR}/,pic${X}-,g" \
 	    > pic${X}.${EXT}
+
+	echo "combining images"
+	./puzzle.pl pic${X}.${EXT}
+	rm -f pic${X}-*
+	rm -f pic${X}.${EXT}
+	mv converted.jpg pic${X}.jpg
 
 	echo "${X}.${EXT} --> OK"
 
