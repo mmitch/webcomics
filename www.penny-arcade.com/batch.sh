@@ -30,42 +30,23 @@ while true; do
     DATE2=$(printf %04d-%02d-%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-
     EXT=gif
     FILE=${DATE}.${EXT}
-    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}view.php?date=${DATE2} -O ${FILE} ${PICBASE}/${YS}/${DATE}h.${EXT} 2> /dev/null
+    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}view.php?date=${DATE2} -O ${FILE} ${PICBASE}/${YS}/${DATE}l.${EXT} 2> /dev/null
 
     if [ -s ${FILE} ]; then
 	echo OK
 	chmod -w ${FILE}
 	EXITCODE=0
-
-	EXT=txt
-	FILE=${DATE}.${EXT}
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE} -O - ${PAGEBASE}view.php3?date=${DATE2} 2> /dev/null \
-	    | grep '&nbsp;&nbsp;' \
-	    | grep '<b><i>.*</i></b>' \
-	    | sed -e 's,^.*<b><i>,,' -e 's,</i></b>.*$,,' \
-	    > ${FILE}
-
     else
 	test -w ${FILE} && rm ${FILE}
 	EXT=jpg
 	FILE=${DATE}.${EXT}
-        wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}view.php?date=${DATE2} -O ${FILE} ${PICBASE}/${YS}/${DATE}h.${EXT} 2> /dev/null
+        wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}view.php?date=${DATE2} -O ${FILE} ${PICBASE}/${YS}/${DATE}l.${EXT} 2> /dev/null
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
-
-	    EXT=txt
-	    FILE=${DATE}.${EXT}
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE} -O - ${PAGEBASE}view.php3?date=${DATE2} 2> /dev/null \
-		| grep '&nbsp;&nbsp;' \
-		| grep '<b><i>.*</i></b>' \
-		| sed -e 's,^.*<b><i>,,' -e 's,</i></b>.*$,,' \
-		> ${FILE}
-
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
