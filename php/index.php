@@ -73,6 +73,12 @@
 					 "file" => "$localpath/www.manga-takarajima.mangafan.net",
 					 "home" => "http://www.manga-takarajima.mangafan.net/azumanga_daiou.htm"
 					 ),
+		    "dorktower" => array (
+					 "name" => "Dorktower",
+					 "href" => "$netpath/www.dorktower.com",
+					 "file" => "$localpath/www.dorktower.com",
+					 "home" => "http://www.dorktower.com"
+					 ),
 		    "userfriendly" => array (
 					 "name" => "Userfriendly 2003",
 					 "href" => "$netpath/www.userfriendly.org",
@@ -380,6 +386,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.21 $<br>$Date: 2003-10-07 07:55:15 $</small></p>
+    <p><small>$Revision: 1.22 $<br>$Date: 2003-12-25 19:30:33 $</small></p>
   </body>
 </html>
