@@ -63,12 +63,14 @@ function create_cache()
 }
 
 function open_cache()
+# read cache
 {
   global $cachefile;
   return unserialize( file_get_contents( $cachefile ) );
 }
 
 function write_cache($comics)
+# save cache
 {
   global $cachefile;
   $cache = fopen($cachefile, "w");
@@ -78,9 +80,38 @@ function write_cache($comics)
   }
 }
 
+function list_all_comics($comics)
+# show a list of all comics
+{
+  global $lastVisited, $myhref;
+  echo "<h2>Available Comics</h2>\n";
+  echo "<ul>\n";
+
+  reset ($comics);
+  while ( list ($key, $val) = each($comics) ) {
+    if (isset($lastVisited[$key])) {
+      $total = trim(`wc -l < $val[file]/index`) - 1;
+      echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</a>";
+      if ($lastVisited[$key] < $total) {
+	echo " (".($total-$lastVisited[$key])." new)";
+      }
+      echo "</li>\n";
+    } else {
+      echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</a></li>\n";
+    }
+  }
+
+  echo "</ul>\n";
+  echo "<p><br><small><a href=\"$myhref?recache=1\">find comics</a></small></p>\n";
+
+}
+
+
+
+
 # Einlesen des Caches
 $comics = open_cache();
-if (! is_array($comics)) {
+if ((! is_array($comics)) or (isset($recache))) {
   $comics = create_cache();
   write_cache($comics);
 }
@@ -234,36 +265,15 @@ if ($comics[$comic]) {
 
 } else {
 
-    #
-    # List of all Comics
-    #
+list_all_comics($comics);
 
-    echo "<h2>Available Comics</h2>\n";
-    echo "<ul>\n";
-
-    reset ($comics);
-    while ( list ($key, $val) = each($comics) ) {
-	if (isset($lastVisited[$key])) {
-	    $total = trim(`wc -l < $val[file]/index`) - 1;
-	    echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</a>";
-	    if ($lastVisited[$key] < $total) {
-		echo " (".($total-$lastVisited[$key])." new)";
-	    }
-	    echo "</li>\n";
-	} else {
-	    echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</a></li>\n";
-	}
-    }
-
-    echo "</ul>\n";
 }
-
 ?>
 
 
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.37 $<br>$Date: 2005-03-06 13:09:29 $</small></p>
+    <p><small>$Revision: 1.38 $<br>$Date: 2005-03-06 13:17:29 $</small></p>
   </body>
 </html>
