@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2001-12-22 13:15:10 mitch Exp $
+# $Id: batch.sh,v 1.3 2001-12-22 13:34:39 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.2  2001-12-22 13:15:10  mitch
+# Revision 1.3  2001-12-22 13:34:39  mitch
+# $FOLDER-Berechnung korrigiert
+#
+# Revision 1.2  2001/12/22 13:15:10  mitch
 # STDERR von wget ausgeschaltet
 #
 # Revision 1.1  2001/12/22 13:14:28  mitch
@@ -26,9 +29,9 @@ GETBASE="http://www.purrsia.com/freefall"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 for X in $(seq -f %05g $1 $2); do
-    echo -n "fetching $X: "
-    FOLDER=ff$(( $( echo $X | cut -c 3 ) +1 ))00
+    FOLDER=ff$( echo $(( $( echo ${X} | sed 's/^0*//') +99 )) | cut -c 1 )00
     FILE=pic${X}.gif
+    echo -n "fetching $X: "
     wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}/${FOLDER}/fv${X}.htm -O ${FILE} ${GETBASE}/${FOLDER}/fv${X}.gif 2> /dev/null
     if [ -s ${FILE} ]; then
 	echo "OK"
