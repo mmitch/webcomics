@@ -1,5 +1,10 @@
 #!/bin/bash
+# $Id: batch.sh,v 1.3 2005-02-21 14:28:29 ikari Exp $
 
+# $Log: batch.sh,v $
+# Revision 1.3  2005-02-21 14:28:29  ikari
+# Versuch, die bisherigen Logeintraege reinbasteln zu lassen
+#
 EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{5}.(gif|jpg)' | tail -1 | cut -c 1-5)
