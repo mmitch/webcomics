@@ -8,10 +8,10 @@
     # Edit these variables for your system.
     #
     # Where are the files stored locally?
-    $localpath="/home/pub/mitch/MIRROR";
+    $localpath="/home/mitch/pub/MIRROR";
     #
     # How can the files accessed by http?
-    $netpath="/pub/mitch/MIRROR";
+    $netpath="/MIRROR";
     #
     # How can this very file be accessed by http?
     $myhref="$netpath/php/index.php";
@@ -368,6 +368,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.17 $<br>$Date: 2003-03-08 14:12:08 $</small></p>
+    <p><small>$Revision: 1.18 $<br>$Date: 2003-04-17 09:08:19 $</small></p>
   </body>
 </html>
