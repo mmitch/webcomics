@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2002-07-27 17:40:13 mitch Exp $
+# $Id: batch.sh,v 1.5 2002-12-24 13:18:50 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.4  2002-07-27 17:40:13  mitch
+# Revision 1.5  2002-12-24 13:18:50  mitch
+# Holt automatisch alle Comics ab Beginn
+#
+# Revision 1.4  2002/07/27 17:40:13  mitch
 # Funktioniert wieder -- fester Pfad für wget war böse
 #
 # Revision 1.3  2001/11/08 21:09:40  mitch
@@ -15,29 +18,40 @@
 # Initial revision
 #
 
-if [ -z ${1} ]; then
-    echo "give DATE as [yyyymmdd]" 1>&2
-    exit 1
+EXITCODE=2
+
+LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
+if [ -z ${LATEST} ]; then
+    LATEST=19971116  # first strip ever - 1
 fi
 
-X=$1
+X=${LATEST}
 
-echo -n "getting ${X}: "
-URL=http://ars.userfriendly.org/cartoons/?id=${X}
-PICURL=$(
-    wget -O - ${URL} 2>/dev/null | \
-	grep ${X} | \
-	grep "^<a href.*gif" |\
-	sed -e 's/gif.*$/gif/' -e 's/^.*src="//'
-)
-if [ -z ${PICURL} ]; then
-    echo "wrong date?"
-else
-    wget -O ${X}.gif --referer=${URL} ${PICURL} 2>/dev/null
-    if [ -s ${X}.gif ]; then
-	echo "OK"
+while true; do
+
+    X=$(date -d "${X} + 1 day" +%Y%m%d)
+
+    echo -n "getting ${X}: "
+    URL="http://ars.userfriendly.org/cartoons/?mode=classic&id=${X}"
+    PICURL=$(
+	wget -O - ${URL} 2>/dev/null | \
+	    grep ${X} | \
+	    grep "^<a href.*gif" |\
+	    sed -e 's/gif.*$/gif/' -e 's/^.*src="//'
+    )
+    if [ -z ${PICURL} ]; then
+	echo "wrong date?"
+	exit ${EXITCODE}
     else
-	rm -f ${X}.gif
-	echo "fetch failed!!!"
+	wget -O ${X}.gif --referer=${URL} ${PICURL} 2>/dev/null
+	if [ -s ${X}.gif ]; then
+	    echo "OK"
+	    EXITCODE=0
+	else
+	    rm -f ${X}.gif
+	    echo "fetch failed!!!"
+	    exit ${EXITCODE}
+	fi
     fi
-fi
+
+done
