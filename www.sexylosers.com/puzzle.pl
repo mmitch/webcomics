@@ -1,12 +1,15 @@
 #!/usr/bin/perl
 
-# $Id: puzzle.pl,v 1.1 2002-12-22 21:41:14 mitch Exp $
+# $Id: puzzle.pl,v 1.2 2002-12-22 22:00:21 mitch Exp $
 
 # Dieses Programm "rendert" kleine HTML-Tabellen mit Bildern in ein
 # grossen Bild.
 
 # $Log: puzzle.pl,v $
-# Revision 1.1  2002-12-22 21:41:14  mitch
+# Revision 1.2  2002-12-22 22:00:21  mitch
+# JPEG-Qualitaet erhoeht
+#
+# Revision 1.1  2002/12/22 21:41:14  mitch
 # Initial revision
 #
 
@@ -72,6 +75,8 @@ $th += $lh;
 # combine image
 my $image = Image::Magick->new;
 $err = $image->Set(size=>"${tw}x${th}");
+warn $err if $err;
+$err = $image->Set(quality=>100);
 warn $err if $err;
 $err = $image->ReadImage('xc:black');
 warn $err if $err;
