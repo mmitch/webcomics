@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2001-12-20 17:25:22 mitch Exp $
+# $Id: batch.sh,v 1.6 2002-02-17 20:34:33 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2001-12-20 17:25:22  mitch
+# Revision 1.6  2002-02-17 20:34:33  mitch
+# Läuft wieder nach Umzug zu keenspace
+#
+# Revision 1.5  2001/12/20 17:25:22  mitch
 # Tarnung: "wget" wird nicht mehr als User-Agent akzeptiert, wir sind
 #          jetzt "Opera"
 #
@@ -31,18 +34,18 @@ fi
 
 echo "fetching from $1 to $2"
 
-REFBASE="http://sexylosers.com/comic.cgi?"
-GETBASE="http://sexylosers.com/image.cgi?sl"
+REFBASE="http://sexylosers.keenspace.com/"
+GETBASE="http://sexylosers.keenspace.com/images/sl"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 for X in `seq -f %03g $1 $2`; do
     echo -n "fetching $X: "
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
     if [ -s pic${X}.gif ]; then
 	echo "$X is gif --> OK"
     else
 	rm -f pic${X}.gif
-	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
+	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
 	if [ -s pic${X}.jpg ]; then
 	    echo "$X is jpg --> OK"
 	else
