@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.7 2002-08-21 21:28:49 mitch Exp $
+# $Id: batch.sh,v 1.8 2002-09-18 11:42:49 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.7  2002-08-21 21:28:49  mitch
+# Revision 1.8  2002-09-18 11:42:49  mitch
+# Keenspace wollte wieder dazwischenfunken, Skript angepasst
+#
+# Revision 1.7  2002/08/21 21:28:49  mitch
 # Automatisches Herunter aller noch nicht geladenen Bilder auf einen Schlag
 #
 # Revision 1.6  2002/02/17 20:34:33  mitch
@@ -34,24 +37,28 @@ echo "last fetched: $X"
 
 REFBASE="http://sexylosers.keenspace.com/"
 GETBASE="http://sexylosers.keenspace.com/images/sl"
-USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.1  [en]"
 
 while true; do
     X=$( printf %03d $(( 10#$X + 1 )))
-    echo -n "fetching $X: "
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
-    if [ -s pic${X}.gif ]; then
-	echo "$X is gif --> OK"
+    PICTURE=$(
+	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE} -O - ${REFBASE}${X}.html 2> /dev/null \
+	    | grep sl${X} \
+	    | sed -e 's/^.*SRC="http:/http:/' -e 's/".*$//'
+    )
+
+    [ -z "${PICTURE}" ] && echo "$X doesn't exist" && exit 0
+
+    # EXT=${PICTURE:-3:3}
+    EXT=${PICTURE:$(( ${#PICTURE} -3 ))}
+    
+    echo -n "fetching $X.$EXT: "
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.${EXT} ${PICTURE} 2> /dev/null
+    if [ -s pic${X}.${EXT} ]; then
+	echo "$X.$EXT --> OK"
     else
-	rm -f pic${X}.gif
-	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
-	if [ -s pic${X}.jpg ]; then
-	    echo "$X is jpg --> OK"
-	else
-	    rm -f pic${X}.jpg
-	    echo "PROBLEM: $X is neither gif nor jpg --> NOK"
-	    exit 0
-	fi
+	rm -f pic${X}.${EXT}
+	echo "PROBLEM: $X.$EXT --> NOK"
     fi
 done
 
