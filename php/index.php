@@ -49,6 +49,12 @@
 					 "file" => "$localpath/www.sexylosers.com",
 					 "home" => "http://www.sexylosers.com"
 					 ),
+		    "nichtlustig" => array (
+					 "name" => "Nichtlustig",
+					 "href" => "$netpath/www.nichtlustig.de",
+					 "file" => "$localpath/www.nichtlustig.de",
+					 "home" => "http://www.nichtlustig.de"
+					 ),
 		    "errantstory" => array (
 					 "name" => "Errant Story",
 					 "href" => "$netpath/www.errantstory.com",
@@ -368,6 +374,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.18 $<br>$Date: 2003-04-17 09:08:19 $</small></p>
+    <p><small>$Revision: 1.19 $<br>$Date: 2003-07-28 10:37:21 $</small></p>
   </body>
 </html>
