@@ -222,9 +222,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-<!-- Created: Sat Jul 20 18:51:57 CEST 2002 -->
-<!-- hhmts start -->
-Last modified: Sat Jul 20 22:41:17 CEST 2002
-<!-- hhmts end -->
+    <p><small>$Revision: 1.3 $<br>$Date: 2002-09-03 18:13:03 $</small></p>
   </body>
 </html>
