@@ -1,4 +1,4 @@
-$Id: README,v 1.2 2005-03-06 13:09:46 mitch Exp $
+$Id: README,v 1.3 2005-03-06 13:49:51 mitch Exp $
 
 HOW TO USE THE PHP WEBCOMIC BROWSER
 
@@ -71,6 +71,6 @@ You're done!  Browse the php/index.html and there you go.
 
 == Maintenance ==
 
-If there is a new comic, you need to create an COMIC file.  To make
-new comics visible in the comic browser, select "find comics" to
-recreate the $cachefile.
+If there is a new comic, you need to create a COMIC file.  To make new
+comics visible in the comic browser, select "find comics" to recreate
+the $cachefile.
