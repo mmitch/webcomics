@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.11 2003-07-12 11:17:04 mitch Exp $
+# $Id: batch.sh,v 1.12 2004-08-03 08:24:58 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.11  2003-07-12 11:17:04  mitch
+# Revision 1.12  2004-08-03 08:24:58  mitch
+# skipping auch bei JPEGs
+#
+# Revision 1.11  2003/07/12 11:17:04  mitch
 # Fix der letzten Änderung
 #
 # Revision 1.10  2003/07/12 11:14:44  mitch
@@ -86,14 +89,20 @@ while true; do
 	    test -w ${FILE} && rm ${FILE}
 	    EXT=jpg
 	    FILE=${DATE}.${EXT}
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
-	    if [ -s ${FILE} ]; then
-		echo OK
-		chmod -w ${FILE}
-		EXITCODE=0
+
+	    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+		echo skipping
 	    else
-		test -w ${FILE} && rm ${FILE}
-		echo nok
+
+		wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
+		if [ -s ${FILE} ]; then
+		    echo OK
+		    chmod -w ${FILE}
+		    EXITCODE=0
+		else
+		    test -w ${FILE} && rm ${FILE}
+		    echo nok
+		fi
 	    fi
 	fi
     fi
