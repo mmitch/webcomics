@@ -1,4 +1,17 @@
 <?
+    # Edit these variables for your system.
+    #
+    # Where are the files stored locally?
+    $localpath="/home/pub/mitch/MIRROR";
+    #
+    # How can the files accessed by http?
+    $netpath="/pub/mitch/MIRROR";
+    #
+    # How can this very file be accessed by http?
+    $myhref="$netpath/php/index.php";
+?>
+
+<?
     if (isset($comic) && isset($id)) {
 	setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
     }
@@ -15,84 +28,91 @@
 
 
 <?
-    $myhref="/pub/mitch/MIRROR/php/index.php";
-    
+
+    # Because there are so many comics, some of the comic strips have
+    # been split up into different subdirectories.  Just make sure the
+    # appropriate pictures and a corresponding index file are in the
+    # directories.
+    #
+    # You could also remove the duplicates and put everything into a
+    # single directory.
+
     $comics = array("megatokyo" => array(
 					 "name" => "Megatokyo",
-					 "href" => "/pub/mitch/MIRROR/www.megatokyo.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.megatokyo.com",
+					 "href" => "$netpath/www.megatokyo.com",
+					 "file" => "$localpath/www.megatokyo.com",
 					 "home" => "http://www.megatokyo.com"
 					 ),
 		    "sexylosers" => array (
 					 "name" => "Sexy Losers",
-					 "href" => "/pub/mitch/MIRROR/www.sexylosers.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.sexylosers.com",
+					 "href" => "$netpath/www.sexylosers.com",
+					 "file" => "$localpath/www.sexylosers.com",
 					 "home" => "http://www.sexylosers.com"
 					 ),
 		    "errantstory" => array (
 					 "name" => "Errant Story",
-					 "href" => "/pub/mitch/MIRROR/www.errantstory.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.errantstory.com",
+					 "href" => "$netpath/www.errantstory.com",
+					 "file" => "$localpath/www.errantstory.com",
 					 "home" => "http://www.errantstory.com"
 					 ),
 		    "exploitationnow" => array (
 					 "name" => "Exploitation Now",
-					 "href" => "/pub/mitch/MIRROR/www.exploitationnow.com",
-					 "file" => "/home/pub/mitch/MIRROR/www.exploitationnow.com",
+					 "href" => "$netpath/www.exploitationnow.com",
+					 "file" => "$localpath/www.exploitationnow.com",
 					 "home" => "http://www.exploitationnow.com"
 					 ),
 		    "azumanga" => array (
 					 "name" => "Azumanga Daioh",
-					 "href" => "/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net",
-					 "file" => "/home/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net",
+					 "href" => "$netpath/www.manga-takarajima.mangafan.net",
+					 "file" => "$localpath/www.manga-takarajima.mangafan.net",
 					 "home" => "http://www.manga-takarajima.mangafan.net/azumanga_daiou.htm"
 					 ),
 		    "userfriendly" => array (
 					 "name" => "Userfriendly 2002",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org",
+					 "href" => "$netpath/www.userfriendly.org",
+					 "file" => "$localpath/www.userfriendly.org",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2001" => array (
 					 "name" => "Userfriendly 2001",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/2001",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2001",
+					 "href" => "$netpath/www.userfriendly.org/2001",
+					 "file" => "$localpath/www.userfriendly.org/2001",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2000" => array (
 					 "name" => "Userfriendly 2000",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/2000",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2000",
+					 "href" => "$netpath/www.userfriendly.org/2000",
+					 "file" => "$localpath/www.userfriendly.org/2000",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1999" => array (
 					 "name" => "Userfriendly 1999",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1999",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1999",
+					 "href" => "$netpath/www.userfriendly.org/1999",
+					 "file" => "$localpath/www.userfriendly.org/1999",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1998" => array (
 					 "name" => "Userfriendly 1998",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1998",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1998",
+					 "href" => "$netpath/www.userfriendly.org/1998",
+					 "file" => "$localpath/www.userfriendly.org/1998",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly1997" => array (
 					 "name" => "Userfriendly 1997",
-					 "href" => "/pub/mitch/MIRROR/www.userfriendly.org/1997",
-					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1997",
+					 "href" => "$netpath/www.userfriendly.org/1997",
+					 "file" => "$localpath/www.userfriendly.org/1997",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "freefall" => array (
 					 "name" => "Freefall 500-",
-					 "href" => "/pub/mitch/MIRROR/freefall.purrsia.com",
-					 "file" => "/home/pub/mitch/MIRROR/freefall.purrsia.com",
+					 "href" => "$netpath/freefall.purrsia.com",
+					 "file" => "$localpath/freefall.purrsia.com",
 					 "home" => "http://freefall.purrsia.com"
 					 ),
 		    "freefallupto500" => array (
 					 "name" => "Freefall 1-499",
-					 "href" => "/pub/mitch/MIRROR/freefall.purrsia.com/under500",
-					 "file" => "/home/pub/mitch/MIRROR/freefall.purrsia.com/under500",
+					 "href" => "$netpath/freefall.purrsia.com/under500",
+					 "file" => "$localpath/freefall.purrsia.com/under500",
 					 "home" => "http://freefall.purrsia.com"
 					 )
 		    );
@@ -249,7 +269,7 @@ if ($comics[$comic]) {
 
 
     <hr>
-    <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.7 $<br>$Date: 2002-12-04 16:12:04 $</small></p>
+    <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
+    <p><small>$Revision: 1.8 $<br>$Date: 2002-12-24 11:48:09 $</small></p>
   </body>
 </html>
