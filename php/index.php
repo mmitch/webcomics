@@ -1,7 +1,8 @@
 <?
-    if (isset($comic) && isset($id)) {
-	setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
-    }
+# cookie handling
+if (isset($comic) && isset($id)) {
+  setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
+}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -10,48 +11,79 @@
     <title>Mitchs PHP Comicbrowser</title>
   </head>
 
-  <body>
+<body>
 
 <?
-    include_once('config.inc');
+include_once('config.inc');
 
-    # dynamically create $comics array
-    $filesfound = popen("find $localpath -type f -name COMIC", "r");
-    if ($filesfound) {
-    	while (! feof($filesfound)) {
+function create_cache()
+# dynamically create $comics array
+{
+  global $localpath, $netpath;
+  $comics = array();
 
-	    # parse COMIC file
-	    $file = rtrim(fgets($filesfound, 8192)); # max 8k per line
-	    $newcomic = array();
-	    $fp = fopen($file, "r");
-	    $tag = 0;
-	    if ($fp) {
-	        while (! feof($fp)) {
+  $find = popen("find $localpath -type f -name COMIC", "r");
+  if ($find) {
+    while (! feof($find)) {
 
-		    $line = rtrim(fgets($fp, 8192)); # max 8k per line
-		    list($key, $value) = explode(": ", $line, 2);
-		    if ($key === "TAG") {
-		        $tag = $value;
-		    } elseif ($key === "NAME") {
-		        $newcomic[name] = $value;
-		    } elseif ($key === "HOME") {
-		        $newcomic[home] = $value;
-		    }
-		}
+      # parse COMIC file
+      $file = rtrim(fgets($find, 8192)); # max 8k per line
+      $newcomic = array();
+      $fp = fopen($file, "r");
+      $tag = 0;
+      if ($fp) {
+	while (! feof($fp)) {
 
-		if ($tag) {
-		    $newcomic[file] = dirname($file);
-		    $newcomic[href] = str_replace($localpath, $netpath, $newcomic[file]);
-		    $comics[$tag] = $newcomic;
-		}
-		fclose($fp);
-	    }
+	  $line = rtrim(fgets($fp, 8192)); # max 8k per line
+	  list($key, $value) = explode(": ", $line, 2);
+	  if ($key === "TAG") {
+	    $tag = $value;
+	  } elseif ($key === "NAME") {
+	    $newcomic[name] = $value;
+	  } elseif ($key === "HOME") {
+	    $newcomic[home] = $value;
+	  }
 	}
-        pclose($filesfound);
+	
+	if ($tag) {
+	  $newcomic[file] = dirname($file);
+	  $newcomic[href] = str_replace($localpath, $netpath, $newcomic[file]);
+	  $comics[$tag] = $newcomic;
+	}
+	fclose($fp);
+      }
     }
+    pclose($find);
+  }
 
 
-    sort($comics);
+  sort($comics);
+
+  return $comics;
+}
+
+function open_cache()
+{
+  global $cachefile;
+  return unserialize( file_get_contents( $cachefile ) );
+}
+
+function write_cache($comics)
+{
+  global $cachefile;
+  $cache = fopen($cachefile, "w");
+  if ($cache) {
+    fwrite($cache, serialize($comics));
+    fclose($cache);
+  }
+}
+
+# Einlesen des Caches
+$comics = open_cache();
+if (! is_array($comics)) {
+  $comics = create_cache();
+  write_cache($comics);
+}
 
 if ($comics[$comic]) {
 
@@ -232,6 +264,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.36 $<br>$Date: 2005-03-06 11:32:06 $</small></p>
+    <p><small>$Revision: 1.37 $<br>$Date: 2005-03-06 13:09:29 $</small></p>
   </body>
 </html>
