@@ -1,9 +1,9 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.4 2003-02-12 00:42:25 ikari Exp $
+# $Id: batch.sh,v 1.5 2003-02-12 13:25:21 ikari Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.4  2003-02-12 00:42:25  ikari
-# Ermittelt nun auch die Stripnamen. Kopierquelle: Megatokyo-Script Revision 1.6
+# Revision 1.5  2003-02-12 13:25:21  ikari
+# Bugfix: Versehentlich die falsche Datei committet.
 #
 # Revision 1.6  2002/12/24 12:02:01  mitch
 # --use-proxy=off bei wget entfernt.
@@ -27,33 +27,38 @@
 EXITCODE=2
 
 wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
-| grep "^<option value='.*</option>" \
+| grep "<option value=\".*</option>" \
 | sed -e "s/<\/select>$//" \
-      -e "s/<\/option>//"
+     -e "s/<\/option>//" \
 | perl batch.pl \
-| while read IDX; do
-    read DATE
-    read NR
+| while read DATE2; do
     read TITLE
     read SPACER
-    if [ -s ${NR}.[gj][ip][fg] ]; then
-	echo "[$NR] skipped"
+
+    DATE=$(echo ${DATE2} | sed -e 's/-//;s/-//');
+    YEAR=$(echo ${DATE} | cut -c 1-4);
+
+    if [ -s ${DATE}.[gj][ip][fg] ]; then
+	echo "[$DATE] skipped"
     else
-	echo -n "[$NR]: fetching $DATE $TITLE   "
-	FILE=${NR}.gif
-	TEXT=${NR}.txt
-	wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif 2>/dev/null
+	echo -n "[$DATE2]: fetching $TITLE   "
+	
+	FILE=${DATE}.gif
+	TEXT=${DATE}.txt
+	wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
+             http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif 2>/dev/null
 	if [ -s ${FILE} ]; then
-	    echo "[$NR] $DATE $TITLE" > ${TEXT}
+	    echo "$DATE2 $TITLE" > ${TEXT}
 	    echo "OK"
 	    EXITCODE=0
 	else
 	    rm -f ${FILE}
 	    # Try .jpg
-	    FILE=${NR}.jpg
-	    wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
+	    FILE=${DATE}.jpg
+	    wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
+                  http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg 2>/dev/null
 	    if [ -s ${FILE} ]; then
-		echo "[$NR] $DATE $TITLE" > ${TEXT}
+		echo "$DATE2 $TITLE" > ${TEXT}
 		echo "OK"
 		EXITCODE=0
 	    else
@@ -63,7 +68,7 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 	fi
     fi
 done
-
+ 
 echo "fini"
 
 exit ${EXITCODE}
