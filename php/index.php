@@ -117,7 +117,7 @@ function get_index($me)
     while (! feof($fp)) {
       $line = fgets($fp, 4096);  # max 4k per line
       if (! preg_match('/^\s*$/', $line)) {
-	list ($f, $t) = preg_split('/\t/', $line);
+	list($f, $t) = explode("\t", $line, 2);
 	$files[$max] = chop($f);
 	$titles[$max] = chop($t);
 	$max++;
@@ -275,6 +275,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.39 $<br>$Date: 2005-03-06 13:37:59 $</small></p>
+    <p><small>$Revision: 1.40 $<br>$Date: 2005-03-06 13:39:57 $</small></p>
   </body>
 </html>
