@@ -29,6 +29,18 @@
 					 "file" => "/home/pub/mitch/MIRROR/www.sexylosers.com",
 					 "home" => "http://www.sexylosers.com"
 					 ),
+		    "errantstory" => array (
+					 "name" => "Errant Story",
+					 "href" => "/pub/mitch/MIRROR/www.errantstory.com",
+					 "file" => "/home/pub/mitch/MIRROR/www.errantstory.com",
+					 "home" => "http://www.errantstory.com"
+					 ),
+		    "exploitationnow" => array (
+					 "name" => "Exploitation Now",
+					 "href" => "/pub/mitch/MIRROR/www.exploitationnow.com",
+					 "file" => "/home/pub/mitch/MIRROR/www.exploitationnow.com",
+					 "home" => "http://www.exploitationnow.com"
+					 ),
 		    "azumanga" => array (
 					 "name" => "Azumanga Daioh",
 					 "href" => "/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net",
@@ -238,6 +250,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.5 $<br>$Date: 2002-10-05 14:03:47 $</small></p>
+    <p><small>$Revision: 1.6 $<br>$Date: 2002-12-04 16:03:32 $</small></p>
   </body>
 </html>
