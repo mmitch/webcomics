@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.3 2005-02-21 22:24:43 mitch Exp $
+# $Id: batch.sh,v 1.4 2005-02-21 22:27:56 mitch Exp $
 
 EXITCODE=2
 
@@ -29,12 +29,13 @@ while [ "${CURRENT}" -gt "${X}" ] ; do
 	sed -e 's,^.*IMG SRC="*/comics/dilbert/archive/images/,,' -e 's," .*$,,'
     )
     PICURL=${BASEURL}images/${PICNAME}
-    wget -qO${X}.gif --referer=${PAGEURL} ${PICURL}
-    if [ -s ${X}.gif ]; then
+    EXT=$( echo ${PICNAME} | sed 's/^.*\.//' )
+    wget -qO${X}.${EXT} --referer=${PAGEURL} ${PICURL}
+    if [ -s ${X}.${EXT} ]; then
         echo "OK"
         EXITCODE=0
     else
-        rm -f ${X}.jpg
+        rm -f ${X}.{$EXT}
         echo "fetch failed!!!"
         exit ${EXITCODE}
     fi
