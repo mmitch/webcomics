@@ -1,8 +1,14 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.7 2003-02-16 13:27:44 mitch Exp $
+# $Id: batch.sh,v 1.8 2003-02-16 13:35:10 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.7  2003-02-16 13:27:44  mitch
+# Revision 1.8  2003-02-16 13:35:10  mitch
+# Die Datei "minimum.year" kann angelegt werden und stoppt das
+# Download-Skript am dort enthaltenen Jahr (damit können dann
+# Unterordner pro Jahr realisiert werden -- sonst würde das Skript immer
+# alles runterladen)
+#
+# Revision 1.7  2003/02/16 13:27:44  mitch
 # Verzicht auf sed (externer Prozess!) zur Datumsumwandlung
 #
 # Revision 1.6  2003/02/16 13:24:40  mitch
@@ -33,6 +39,12 @@
 
 EXITCODE=2
 
+if [ -r minimum.year ]; then
+    read STOP < minimum.year
+else
+    STOP=0
+fi
+
 wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 | grep "<option value=\".*</option>" \
 | sed -e "s/<\/select>$//" \
@@ -44,6 +56,11 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 
     DATE=${DATE2:0:4}${DATE2:5:2}${DATE2:8:2}
     YEAR=${DATE2:0:4}
+
+    if [ ${YEAR} -lt ${STOP} ]; then
+	echo "stopped because of minimum.year"
+	exit ${EXITCODE}
+    fi
 
     if [ -s ${DATE}.[gj][ip][fg] ]; then
 	echo "[$DATE] skipped"
