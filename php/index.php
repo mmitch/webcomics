@@ -67,6 +67,18 @@
 					 "file" => "$localpath/www.w00t-comic.net",
 					 "home" => "http://www.w00t-comic.net"
 					 ),
+		    "dilbert" => array (
+					 "name" => "Dilbert",
+					 "href" => "$netpath/www.dilbert.com",
+					 "file" => "$localpath/www.dilbert.com",
+					 "home" => "http://www.dilbert.com"
+					 ),
+		    "machall" => array (
+					 "name" => "Mac Hall",
+					 "href" => "$netpath/www.machall.com",
+					 "file" => "$localpath/www.machall.com",
+					 "home" => "http://www.machall.com"
+					 ),
 		    "nichtlustig" => array (
 					 "name" => "Nichtlustig",
 					 "href" => "$netpath/www.nichtlustig.de",
@@ -428,6 +440,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.29 $<br>$Date: 2005-02-21 22:45:19 $</small></p>
+    <p><small>$Revision: 1.30 $<br>$Date: 2005-02-21 22:53:05 $</small></p>
   </body>
 </html>
