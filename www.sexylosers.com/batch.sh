@@ -1,8 +1,12 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2001-10-29 20:31:15 mitch Exp $
+# $Id: batch.sh,v 1.5 2001-12-20 17:25:22 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.4  2001-10-29 20:31:15  mitch
+# Revision 1.5  2001-12-20 17:25:22  mitch
+# Tarnung: "wget" wird nicht mehr als User-Agent akzeptiert, wir sind
+#          jetzt "Opera"
+#
+# Revision 1.4  2001/10/29 20:31:15  mitch
 # Es bleiben keine leeren Dateien mehr übrig
 #
 # Revision 1.3  2001/10/20 17:25:06  mitch
@@ -29,15 +33,16 @@ echo "fetching from $1 to $2"
 
 REFBASE="http://sexylosers.com/comic.cgi?"
 GETBASE="http://sexylosers.com/image.cgi?sl"
+USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 for X in `seq -f %03g $1 $2`; do
     echo -n "fetching $X: "
-    wget --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
+    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
     if [ -s pic${X}.gif ]; then
 	echo "$X is gif --> OK"
     else
 	rm -f pic${X}.gif
-	wget --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
+	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
 	if [ -s pic${X}.jpg ]; then
 	    echo "$X is jpg --> OK"
 	else
