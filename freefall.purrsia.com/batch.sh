@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2002-08-21 21:23:18 mitch Exp $
+# $Id: batch.sh,v 1.5 2002-12-04 16:14:50 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.4  2002-08-21 21:23:18  mitch
+# Revision 1.5  2002-12-04 16:14:50  mitch
+# Neue URL eingebaut
+#
+# Revision 1.4  2002/08/21 21:23:18  mitch
 # Automatisches Herunter aller noch nicht geladenen Bilder auf einen Schlag
 #
 # Revision 1.3  2001/12/22 13:34:39  mitch
@@ -22,8 +25,8 @@ fi
 
 echo "last fetched is $X"
 
-REFBASE="http://www.purrsia.com/freefall"
-GETBASE="http://www.purrsia.com/freefall"
+REFBASE="http://freefall.purrsia.com"
+GETBASE="http://freefall.purrsia.com"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while true ; do
