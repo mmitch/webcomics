@@ -1,8 +1,14 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.3 2001-12-22 12:47:01 mitch Exp $
+# $Id: batch.sh,v 1.4 2001-12-23 10:28:29 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.3  2001-12-22 12:47:01  mitch
+# Revision 1.4  2001-12-23 10:28:29  mitch
+# Cronjob-Fehlermeldung hoffentlich beseitigt
+# (warum tritt die Meldung beim händischen Start nicht auf?)
+#
+# rm: cannot remove `20011222.gif': No such file or directory
+#
+# Revision 1.3  2001/12/22 12:47:01  mitch
 # Fertig geladene Bilder werden scheibgeschützt
 #
 # Revision 1.2  2001/12/20 18:50:02  mitch
@@ -46,7 +52,7 @@ while true; do
 	echo OK
 	chmod -w ${FILE}
     else
-	rm ${FILE}
+	test -w ${FILE} && rm ${FILE}
 	echo nok
     fi
     
