@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.14 2002-12-24 11:58:22 mitch Exp $
+# $Id: batch.sh,v 1.15 2002-12-24 12:02:02 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.14  2002-12-24 11:58:22  mitch
+# Revision 1.15  2002-12-24 12:02:02  mitch
+# --use-proxy=off bei wget entfernt.
+#
+# Revision 1.14  2002/12/24 11:58:22  mitch
 # Ende mit RC=2, wenn kein neues Bild geladen wurde.
 #
 # Revision 1.13  2002/12/22 21:40:52  mitch
@@ -63,7 +66,7 @@ USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.1  [en]"
 while true; do
     X=$( printf %03d $(( 10#$X + 1 )))
     PICTURE=$(
-    	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE} -O - ${REFBASE}${X}.html 2> /dev/null \
+    	wget --user-agent="${USERAGENT}" --referer=${REFBASE} -O - ${REFBASE}${X}.html 2> /dev/null \
     	    | grep sl${X} \
     	    | sed -e 's/^.*SRC="http:/http:/' -e 's/".*$//'
     )
@@ -75,7 +78,7 @@ while true; do
 	echo "fetching ${X}.${EXT}: "
 
 	LINE=$(
-	    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE} --output-document=- ${REFBASE}${X}.html 2> /dev/null \
+	    wget --user-agent="${USERAGENT}" --referer=${REFBASE} --output-document=- ${REFBASE}${X}.html 2> /dev/null \
 		| grep -i ^\<TABLE \
 		| grep -i \</TABLE\>\$ \
 		| grep -i IMG \
@@ -95,7 +98,7 @@ while true; do
 	    FILE=$(basename $URL) 
 	    echo getting partial $URL
 	    rm -f ${FILE}
-	    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}-$FILE ${URL} 2> /dev/null
+	    wget --user-agent="${USERAGENT}" --referer=${REFBASE}${X}.html -O pic${X}-$FILE ${URL} 2> /dev/null
 	done
 	
 	IMGDIR=$(
@@ -126,7 +129,7 @@ while true; do
 	EXT=${PICTURE:$(( ${#PICTURE} -3 ))}
     
 	echo -n "fetching ${X}.${EXT}: "
-	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.${EXT} ${PICTURE} 2> /dev/null
+	wget --user-agent="${USERAGENT}" --referer=${REFBASE}${X}.html -O pic${X}.${EXT} ${PICTURE} 2> /dev/null
 	if [ -s pic${X}.${EXT} ]; then
 	    echo "${X}.${EXT} --> OK"
 	    EXITCODE=0

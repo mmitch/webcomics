@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2002-12-24 11:50:51 mitch Exp $
+# $Id: batch.sh,v 1.7 2002-12-24 12:01:57 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.6  2002-12-24 11:50:51  mitch
+# Revision 1.7  2002-12-24 12:01:57  mitch
+# --use-proxy=off bei wget entfernt.
+#
+# Revision 1.6  2002/12/24 11:50:51  mitch
 # Ende mit RC=2, wenn kein neues Bild geladen wurde.
 #
 # Revision 1.5  2002/12/04 16:14:50  mitch
@@ -39,7 +42,7 @@ while true ; do
     FOLDER=ff$( echo $(( $( echo ${X} | sed 's/^0*//') +99 )) | cut -c 1 )00
     FILE=pic${X}.gif
     echo -n "fetching $X: "
-    wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}/${FOLDER}/fv${X}.htm -O ${FILE} ${GETBASE}/${FOLDER}/fv${X}.gif 2> /dev/null
+    wget --user-agent="${USERAGENT}" --referer=${REFBASE}/${FOLDER}/fv${X}.htm -O ${FILE} ${GETBASE}/${FOLDER}/fv${X}.gif 2> /dev/null
     if [ -s ${FILE} ]; then
 	echo "OK"
 	chmod -w ${FILE}

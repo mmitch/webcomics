@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2002-12-24 11:56:50 mitch Exp $
+# $Id: batch.sh,v 1.6 2002-12-24 12:02:01 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2002-12-24 11:56:50  mitch
+# Revision 1.6  2002-12-24 12:02:01  mitch
+# --use-proxy=off bei wget entfernt.
+#
+# Revision 1.5  2002/12/24 11:56:50  mitch
 # Ende mit RC=2, wenn kein neues Bild geladen wurde.
 #
 # Revision 1.4  2002/07/27 17:26:48  mitch
@@ -20,7 +23,7 @@
 
 EXITCODE=2
 
-wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
+wget -O - http://www.megatokyo.com 2>/dev/null \
 | grep "^<option value='.*</select>" \
 | sed -e "s/<\/select>$//" \
       -e "s/<\/option>/\\
@@ -37,7 +40,7 @@ wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
 	echo -n "[$NR]: fetching $DATE $TITLE   "
 	FILE=${NR}.gif
 	TEXT=${NR}.txt
-	wget --use-proxy=off -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif 2>/dev/null
+	wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif 2>/dev/null
 	if [ -s ${FILE} ]; then
 	    echo "[$NR] $DATE $TITLE" > ${TEXT}
 	    echo "OK"
@@ -46,7 +49,7 @@ wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
 	    rm -f ${FILE}
 	    # Try .jpg
 	    FILE=${NR}.jpg
-	    wget --use-proxy=off -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
+	    wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
 	    if [ -s ${FILE} ]; then
 		echo "[$NR] $DATE $TITLE" > ${TEXT}
 		echo "OK"
