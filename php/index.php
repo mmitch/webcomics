@@ -55,6 +55,12 @@
 					 "file" => "$localpath/www.crtaltdel-online.com",
 					 "home" => "http://www.crtaltdel-online.com"
 					 ),
+		    "queenofwands" => array (
+					 "name" => "Queen of Wands",
+					 "href" => "$netpath/www.queenofwands.net",
+					 "file" => "$localpath/www.queenofwands.net",
+					 "home" => "http://www.queenofwands.net"
+					 ),
 		    "w00t" => array (
 					 "name" => "/usr/bin/w00t",
 					 "href" => "$netpath/www.w00t-comic.net",
@@ -410,6 +416,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.26 $<br>$Date: 2004-11-04 22:51:09 $</small></p>
+    <p><small>$Revision: 1.27 $<br>$Date: 2004-11-04 23:01:51 $</small></p>
   </body>
 </html>
