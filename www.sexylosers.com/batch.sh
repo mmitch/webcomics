@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2001-10-20 16:33:01 mitch Exp $
+# $Id: batch.sh,v 1.2 2001-10-20 16:52:58 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.1  2001-10-20 16:33:01  mitch
+# Revision 1.2  2001-10-20 16:52:58  mitch
+# JPG-if-Abfrage war falschrum
+#
+# Revision 1.1  2001/10/20 16:33:01  mitch
 # Initial revision
 #
 
@@ -31,9 +34,9 @@ for X in `seq $1 $2`; do
 	rm pic${X}.gif
 	wget --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
 	if [ -s pic${X}.jpg ]; then
-	    echo "PROBLEM: $X is neither gif nor jpg --> NOK"
-	else
 	    echo "$X is jpg --> OK"
+	else
+	    echo "PROBLEM: $X is neither gif nor jpg --> NOK"
 	fi
     fi
 done
