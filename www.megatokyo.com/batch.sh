@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2002-01-25 15:43:45 mitch Exp $
+# $Id: batch.sh,v 1.3 2002-07-14 10:14:12 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.2  2002-01-25 15:43:45  mitch
+# Revision 1.3  2002-07-14 10:14:12  mitch
+# liest jetzt auch die .jpg-Dateien ein
+#
+# Revision 1.2  2002/01/25 15:43:45  mitch
 # Adapted to new Freshmeat page
 #
 # Revision 1.1  2001/10/20 19:04:50  mitch
@@ -20,7 +23,7 @@ wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
     read NR
     read TITLE
     read SPACER
-    if [ -s ${NR}.gif ]; then
+    if [ -s ${NR}.[gj][ip][fg] ]; then
 	echo "[$NR] skipped"
     else
 	echo -n "[$NR]: fetching $DATE $TITLE   "
@@ -31,8 +34,16 @@ wget --use-proxy=off -O - http://www.megatokyo.com 2>/dev/null \
 	    echo "[$NR] $DATE $TITLE" > ${TEXT}
 	    echo "OK"
 	else
-	    rm -f ${FILE}
-	    echo "failed!!!"
+	    # Try .jpg
+	    FILE=${NR}.jpg
+	    wget --use-proxy=off -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
+	    if [ -s ${FILE} ]; then
+		echo "[$NR] $DATE $TITLE" > ${TEXT}
+		echo "OK"
+	    else
+		rm -f ${FILE}
+		echo "failed!!!"
+	    fi
 	fi
     fi
 done
