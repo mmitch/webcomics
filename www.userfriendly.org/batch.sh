@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2001-10-20 17:22:17 mitch Exp $
+# $Id: batch.sh,v 1.2 2001-10-20 17:29:43 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.1  2001-10-20 17:22:17  mitch
+# Revision 1.2  2001-10-20 17:29:43  mitch
+# Meldung bei nicht existenter URL
+#
+# Revision 1.1  2001/10/20 17:22:17  mitch
 # Initial revision
 #
 
@@ -20,10 +23,14 @@ PICURL=$(
 wget --use-proxy=OFF -O - ${URL} 2>/dev/null | \
 grep $X | grep "^<a href.*gif" | sed -e 's/gif.*$/gif/' -e 's/^.*src="//'
 )
-wget --use-proxy=OFF -O ${X}.gif --referer=${URL} ${PICURL} 2>/dev/null
-if [ -s ${X}.gif ]; then
-    echo "OK"
+if [ -z $PICURL ]; then
+    echo "wrong date?"
 else
-    rm -f ${X}.gif
-    echo "failed!!!"
+    wget --use-proxy=OFF -O ${X}.gif --referer=${URL} ${PICURL} 2>/dev/null
+    if [ -s ${X}.gif ]; then
+	echo "OK"
+    else
+	rm -f ${X}.gif
+	echo "fetch failed!!!"
+    fi
 fi
