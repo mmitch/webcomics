@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{6}.jpg' | tail -1 | cut -c 1-8)
+LATEST=$(ls | egrep '[0-9]{6}.[jpg|gif]' | tail -1 | cut -c 1-8)
  if [ -z ${LATEST} ]; then
     LATEST=20020722  # first strip ever
 fi
@@ -30,7 +30,7 @@ while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-    EXT=jpg
+    EXT=gif
     FILE=${DATE}.${EXT}
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
@@ -44,7 +44,7 @@ while true; do
 	    chmod -w ${FILE}
 	    EXITCODE=0
 	else
-	    EXT=gif
+	    EXT=jpg
 
 	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}.${EXT}
 	
