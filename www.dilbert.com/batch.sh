@@ -1,27 +1,20 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2005-02-21 21:58:42 mitch Exp $
+# $Id: batch.sh,v 1.2 2005-02-21 22:07:30 mitch Exp $
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{5}.(gif|jpg)' | tail -1 | cut -c 1-5)
+LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
-    LATEST=0  # first strip ever - 1
+    # only the last month's archive is online!
+    # this will probably break with non-GNU-date
+    LATEST=$(date +%Y%m%d -d "1 month ago")
 fi
 
 X=${LATEST}
+BASEURL="http://www.dilbert.com/comics/dilbert/archive/"
+CURRENT=$(date +%Y%m%d)
 
-BASEURL="http://www.machall.com/"
-PICURL1="index.php?do_command=show_strip&strip_id="
-PICURL2="&auth=01101-10010-01010-10101-11111"
-
-CURRENT=$( wget -qO - ${BASEURL} \
-         | grep show_strip   \
-         | sed -e 's/.*id=//;s/&auth.*//')
-CURRENT=$(printf %05d ${CURRENT})
-Y=$((10#${X}+1))
-Y=$(printf %05d ${Y})
-
-echo "Fetching from ${Y} to ${CURRENT}."
+echo "Fetching from ${LATEST} to ${CURRENT}."
 
 while [ "${CURRENT}" -gt "${X}" ] ; do
 
