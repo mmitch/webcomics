@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2001-10-20 16:52:58 mitch Exp $
+# $Id: batch.sh,v 1.3 2001-10-20 17:25:06 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.2  2001-10-20 16:52:58  mitch
+# Revision 1.3  2001-10-20 17:25:06  mitch
+# printf gespart (wir haben GNU seq)
+#
+# Revision 1.2  2001/10/20 16:52:58  mitch
 # JPG-if-Abfrage war falschrum
 #
 # Revision 1.1  2001/10/20 16:33:01  mitch
@@ -24,8 +27,7 @@ echo "fetching from $1 to $2"
 REFBASE="http://sexylosers.com/comic.cgi?"
 GETBASE="http://sexylosers.com/image.cgi?sl"
 
-for X in `seq $1 $2`; do
-    X=`printf "%03d" $X`
+for X in `seq -f %03g $1 $2`; do
     echo -n "fetching $X: "
     wget --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.gif ${GETBASE}$X.gif 2> /dev/null
     if [ -s pic${X}.gif ]; then
