@@ -1,8 +1,13 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.8 2003-02-16 13:35:10 mitch Exp $
+# $Id: batch.sh,v 1.9 2003-03-05 22:48:28 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.8  2003-02-16 13:35:10  mitch
+# Revision 1.9  2003-03-05 22:48:28  mitch
+# - BugFix EXITCODE (Variable wurde in Subshell gesetzt)
+#   Derselbe Fehler wie in megatokyo/batch.sh,1.8
+# - Anzeige Datumsformat einheitlich
+#
+# Revision 1.8  2003/02/16 13:35:10  mitch
 # Die Datei "minimum.year" kann angelegt werden und stoppt das
 # Download-Skript am dort enthaltenen Jahr (damit können dann
 # Unterordner pro Jahr realisiert werden -- sonst würde das Skript immer
@@ -50,49 +55,55 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 | sed -e "s/<\/select>$//" \
      -e "s/<\/option>//" \
 | perl batch.pl \
-| while read DATE2; do
-    read TITLE
-    read SPACER
-
-    DATE=${DATE2:0:4}${DATE2:5:2}${DATE2:8:2}
-    YEAR=${DATE2:0:4}
-
-    if [ ${YEAR} -lt ${STOP} ]; then
-	echo "stopped because of minimum.year"
-	exit ${EXITCODE}
-    fi
-
-    if [ -s ${DATE}.[gj][ip][fg] ]; then
-	echo "[$DATE] skipped"
-    else
-	echo -n "[$DATE2]: fetching $TITLE   "
+| (
+    while read DATE2; do
+	read TITLE
+	read SPACER
 	
-	FILE=${DATE}.gif
-	TEXT=${DATE}.txt
-	wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-             http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif 2>/dev/null
-	if [ -s ${FILE} ]; then
-	    echo "$TITLE" > ${TEXT}
-	    echo "OK"
-	    EXITCODE=0
+	DATE=${DATE2:0:4}${DATE2:5:2}${DATE2:8:2}
+	YEAR=${DATE2:0:4}
+	
+	if [ ${YEAR} -lt ${STOP} ]; then
+	    echo "stopped because of minimum.year"
+	    exit ${EXITCODE}
+	fi
+	
+	if [ -s ${DATE}.[gj][ip][fg] ]; then
+	    echo "[${DATE}] skipped"
 	else
-	    rm -f ${FILE}
-	    # Try .jpg
-	    FILE=${DATE}.jpg
+	    echo -n "[${DATE}]: fetching $TITLE   "
+	    
+	    FILE=${DATE}.gif
+	    TEXT=${DATE}.txt
 	    wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-                  http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg 2>/dev/null
+		http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif 2>/dev/null
 	    if [ -s ${FILE} ]; then
 		echo "$TITLE" > ${TEXT}
 		echo "OK"
 		EXITCODE=0
 	    else
 		rm -f ${FILE}
-		echo "failed!!!"
+ 	        # Try .jpg
+		FILE=${DATE}.jpg
+		wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
+		    http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg 2>/dev/null
+		if [ -s ${FILE} ]; then
+		    echo "$TITLE" > ${TEXT}
+		    echo "OK"
+		    EXITCODE=0
+		else
+		    rm -f ${FILE}
+		    echo "failed!!!"
+		fi
 	    fi
 	fi
-    fi
-done
- 
+    done
+    
+    exit ${EXITCODE}
+)
+
+EXITCODE=$?
+
 echo "fini"
 
 exit ${EXITCODE}
