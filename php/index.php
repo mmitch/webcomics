@@ -127,36 +127,6 @@
 					 "file" => "$localpath/www.penny-arcade.com",
 					 "home" => "http://www.penny-arcade.com"
 					 ),
-		    "penny-arcade2002" => array (
-					 "name" => "Penny Arcade 2002",
-					 "href" => "$netpath/www.penny-arcade.com/2002",
-					 "file" => "$localpath/www.penny-arcade.com/2002",
-					 "home" => "http://www.penny-arcade.com"
-					 ),
-		    "penny-arcade2001" => array (
-					 "name" => "Penny Arcade 2001",
-					 "href" => "$netpath/www.penny-arcade.com/2001",
-					 "file" => "$localpath/www.penny-arcade.com/2001",
-					 "home" => "http://www.penny-arcade.com"
-					 ),
-		    "penny-arcade2000" => array (
-					 "name" => "Penny Arcade 2000",
-					 "href" => "$netpath/www.penny-arcade.com/2000",
-					 "file" => "$localpath/www.penny-arcade.com/2000",
-					 "home" => "http://www.penny-arcade.com"
-					 ),
-		    "penny-arcade1999" => array (
-					 "name" => "Penny Arcade 1999",
-					 "href" => "$netpath/www.penny-arcade.com/1999",
-					 "file" => "$localpath/www.penny-arcade.com/1999",
-					 "home" => "http://www.penny-arcade.com"
-					 ),
-		    "penny-arcade1998" => array (
-					 "name" => "Penny Arcade 1998",
-					 "href" => "$netpath/www.penny-arcade.com/1998",
-					 "file" => "$localpath/www.penny-arcade.com/1998",
-					 "home" => "http://www.penny-arcade.com"
-					 ),
 		    );
 
 if ($comics[$comic]) {
@@ -312,6 +282,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.12 $<br>$Date: 2003-02-15 13:00:40 $</small></p>
+    <p><small>$Revision: 1.13 $<br>$Date: 2003-02-16 13:12:48 $</small></p>
   </body>
 </html>
