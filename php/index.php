@@ -1,5 +1,5 @@
 <?
-# cookie handling
+// cookie handling
 if (isset($comic) && isset($id)) {
   setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
 }
@@ -17,7 +17,7 @@ if (isset($comic) && isset($id)) {
 include_once('config.inc');
 
 function create_cache()
-# dynamically create $comics array
+// dynamically create $comics array
 {
   global $localpath, $netpath;
   $comics = array();
@@ -26,15 +26,15 @@ function create_cache()
   if ($find) {
     while (! feof($find)) {
 
-      # parse COMIC file
-      $file = rtrim(fgets($find, 8192)); # max 8k per line
+      // parse COMIC file
+      $file = rtrim(fgets($find, 8192)); // max 8k per line
       $newcomic = array();
       $fp = fopen($file, "r");
       $tag = 0;
       if ($fp) {
 	while (! feof($fp)) {
 
-	  $line = rtrim(fgets($fp, 8192)); # max 8k per line
+	  $line = rtrim(fgets($fp, 8192)); // max 8k per line
 	  list($key, $value) = explode(": ", $line, 2);
 	  if ($key === "TAG") {
 	    $tag = $value;
@@ -63,14 +63,14 @@ function create_cache()
 }
 
 function open_cache()
-# read cache
+// read cache
 {
   global $cachefile;
   return unserialize( file_get_contents( $cachefile ) );
 }
 
 function write_cache($comics)
-# save cache
+// save cache
 {
   global $cachefile;
   $cache = fopen($cachefile, "w");
@@ -81,7 +81,7 @@ function write_cache($comics)
 }
 
 function list_all_comics($comics)
-# show a list of all comics
+// show a list of all comics
 {
   global $lastVisited, $myhref;
   echo "<h2>Available Comics</h2>\n";
@@ -107,7 +107,7 @@ function list_all_comics($comics)
 }
 
 function get_index($me)
-# read a comic index file
+// read a comic index file
 {
   global $max, $files, $titles;
 
@@ -115,7 +115,7 @@ function get_index($me)
   if ($fp) {
 
     while (! feof($fp)) {
-      $line = fgets($fp, 4096);  # max 4k per line
+      $line = fgets($fp, 4096);  // max 4k per line
       if (! preg_match('/^\s*$/', $line)) {
 	list($f, $t) = explode("\t", $line, 2);
 	$files[$max] = chop($f);
@@ -134,7 +134,7 @@ function get_index($me)
 }
 
 function show_strip($me, $id)
-# show a single comic strip
+// show a single comic strip
 {
   global $comic, $myhref;
   global $max, $files, $titles;
@@ -155,7 +155,7 @@ function show_strip($me, $id)
 
   echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
 
-  # upper navigation
+  // upper navigation
   echo "<table><tr><td align=\"left\">";
   if ($id > 0) {
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
@@ -169,7 +169,7 @@ function show_strip($me, $id)
   }
   echo "<br>\n";
 
-  # picture
+  // picture
   if ($id < $premax) {
     echo "<a href=\"$nextref\">";
   } else {
@@ -178,7 +178,7 @@ function show_strip($me, $id)
   echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" title=\"$titles[$id]\" border=\"0\">";
   echo "</a>\n";
 
-  # liner\'s notes
+  // liner's notes
   $file = preg_replace("/^.*\/([^\/]+)$/", "$1", $files[$id]);
   $file = preg_replace("/\.[^.]*$/", ".htm", $file);
   $file = "$me[file]/$file";
@@ -189,7 +189,7 @@ function show_strip($me, $id)
     if ($fp) {
       echo "<p>\n";
       while (! feof($fp)) {
-	echo fgets($fp, 8192); # max 8k per line
+	echo fgets($fp, 8192); // max 8k per line
       }
       echo "</p>\n";
 
@@ -201,7 +201,7 @@ function show_strip($me, $id)
     }
   }
 
-  # lower navigation
+  // lower navigation
   echo "<br><br>";
   if ($id > 0) {
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
@@ -217,8 +217,8 @@ function show_strip($me, $id)
 }
 
 function show_comic($me)
-# show a whole comic
-# THIS VIEW IS CRAP
+// show a whole comic
+// THIS VIEW IS CRAP
 {
   global $comic, $myhref, $rev;
   global $max, $files, $titles;
@@ -245,7 +245,7 @@ function show_comic($me)
 }
 
 
-# Einlesen des Caches
+// Einlesen des Caches
 $comics = open_cache();
 if ((! is_array($comics)) or (isset($recache))) {
   $comics = create_cache();
@@ -275,6 +275,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.40 $<br>$Date: 2005-03-06 13:39:57 $</small></p>
+    <p><small>$Revision: 1.41 $<br>$Date: 2005-03-06 13:41:20 $</small></p>
   </body>
 </html>
