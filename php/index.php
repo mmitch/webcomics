@@ -49,6 +49,12 @@
 					 "file" => "$localpath/www.sexylosers.com",
 					 "home" => "http://www.sexylosers.com"
 					 ),
+		    "w00t" => array (
+					 "name" => "/usr/bin/w00t",
+					 "href" => "$netpath/www.w00t-comic.net",
+					 "file" => "$localpath/www.w00t-comic.net",
+					 "home" => "http://www.w00t-comic.net"
+					 ),
 		    "nichtlustig" => array (
 					 "name" => "Nichtlustig",
 					 "href" => "$netpath/www.nichtlustig.de",
@@ -398,6 +404,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.24 $<br>$Date: 2004-05-23 09:25:04 $</small></p>
+    <p><small>$Revision: 1.25 $<br>$Date: 2004-10-26 21:53:36 $</small></p>
   </body>
 </html>
