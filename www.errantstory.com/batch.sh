@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2002-12-04 16:33:58 mitch Exp $
+# $Id: batch.sh,v 1.7 2002-12-24 11:51:49 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.6  2002-12-04 16:33:58  mitch
+# Revision 1.7  2002-12-24 11:51:49  mitch
+# Ende mit RC=2, wenn kein neues Bild geladen wurde.
+#
+# Revision 1.6  2002/12/04 16:33:58  mitch
 # Umgeschrieben auf Errant Story
 # Kopierquelle: Exploitation Now
 #
@@ -24,6 +27,8 @@
 # Revision 1.1  2001/12/20 18:28:31  mitch
 # Initial revision
 #
+
+EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
@@ -59,6 +64,7 @@ while true; do
     if [ -s ${FILE} ]; then
 	echo OK
 	chmod -w ${FILE}
+	EXITCODE=0
     else
 	test -w ${FILE} && rm ${FILE}
 	EXT=jpg
@@ -67,6 +73,7 @@ while true; do
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
+	    EXITCODE=0
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
@@ -74,7 +81,7 @@ while true; do
     fi
     
     if [ ${DATE} = ${YE}${ME}${DE} ]; then
-	exit
+	exit ${EXITCODE}
     fi
 
     DS=$((${DS} + 1))

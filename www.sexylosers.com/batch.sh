@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.13 2002-12-22 21:40:52 mitch Exp $
+# $Id: batch.sh,v 1.14 2002-12-24 11:58:22 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.13  2002-12-22 21:40:52  mitch
+# Revision 1.14  2002-12-24 11:58:22  mitch
+# Ende mit RC=2, wenn kein neues Bild geladen wurde.
+#
+# Revision 1.13  2002/12/22 21:40:52  mitch
 # Die Einzelbilder werden zusammengebastelt.
 #
 # Revision 1.12  2002/12/22 21:01:00  mitch
@@ -44,6 +47,8 @@
 # Initial revision
 #
 
+EXITCODE=2
+
 X=$(ls | egrep 'pic[0-9]{3}.(gif|jpg)' | tail -1 | cut -c 4-6)
 if [ -z ${X} ]; then
     X=000  # first strip ever (1 is added before downloading!)
@@ -79,7 +84,7 @@ while true; do
 
 	if [ -z "${LINE}" ] ; then
 	    echo "${X}.${EXT} --> NOK!  exiting."
-	    exit 0
+	    exit ${EXITCODE}
 	fi
 
 	echo ${LINE} \
@@ -114,6 +119,7 @@ while true; do
 	mv converted.jpg pic${X}.jpg
 
 	echo "${X}.${EXT} --> OK"
+	EXITCODE=0
 
     else
 
@@ -123,6 +129,7 @@ while true; do
 	wget --user-agent="${USERAGENT}" --use-proxy=off --referer=${REFBASE}${X}.html -O pic${X}.${EXT} ${PICTURE} 2> /dev/null
 	if [ -s pic${X}.${EXT} ]; then
 	    echo "${X}.${EXT} --> OK"
+	    EXITCODE=0
 	else
 	    rm -f pic${X}.${EXT}
 	    echo "${X}.${EXT} --> NOK!"

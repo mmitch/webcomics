@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2002-12-04 16:14:50 mitch Exp $
+# $Id: batch.sh,v 1.6 2002-12-24 11:50:51 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.5  2002-12-04 16:14:50  mitch
+# Revision 1.6  2002-12-24 11:50:51  mitch
+# Ende mit RC=2, wenn kein neues Bild geladen wurde.
+#
+# Revision 1.5  2002/12/04 16:14:50  mitch
 # Neue URL eingebaut
 #
 # Revision 1.4  2002/08/21 21:23:18  mitch
@@ -17,6 +20,8 @@
 # Revision 1.1  2001/12/22 13:14:28  mitch
 # Initial revision
 #
+
+EXITCODE=2
 
 X=$(ls | egrep 'pic[0-9]{5}.gif' | tail -1 | cut -c 4-8)
 if [ -z ${X} ]; then
@@ -38,9 +43,10 @@ while true ; do
     if [ -s ${FILE} ]; then
 	echo "OK"
 	chmod -w ${FILE}
+	EXITCODE=0
     else
 	rm -f ${FILE}
 	echo "nok"
-	exit 0
+	exit ${EXITCODE}
     fi
 done
