@@ -1,8 +1,11 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.6 2003-02-16 13:24:40 mitch Exp $
+# $Id: batch.sh,v 1.7 2003-02-16 13:27:44 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.6  2003-02-16 13:24:40  mitch
+# Revision 1.7  2003-02-16 13:27:44  mitch
+# Verzicht auf sed (externer Prozess!) zur Datumsumwandlung
+#
+# Revision 1.6  2003/02/16 13:24:40  mitch
 # .txt-Datei braucht das Datum nicht zu enthalten, ist sonst doppelt
 # Runterladen der hochqualitativen Bilder statt der kleinen (h statt l).
 #
@@ -39,8 +42,8 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
     read TITLE
     read SPACER
 
-    DATE=$(echo ${DATE2} | sed -e 's/-//;s/-//');
-    YEAR=$(echo ${DATE} | cut -c 1-4);
+    DATE=${DATE2:0:4}${DATE2:5:2}${DATE2:8:2}
+    YEAR=${DATE2:0:4}
 
     if [ -s ${DATE}.[gj][ip][fg] ]; then
 	echo "[$DATE] skipped"
