@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.10 2003-07-12 11:14:44 mitch Exp $
+# $Id: batch.sh,v 1.11 2003-07-12 11:17:04 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.10  2003-07-12 11:14:44  mitch
+# Revision 1.11  2003-07-12 11:17:04  mitch
+# Fix der letzten Änderung
+#
+# Revision 1.10  2003/07/12 11:14:44  mitch
 # Keine `20030709.gif: Permission denied'-Meldungen mehr.
 #
 # Revision 1.9  2002/12/24 13:53:03  mitch
@@ -69,7 +72,7 @@ while true; do
     EXT=gif
     FILE=${DATE}.${EXT}
 
-    if [ ! -w ${FILE} ]; then
+    if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
     else
 
