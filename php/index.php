@@ -68,9 +68,15 @@
 					 "home" => "http://www.manga-takarajima.mangafan.net/azumanga_daiou.htm"
 					 ),
 		    "userfriendly" => array (
-					 "name" => "Userfriendly 2002",
+					 "name" => "Userfriendly 2003",
 					 "href" => "$netpath/www.userfriendly.org",
 					 "file" => "$localpath/www.userfriendly.org",
+					 "home" => "http://www.userfriendly.org"
+					 ),
+		    "userfriendly2002" => array (
+					 "name" => "Userfriendly 2002",
+					 "href" => "$netpath/www.userfriendly.org/2002",
+					 "file" => "$localpath/www.userfriendly.org/2002",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2001" => array (
@@ -270,6 +276,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.9 $<br>$Date: 2002-12-24 11:49:06 $</small></p>
+    <p><small>$Revision: 1.10 $<br>$Date: 2003-01-13 17:57:13 $</small></p>
   </body>
 </html>
