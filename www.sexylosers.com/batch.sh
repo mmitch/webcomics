@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.9 2002-12-22 12:44:46 mitch Exp $
+# $Id: batch.sh,v 1.10 2002-12-22 12:48:39 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.9  2002-12-22 12:44:46  mitch
+# Revision 1.10  2002-12-22 12:48:39  mitch
+# Abbruchbedingung eingebaut
+#
+# Revision 1.9  2002/12/22 12:44:46  mitch
 # Auch das neue Format mit den geteilten Bildern stellt kein Problem
 # mehr dar :->
 #
@@ -64,6 +67,11 @@ while true; do
 		| grep -i IMG \
 		| sed 's/ = /=/g'
 	)
+
+	if [ -z "${LINE}" ] ; then
+	    echo "${X}.${EXT} --> NOK!  exiting."
+	    exit 0
+	fi
 
 	echo ${LINE} \
 	    | perl -p -e 's/></>\n</g' \
