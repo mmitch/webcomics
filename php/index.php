@@ -1,3 +1,9 @@
+<?
+    if (isset($comic) && isset($id)) {
+	setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
+    }
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -5,7 +11,7 @@
   </head>
 
   <body>
-    <h1>Mitchs PHP Comicbrowser</h1>
+<!--    <h1>Mitchs PHP Comicbrowser</h1> -->
 
 
 <?
@@ -27,14 +33,44 @@
 					 "file" => "/home/pub/mitch/MIRROR/www.manga-takarajima.mangafan.net"
 					 ),
 		    "userfriendly" => array (
-					 "name" => "Userfriendly",
+					 "name" => "Userfriendly 2002",
 					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org",
 					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org"
 					 ),
+		    "userfriendly2001" => array (
+					 "name" => "Userfriendly 2001",
+					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2001",
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2001"
+					 ),
+		    "userfriendly2000" => array (
+					 "name" => "Userfriendly 2000",
+					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/2000",
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/2000"
+					 ),
+		    "userfriendly1999" => array (
+					 "name" => "Userfriendly 1999",
+					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1999",
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1999"
+					 ),
+		    "userfriendly1998" => array (
+					 "name" => "Userfriendly 1998",
+					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1998",
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1998"
+					 ),
+		    "userfriendly1997" => array (
+					 "name" => "Userfriendly 1997",
+					 "href" => "/pub//mitch/MIRROR/www.userfriendly.org/1997",
+					 "file" => "/home/pub/mitch/MIRROR/www.userfriendly.org/1997"
+					 ),
 		    "freefall" => array (
-					 "name" => "Freefall",
+					 "name" => "Freefall 500-",
 					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall",
 					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall"
+					 ),
+		    "freefallupto500" => array (
+					 "name" => "Freefall 1-499",
+					 "href" => "/pub/mitch/MIRROR/www.purrsia.com/freefall/under500",
+					 "file" => "/home/pub/mitch/MIRROR/www.purrsia.com/freefall/under500"
 					 )
 		    );
 
@@ -55,8 +91,8 @@ if ($comics[$comic]) {
 	    $line = fgets($fp, 4096);
 	    if (! preg_match('/^\s*$/', $line)) {
 		list ($f, $t) = preg_split('/\t/', $line);
-		$files[$max] = $f;
-		$titles[$max] = $t;
+		$files[$max] = chop($f);
+		$titles[$max] = chop($t);
 		$max++;
 	    }
 	}
@@ -69,23 +105,69 @@ if ($comics[$comic]) {
 	echo "<p><b>Error opening index file!</b></p>\n";
     }
     
-    if ($file) {
+    if (isset($id)) {
 
         #
         # Single Image   
         #   
 
-	echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
-	
-	echo "<h2>$me[name]</h2>\n";
+	if ($id < 0) {
+	    $id = 0;
+	}
 
-	echo "<img src=\"$me[href]/$file\">\n";
+	$premax = $max-1;
+	$firstref="$myhref?comic=$comic&id=0";
+	$prevref="$myhref?comic=$comic&id=".($id-1);
+	$nextref="$myhref?comic=$comic&id=".($id+1);
+	$lastref="$myhref?comic=$comic&id=$premax";
+
+	if ($id >= $max) {
+	    $id = $premax;
+	}
+
+	echo "<h2>$me[name]<br>$titles[$id]</h2>\n";
+
+	echo "<table><tr><td align=\"center\">";
+	if ($id > 0) {
+	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
+	    echo "<a href=\"$prevref\">[&lt;]</a>\n";
+	}
+#	echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+	echo "<a href=\"$myhref\">[comics]</a>\n";
+	if ($id < $premax) {
+	    echo "<a href=\"$nextref\">[&gt;]</a>\n";
+	    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
+	}
+	echo "<br>\n";
+	
+	if ($id < $premax) {
+	    echo "<a href=\"$nextref\">";
+	    echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" border=\"0\">";
+	    echo "</a>\n";
+	} else {
+	    echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\">\n";
+	}
+
+	echo "<br><br>";
+	if ($id > 0) {
+	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
+	    echo "<a href=\"$prevref\">[&lt;]</a>\n";
+	}
+#	echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+	echo "<a href=\"$myhref\">[comics]</a>\n";
+	if ($id < $premax) {
+	    echo "<a href=\"$nextref\">[&gt;]</a>\n";
+	    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
+	}
+	echo "</td></tr></table>\n";
+	
 
     } else {
 	
         #
         # List of one Comic
-        #
+        # THIS VIEW IS CRAP AND THUS NOT REACHABLE VIA COMIC MENU!
+	#
 
 	echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
 	
@@ -99,11 +181,11 @@ if ($comics[$comic]) {
 
 	if ($rev) {
 	    for ($i = $max-1; $i >= 0 ; $i--) {
-		echo "<li><a href=\"$myhref?comic=$comic&file=$files[$i]\">$titles[$i]</a></li>\n";
+		echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
 	    }
 	} else {
 	    for ($i = 0; $i < $max; $i++) {
-		echo "<li><a href=\"$myhref?comic=$comic&file=$files[$i]\">$titles[$i]</a></li>\n";
+		echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
 	    }
 	}
 
@@ -119,17 +201,16 @@ if ($comics[$comic]) {
     # List of all Comics
     #
 
-    echo "<h2>Liste der Comics</h2>\n";
+    echo "<h2>Available Comics</h2>\n";
     echo "<ul>\n";
 
     reset ($comics);
     while ( list ($key, $val) = each($comics) ) {
-#	echo "$key<br>\n";
-#	echo "$val[name]<br>\n";
-#	echo "$val[href]<br>\n";
-#	echo "$val[file]<br>\n";
-	
-	echo "<li><a href=\"$myhref?comic=$key\">$val[name]</li></a>\n";
+	if (isset($lastVisited[$key])) {
+	    echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</li></a>\n";
+	} else {
+	    echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</li></a>\n";
+	}
     }
 
     echo "</ul>\n";
