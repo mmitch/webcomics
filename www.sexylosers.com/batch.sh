@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.3 2001-10-20 17:25:06 mitch Exp $
+# $Id: batch.sh,v 1.4 2001-10-29 20:31:15 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.3  2001-10-20 17:25:06  mitch
+# Revision 1.4  2001-10-29 20:31:15  mitch
+# Es bleiben keine leeren Dateien mehr übrig
+#
+# Revision 1.3  2001/10/20 17:25:06  mitch
 # printf gespart (wir haben GNU seq)
 #
 # Revision 1.2  2001/10/20 16:52:58  mitch
@@ -33,11 +36,12 @@ for X in `seq -f %03g $1 $2`; do
     if [ -s pic${X}.gif ]; then
 	echo "$X is gif --> OK"
     else
-	rm pic${X}.gif
+	rm -f pic${X}.gif
 	wget --use-proxy=off --referer=${REFBASE}${X} -O pic${X}.jpg ${GETBASE}$X.jpg 2> /dev/null
 	if [ -s pic${X}.jpg ]; then
 	    echo "$X is jpg --> OK"
 	else
+	    rm -f pic${X}.jpg
 	    echo "PROBLEM: $X is neither gif nor jpg --> NOK"
 	fi
     fi
