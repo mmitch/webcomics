@@ -106,7 +106,143 @@ function list_all_comics($comics)
 
 }
 
+function get_index($me)
+# read a comic index file
+{
+  global $max, $files, $titles;
 
+  $fp = fopen("$me[file]/index", "r");
+  if ($fp) {
+
+    while (! feof($fp)) {
+      $line = fgets($fp, 4096);  # max 4k per line
+      if (! preg_match('/^\s*$/', $line)) {
+	list ($f, $t) = preg_split('/\t/', $line);
+	$files[$max] = chop($f);
+	$titles[$max] = chop($t);
+	$max++;
+      }
+    }
+
+    if (! fclose($fp)) {
+      echo "<p><b>Error closing index file!</b></p>\n";
+    }
+
+  } else {
+    echo "<p><b>Error opening index file!</b></p>\n";
+  }
+}
+
+function show_strip($me, $id)
+# show a single comic strip
+{
+  global $comic, $myhref;
+  global $max, $files, $titles;
+
+  if ($id < 0) {
+    $id = 0;
+  }
+
+  $premax = $max-1;
+  $firstref="$myhref?comic=$comic&id=0";
+  $prevref="$myhref?comic=$comic&id=".($id-1);
+  $nextref="$myhref?comic=$comic&id=".($id+1);
+  $lastref="$myhref?comic=$comic&id=$premax";
+
+  if ($id >= $max) {
+    $id = $premax;
+  }
+
+  echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
+
+  # upper navigation
+  echo "<table><tr><td align=\"left\">";
+  if ($id > 0) {
+    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
+    echo "<a href=\"$prevref\">[&lt;]</a>\n";
+  }
+  echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+  echo "<a href=\"$myhref\">[comics]</a>\n";
+  if ($id < $premax) {
+    echo "<a href=\"$nextref\">[&gt;]</a>\n";
+    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
+  }
+  echo "<br>\n";
+
+  # picture
+  if ($id < $premax) {
+    echo "<a href=\"$nextref\">";
+  } else {
+    echo "<a href=\"$myhref\">";
+  }
+  echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" title=\"$titles[$id]\" border=\"0\">";
+  echo "</a>\n";
+
+  # liner\'s notes
+  $file = preg_replace("/^.*\/([^\/]+)$/", "$1", $files[$id]);
+  $file = preg_replace("/\.[^.]*$/", ".htm", $file);
+  $file = "$me[file]/$file";
+
+  if ( file_exists($file) ) {
+    $fp = fopen("$file", "r");
+
+    if ($fp) {
+      echo "<p>\n";
+      while (! feof($fp)) {
+	echo fgets($fp, 8192); # max 8k per line
+      }
+      echo "</p>\n";
+
+      if (! fclose($fp)) {
+	echo "<p><b>Error closing liner's notes!</b></p>\n";
+      }
+    } else {
+      echo "<p><b>Error closing liner's notes!</b></p>\n";
+    }
+  }
+
+  # lower navigation
+  echo "<br><br>";
+  if ($id > 0) {
+    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
+    echo "<a href=\"$prevref\">[&lt;]</a>\n";
+  }
+  echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+  echo "<a href=\"$myhref\">[comics]</a>\n";
+  if ($id < $premax) {
+    echo "<a href=\"$nextref\">[&gt;]</a>\n";
+    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
+  }
+  echo "</td></tr></table>\n";
+}
+
+function show_comic($me)
+# show a whole comic
+# THIS VIEW IS CRAP
+{
+  global $comic, $myhref, $rev;
+  global $max, $files, $titles;
+
+  $revrev = 1 - $rev;
+
+  echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
+  echo "<h2>$me[name]</h2>\n";
+  echo "<p><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></p>\n";
+  echo "<ul>\n";
+
+  if ($rev) {
+    for ($i = $max-1; $i >= 0 ; $i--) {
+      echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
+    }
+  } else {
+    for ($i = 0; $i < $max; $i++) {
+      echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
+    }
+  }
+
+  echo "</ul>\n";
+  echo "<p><a href=\"$myhref?comic=$comic&rev=$reverv\">[reverse]</a></p>\n";
+}
 
 
 # Einlesen des Caches
@@ -114,166 +250,31 @@ $comics = open_cache();
 if ((! is_array($comics)) or (isset($recache))) {
   $comics = create_cache();
   write_cache($comics);
+  echo "<p>Cache rebuilt.</p>\n";
 }
 
 if ($comics[$comic]) {
 
-    $me = $comics[$comic];
+  $selected = $comics[$comic];
+  $files  = array();
+  $titles = array();
+  $max = 0;
 
-    #
-    # Read whole comic
-    #
+  get_index($selected);
 
-    $max = 0;
-
-    $fp = fopen("$me[file]/index", "r");
-    if ($fp) {
-	
-	while (! feof($fp)) {
-	    $line = fgets($fp, 4096);
-	    if (! preg_match('/^\s*$/', $line)) {
-		list ($f, $t) = preg_split('/\t/', $line);
-		$files[$max] = chop($f);
-		$titles[$max] = chop($t);
-		$max++;
-	    }
-	}
-	
-	if (! fclose($fp)) {
-	    echo "<p><b>Error closing index file!</b></p>\n";
-	}
-	
-    } else {
-	echo "<p><b>Error opening index file!</b></p>\n";
-    }
-
-    if (isset($id)) {
-
-        #
-        # Single Image
-        #
-
-	if ($id < 0) {
-	    $id = 0;
-	}
-
-	$premax = $max-1;
-	$firstref="$myhref?comic=$comic&id=0";
-	$prevref="$myhref?comic=$comic&id=".($id-1);
-	$nextref="$myhref?comic=$comic&id=".($id+1);
-	$lastref="$myhref?comic=$comic&id=$premax";
-
-	if ($id >= $max) {
-	    $id = $premax;
-	}
-
-	echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
-
-	# upper navigation
-	echo "<table><tr><td align=\"left\">";
-	if ($id > 0) {
-	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
-	    echo "<a href=\"$prevref\">[&lt;]</a>\n";
-	}
-	echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
-	echo "<a href=\"$myhref\">[comics]</a>\n";
-	if ($id < $premax) {
-	    echo "<a href=\"$nextref\">[&gt;]</a>\n";
-	    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
-	}
-	echo "<br>\n";
-	
-	# picture
-	if ($id < $premax) {
-	    echo "<a href=\"$nextref\">";
-	} else {
-	    echo "<a href=\"$myhref\">";
-	}
-	echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" title=\"$titles[$id]\" border=\"0\">";
-	echo "</a>\n";
-
-	# liner's notes
-        $file = preg_replace("/^.*\/([^\/]+)$/", "$1", $files[$id]);
-        $file = preg_replace("/\.[^.]*$/", ".htm", $file);
-	$file = "$me[file]/$file";
-
-	if ( file_exists($file) ) {
-	    $fp = fopen("$file", "r");
-
-	    if ($fp) {
-		echo "<p>\n";
-		while (! feof($fp)) {
-		    echo fgets($fp, 8192); # max 8k per line
-		}
-		echo "</p>\n";
-
-		if (! fclose($fp)) {
-		    echo "<p><b>Error closing liner's notes!</b></p>\n";
-		}
-	    } else {
-		echo "<p><b>Error closing liner's notes!</b></p>\n";
-	    }
-	}
-
-	# lower navigation
-	echo "<br><br>";
-	if ($id > 0) {
-	    echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
-	    echo "<a href=\"$prevref\">[&lt;]</a>\n";
-	}
-	echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
-	echo "<a href=\"$myhref\">[comics]</a>\n";
-	if ($id < $premax) {
-	    echo "<a href=\"$nextref\">[&gt;]</a>\n";
-	    echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
-	}
-	echo "</td></tr></table>\n";
-	
-
-    } else {
-	
-        #
-        # List of one Comic
-        # THIS VIEW IS CRAP
-	#
-
-	echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
-	
-	echo "<h2>$me[name]</h2>\n";
-
-	$revrev = 1 - $rev;
-
-	echo "<p><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></p>\n";
-
-	echo "<ul>\n";
-
-	if ($rev) {
-	    for ($i = $max-1; $i >= 0 ; $i--) {
-		echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
-	    }
-	} else {
-	    for ($i = 0; $i < $max; $i++) {
-		echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
-	    }
-	}
-
-	echo "</ul>\n";
-	
-	echo "<p><a href=\"$myhref?comic=$comic&rev=$reverv\">[reverse]</a></p>\n";
-
-    }
+  if (isset($id)) {
+    show_strip($selected, $id);
+  } else {
+    show_comic($selected);
+  }
 
 } else {
-
-list_all_comics($comics);
-
+    list_all_comics($comics);
 }
 ?>
 
-
-
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.38 $<br>$Date: 2005-03-06 13:17:29 $</small></p>
+    <p><small>$Revision: 1.39 $<br>$Date: 2005-03-06 13:37:59 $</small></p>
   </body>
 </html>
