@@ -65,6 +65,7 @@
     }
 
 
+    sort($comics);
 
 if ($comics[$comic]) {
 
@@ -245,6 +246,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.34 $<br>$Date: 2005-03-05 00:36:44 $</small></p>
+    <p><small>$Revision: 1.35 $<br>$Date: 2005-03-05 00:39:44 $</small></p>
   </body>
 </html>
