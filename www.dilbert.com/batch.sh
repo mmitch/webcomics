@@ -1,12 +1,11 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.2 2005-02-21 22:07:30 mitch Exp $
+# $Id: batch.sh,v 1.3 2005-02-21 22:24:43 mitch Exp $
 
 EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
     # only the last month's archive is online!
-    # this will probably break with non-GNU-date
     LATEST=$(date +%Y%m%d -d "1 month ago")
 fi
 
@@ -18,17 +17,24 @@ echo "Fetching from ${LATEST} to ${CURRENT}."
 
 while [ "${CURRENT}" -gt "${X}" ] ; do
 
-    X=$((10#${X}+1))
-    Y=$(printf %05d ${X})
-    echo -n "getting ${Y}: "
-    URL="${BASEURL}?strip_id=${Y}"
-    PICURL="${BASEURL}${PICURL1}${Y}${PICURL2}"
-    wget -qO${Y}.jpg --referer=${URL} ${PICURL}
-    if [ -s ${Y}.jpg ]; then
+    X=$(date -d "${X} + 1 day" +%Y%m%d)
+
+    echo -n "getting ${X}: "
+
+
+    PAGEURL=${BASEURL}dilbert-${X}.html
+    PICNAME=$(
+	wget -qO- ${PAGEURL} |
+	grep 'ALT="Today' | 
+	sed -e 's,^.*IMG SRC="*/comics/dilbert/archive/images/,,' -e 's," .*$,,'
+    )
+    PICURL=${BASEURL}images/${PICNAME}
+    wget -qO${X}.gif --referer=${PAGEURL} ${PICURL}
+    if [ -s ${X}.gif ]; then
         echo "OK"
         EXITCODE=0
     else
-        rm -f ${Y}.jpg
+        rm -f ${X}.jpg
         echo "fetch failed!!!"
         exit ${EXITCODE}
     fi
