@@ -157,6 +157,36 @@
 					 "file" => "$localpath/www.penny-arcade.com/1998",
 					 "home" => "http://www.penny-arcade.com"
 					 ),
+		    "tsunamichan_anime_parody" => array (
+					 "name" => "Tsunamichan: Anime Parody",
+					 "href" => "$netpath/tsunamichan.keenspace.com/anime_parody",
+					 "file" => "$localpath/tsunamichan.keenspace.com/anime_parody",
+					 "home" => "http://tsunamichan.keenspace.com/archive/parody.html"
+					 ),
+		    "tsunamichan_experimental_comic_kotone" => array (
+					 "name" => "Tsunamichan: Experimental Comic Kotone",
+					 "href" => "$netpath/tsunamichan.keenspace.com/experimental_comic_kotone",
+					 "file" => "$localpath/tsunamichan.keenspace.com/experimental_comic_kotone",
+					 "home" => "http://tsunamichan.keenspace.com/archive/kotone.html"
+					 ),
+		    "tsunamichan_guest_strips" => array (
+					 "name" => "Tsunamichan: Guest Strips",
+					 "href" => "$netpath/tsunamichan.keenspace.com/guest_strips",
+					 "file" => "$localpath/tsunamichan.keenspace.com/guest_strips",
+					 "home" => "http://tsunamichan.keenspace.com/archive/guest.html"
+					 ),
+		    "tsunamichan_katwalk_studio" => array (
+					 "name" => "Tsunamichan: Katwalk Studio",
+					 "href" => "$netpath/tsunamichan.keenspace.com/katwalk_studio",
+					 "file" => "$localpath/tsunamichan.keenspace.com/katwalk_studio",
+					 "home" => "http://tsunamichan.keenspace.com/archive/katwalk.html"
+					 ),
+		    "tsunamichan_magical_mina" => array (
+					 "name" => "Tsunamichan: Magical Mina",
+					 "href" => "$netpath/tsunamichan.keenspace.com/magical_mina",
+					 "file" => "$localpath/tsunamichan.keenspace.com/magical_mina",
+					 "home" => "http://tsunamichan.keenspace.com/archive/mina.html"
+					 ),
 		    );
 
 if ($comics[$comic]) {
@@ -312,6 +342,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.15 $<br>$Date: 2003-02-16 15:42:47 $</small></p>
+    <p><small>$Revision: 1.16 $<br>$Date: 2003-03-06 19:55:58 $</small></p>
   </body>
 </html>
