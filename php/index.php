@@ -151,6 +151,12 @@
 					 "file" => "$localpath/www.penny-arcade.com",
 					 "home" => "http://www.penny-arcade.com"
 					 ),
+		    "penny-arcade2003" => array (
+					 "name" => "Penny Arcade 2003",
+					 "href" => "$netpath/www.penny-arcade.com/2003",
+					 "file" => "$localpath/www.penny-arcade.com/2003",
+					 "home" => "http://www.penny-arcade.com"
+					 ),
 		    "penny-arcade2002" => array (
 					 "name" => "Penny Arcade 2002",
 					 "href" => "$netpath/www.penny-arcade.com/2002",
@@ -392,6 +398,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.23 $<br>$Date: 2004-05-10 14:08:25 $</small></p>
+    <p><small>$Revision: 1.24 $<br>$Date: 2004-05-23 09:25:04 $</small></p>
   </body>
 </html>
