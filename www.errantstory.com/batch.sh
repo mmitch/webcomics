@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.8 2002-12-24 12:02:00 mitch Exp $
+# $Id: batch.sh,v 1.9 2002-12-24 13:53:03 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.8  2002-12-24 12:02:00  mitch
+# Revision 1.9  2002-12-24 13:53:03  mitch
+# `wget -q' statt `wget 2>/dev/null'
+#
+# Revision 1.8  2002/12/24 12:02:00  mitch
 # --use-proxy=off bei wget entfernt.
 #
 # Revision 1.7  2002/12/24 11:51:49  mitch
@@ -62,7 +65,7 @@ while true; do
     echo -n "fetching ${DATE}: "
     EXT=gif
     FILE=${DATE}.${EXT}
-    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.${EXT} 2> /dev/null
+    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
 
     if [ -s ${FILE} ]; then
 	echo OK
@@ -72,7 +75,7 @@ while true; do
 	test -w ${FILE} && rm ${FILE}
 	EXT=jpg
 	FILE=${DATE}.${EXT}
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -O ${FILE} ${PICBASE}${DATE}.${EXT} 2> /dev/null
+	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}

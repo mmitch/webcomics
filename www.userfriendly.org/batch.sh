@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2002-12-24 13:34:24 mitch Exp $
+# $Id: batch.sh,v 1.7 2002-12-24 13:53:07 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.6  2002-12-24 13:34:24  mitch
+# Revision 1.7  2002-12-24 13:53:07  mitch
+# `wget -q' statt `wget 2>/dev/null'
+#
+# Revision 1.6  2002/12/24 13:34:24  mitch
 # Ordentliche Abbruchbedingung
 #
 # Revision 1.5  2002/12/24 13:18:50  mitch
@@ -38,7 +41,7 @@ while [ "${TODAY}" -gt "${X}" ] ; do
     echo -n "getting ${X}: "
     URL="http://ars.userfriendly.org/cartoons/?mode=classic&id=${X}"
     PICURL=$(
-	wget -O - ${URL} 2>/dev/null | \
+	wget -qO - ${URL} | \
 	    grep ${X} | \
 	    grep "^<a href.*gif" |\
 	    sed -e 's/gif.*$/gif/' -e 's/^.*src="//'
@@ -47,7 +50,7 @@ while [ "${TODAY}" -gt "${X}" ] ; do
 	echo "wrong date?"
 	exit ${EXITCODE}
     else
-	wget -O ${X}.gif --referer=${URL} ${PICURL} 2>/dev/null
+	wget -qO${X}.gif --referer=${URL} ${PICURL}
 	if [ -s ${X}.gif ]; then
 	    echo "OK"
 	    EXITCODE=0

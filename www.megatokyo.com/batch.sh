@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2002-12-24 12:02:01 mitch Exp $
+# $Id: batch.sh,v 1.7 2002-12-24 13:53:05 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.6  2002-12-24 12:02:01  mitch
+# Revision 1.7  2002-12-24 13:53:05  mitch
+# `wget -q' statt `wget 2>/dev/null'
+#
+# Revision 1.6  2002/12/24 12:02:01  mitch
 # --use-proxy=off bei wget entfernt.
 #
 # Revision 1.5  2002/12/24 11:56:50  mitch
@@ -23,7 +26,7 @@
 
 EXITCODE=2
 
-wget -O - http://www.megatokyo.com 2>/dev/null \
+wget -qO - http://www.megatokyo.com \
 | grep "^<option value='.*</select>" \
 | sed -e "s/<\/select>$//" \
       -e "s/<\/option>/\\
@@ -40,7 +43,7 @@ wget -O - http://www.megatokyo.com 2>/dev/null \
 	echo -n "[$NR]: fetching $DATE $TITLE   "
 	FILE=${NR}.gif
 	TEXT=${NR}.txt
-	wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif 2>/dev/null
+	wget -qO${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif
 	if [ -s ${FILE} ]; then
 	    echo "[$NR] $DATE $TITLE" > ${TEXT}
 	    echo "OK"
@@ -49,7 +52,7 @@ wget -O - http://www.megatokyo.com 2>/dev/null \
 	    rm -f ${FILE}
 	    # Try .jpg
 	    FILE=${NR}.jpg
-	    wget -O ${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg 2>/dev/null
+	    wget -qO${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg
 	    if [ -s ${FILE} ]; then
 		echo "[$NR] $DATE $TITLE" > ${TEXT}
 		echo "OK"

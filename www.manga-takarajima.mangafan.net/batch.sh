@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2002-12-24 12:59:57 mitch Exp $
+# $Id: batch.sh,v 1.2 2002-12-24 13:53:05 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.1  2002-12-24 12:59:57  mitch
+# Revision 1.2  2002-12-24 13:53:05  mitch
+# `wget -q' statt `wget 2>/dev/null'
+#
+# Revision 1.1  2002/12/24 12:59:57  mitch
 # Initial revision.
 #
 #
@@ -27,7 +30,7 @@ while true; do
     echo -n "fetching ${NR}: "
     EXT=jpg
     FILE=azumanga$(printf %03d ${LATEST}).${EXT}
-    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE} -O ${FILE} ${PICBASE}${NR}.${EXT} 2> /dev/null
+    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE} -qO ${FILE} ${PICBASE}${NR}.${EXT}
 
     if [ -s ${FILE} ]; then
 	echo OK
