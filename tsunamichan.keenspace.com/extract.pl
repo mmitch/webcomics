@@ -1,8 +1,12 @@
 #!/usr/bin/perl
-# $Id: extract.pl,v 1.1 2003-03-07 21:30:01 mitch Exp $
+# $Id: extract.pl,v 1.2 2003-03-08 14:18:28 mitch Exp $
 #
 # $Log: extract.pl,v $
-# Revision 1.1  2003-03-07 21:30:01  mitch
+# Revision 1.2  2003-03-08 14:18:28  mitch
+# Funktioniert jetzt auch mit <P>s in den Liner's Notes.
+# Überflüssige chomp()s entfernt.
+#
+# Revision 1.1  2003/03/07 21:30:01  mitch
 # Neue Datei zum Extrahieren der Liner's Notes.
 #
 
@@ -15,20 +19,18 @@ die "no date given" unless defined $date;
 
 # skip
 while (my $line=<>) {
-    chomp $line;
     last if $line =~ /<img.*alt=\"\".*src=\"\/comics\/$date.*<hr>/i;
 }
 
 # skip
 while (my $line=<>) {
-    chomp $line;
     last if $line =~ /<\/center>/i;
 }
 
 # take
 while (my $line=<>) {
-    exit if $line =~ /<p>/i;
-    exit if $line =~ /<center>/i;
+    exit if $line =~ /^\s*<p>\s*$/i;
+    exit if $line =~ /^\s*<center*s$>/i;
     print $line;
 }
 
