@@ -1,0 +1,66 @@
+$Id: README,v 1.1 2005-03-06 11:43:50 mitch Exp $
+
+HOW TO USE THE PHP WEBCOMIC BROWSER
+
+
+
+== Prerequisites ==
+
+Every directory that contains webcomic data needs these two files:
+
+1)  index file
+
+To speed up the acces to the specific strips within one webcomic (and
+to enable the inclusion of stip titles (e.g. Megatokyo)) index files
+are used.
+
+The scripts for generating these indexes are already available.  After
+running `batch.sh' for a specific comic, just call `mkindex.sh' from
+the same directory and you're done.
+
+The batch scripts should set their exit code so that mkindex only gets
+called when new strips have been downloaded.  It's safe and most
+simple to just do this:
+
+  $ batch.sh && mkindex.sh
+
+
+2)  COMIC file
+
+The list of available comics is created dynamically from files calles
+`COMIC'.  This allows you to just back up some old comics to a CD.  If
+you want to browse them again, just mount them somewhere unter
+$localpath and they will visible in the comic browser.
+
+The format of a COMIC file is quite simple.  It's just three lines of
+plain text.  Use `: ' to separate a keyword from its value:
+
+---example start---
+TAG: nichtlustig
+NAME: Nichtlustig
+HOME: http://www.nichtlustig.de
+---example end---
+
+Here is an explanation of the keywords:
+
+TAG:  This is uses in the PHP URL and in the cookie to identify a
+      specific webcomic.  Don't use any special characters here
+      (everything that has a special meaning in URLs like ` ', `+',
+       `?' or `&') is a no-no.  Using just [_a-zA-Z0-9] should be a
+      safe bet.
+
+NAME: The name to be displayed in the webcomic index list.
+
+HOME: The original URL of the comic that can be reached via the
+      [online] link when a strip is shown.
+
+
+
+== Setup ==
+
+1)  Copy `config.inc.template' to `config.inc' and edit the paths to
+    your needs.
+
+
+You're done!  Browse the php/index.html and there you go.
+
