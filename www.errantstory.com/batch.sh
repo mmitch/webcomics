@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.9 2002-12-24 13:53:03 mitch Exp $
+# $Id: batch.sh,v 1.10 2003-07-12 11:14:44 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.9  2002-12-24 13:53:03  mitch
+# Revision 1.10  2003-07-12 11:14:44  mitch
+# Keine `20030709.gif: Permission denied'-Meldungen mehr.
+#
+# Revision 1.9  2002/12/24 13:53:03  mitch
 # `wget -q' statt `wget 2>/dev/null'
 #
 # Revision 1.8  2002/12/24 12:02:00  mitch
@@ -65,24 +68,30 @@ while true; do
     echo -n "fetching ${DATE}: "
     EXT=gif
     FILE=${DATE}.${EXT}
-    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
 
-    if [ -s ${FILE} ]; then
-	echo OK
-	chmod -w ${FILE}
-	EXITCODE=0
+    if [ ! -w ${FILE} ]; then
+	echo skipping
     else
-	test -w ${FILE} && rm ${FILE}
-	EXT=jpg
-	FILE=${DATE}.${EXT}
+
 	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
 	else
 	    test -w ${FILE} && rm ${FILE}
-	    echo nok
+	    EXT=jpg
+	    FILE=${DATE}.${EXT}
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	    if [ -s ${FILE} ]; then
+		echo OK
+		chmod -w ${FILE}
+		EXITCODE=0
+	    else
+		test -w ${FILE} && rm ${FILE}
+		echo nok
+	    fi
 	fi
     fi
     
