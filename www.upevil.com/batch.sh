@@ -53,7 +53,7 @@ while true; do
 	fi
     fi
     
-    if [ ${DATE} = ${YE}${ME}${DE} ]; then
+    if [ ${NDATE} == ${YE}${ME}${DE} ]; then
 	exit ${EXITCODE}
     fi
 
