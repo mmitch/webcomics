@@ -80,9 +80,15 @@
 					 "home" => "http://www.dorktower.com"
 					 ),
 		    "userfriendly" => array (
-					 "name" => "Userfriendly 2003",
+					 "name" => "Userfriendly 2004",
 					 "href" => "$netpath/www.userfriendly.org",
 					 "file" => "$localpath/www.userfriendly.org",
+					 "home" => "http://www.userfriendly.org"
+					 ),
+		    "userfriendly2003" => array (
+					 "name" => "Userfriendly 2003",
+					 "href" => "$netpath/www.userfriendly.org/2003",
+					 "file" => "$localpath/www.userfriendly.org/2003",
 					 "home" => "http://www.userfriendly.org"
 					 ),
 		    "userfriendly2002" => array (
@@ -386,6 +392,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.22 $<br>$Date: 2003-12-25 19:30:33 $</small></p>
+    <p><small>$Revision: 1.23 $<br>$Date: 2004-05-10 14:08:25 $</small></p>
   </body>
 </html>
