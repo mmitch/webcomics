@@ -37,7 +37,7 @@
     # You could also remove the duplicates and put everything into a
     # single directory.
 
-    $comics = array("megatokyo" => array(
+    $comics = array("megatokyo500+" => array(
 					 "name" => "Megatokyo",
 					 "href" => "$netpath/www.megatokyo.com",
 					 "file" => "$localpath/www.megatokyo.com",
@@ -49,19 +49,19 @@
 					 "file" => "$localpath/www.sexylosers.com",
 					 "home" => "http://www.sexylosers.com"
 					 ),
-		    "ctrlaltdel" => array (
+		    "ctrlaltdel2005" => array (
 					 "name" => "Ctrl+Alt+Del",
 					 "href" => "$netpath/www.ctrlaltdel-online.com",
 					 "file" => "$localpath/www.ctrlaltdel-online.com",
 					 "home" => "http://www.ctrlaltdel-online.com"
 					 ),
-		    "queenofwands" => array (
+		    "queenofwands2005" => array (
 					 "name" => "Queen of Wands",
 					 "href" => "$netpath/www.queenofwands.net",
 					 "file" => "$localpath/www.queenofwands.net",
 					 "home" => "http://www.queenofwands.net"
 					 ),
-		    "w00t" => array (
+		    "w00t2005" => array (
 					 "name" => "/usr/bin/w00t",
 					 "href" => "$netpath/www.w00t-comic.net",
 					 "file" => "$localpath/www.w00t-comic.net",
@@ -73,7 +73,7 @@
 					 "file" => "$localpath/www.dilbert.com",
 					 "home" => "http://www.dilbert.com"
 					 ),
-		    "machall" => array (
+		    "machall200+" => array (
 					 "name" => "Mac Hall",
 					 "href" => "$netpath/www.machall.com",
 					 "file" => "$localpath/www.machall.com",
@@ -85,7 +85,7 @@
 					 "file" => "$localpath/www.nichtlustig.de",
 					 "home" => "http://www.nichtlustig.de"
 					 ),
-		    "errantstory" => array (
+		    "errantstory2005" => array (
 					 "name" => "Errant Story",
 					 "href" => "$netpath/www.errantstory.com",
 					 "file" => "$localpath/www.errantstory.com",
@@ -175,13 +175,13 @@
 					 "file" => "$localpath/freefall.purrsia.com/under500",
 					 "home" => "http://freefall.purrsia.com"
 					 ),
-		    "applegeeks" => array (
+		    "applegeeks100+" => array (
 					 "name" => "Apple Geeks",
 					 "href" => "$netpath/www.applegeeks.com",
 					 "file" => "$localpath/www.applegeeks.com",
 					 "home" => "http://www.applegeeks.com"
 					 ),
-		    "penny-arcade" => array (
+		    "penny-arcade2005" => array (
 					 "name" => "Penny Arcade",
 					 "href" => "$netpath/www.penny-arcade.com",
 					 "file" => "$localpath/www.penny-arcade.com",
@@ -440,6 +440,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.30 $<br>$Date: 2005-02-21 22:53:05 $</small></p>
+    <p><small>$Revision: 1.31 $<br>$Date: 2005-03-04 23:33:06 $</small></p>
   </body>
 </html>
