@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.10 2002-12-22 12:48:39 mitch Exp $
+# $Id: batch.sh,v 1.11 2002-12-22 12:50:16 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.10  2002-12-22 12:48:39  mitch
+# Revision 1.11  2002-12-22 12:50:16  mitch
+# Textblöcke werden in .htm gespeichert, nicht .html
+#
+# Revision 1.10  2002/12/22 12:48:39  mitch
 # Abbruchbedingung eingebaut
 #
 # Revision 1.9  2002/12/22 12:44:46  mitch
@@ -35,7 +38,7 @@
 # Initial revision
 #
 
-X=$(ls | egrep 'pic[0-9]{3}.(gif|jpg|html)' | tail -1 | cut -c 4-6)
+X=$(ls | egrep 'pic[0-9]{3}.(gif|jpg|htm)' | tail -1 | cut -c 4-6)
 if [ -z ${X} ]; then
     X=000  # first strip ever (1 is added before downloading!)
 fi
@@ -56,7 +59,7 @@ while true; do
 
     if [ -z "${PICTURE}" ] ; then
 
-	EXT=html
+	EXT=htm
 	
 	echo "fetching ${X}.${EXT}: "
 
