@@ -1,8 +1,12 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.16 2002-12-24 13:53:06 mitch Exp $
+# $Id: batch.sh,v 1.17 2003-01-11 18:32:41 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.16  2002-12-24 13:53:06  mitch
+# Revision 1.17  2003-01-11 18:32:41  mitch
+# Workaround für Fehler in Comic #160: Im HTML-Quellcode fehlt ein
+# schließendes Tag.
+#
+# Revision 1.16  2002/12/24 13:53:06  mitch
 # `wget -q' statt `wget 2>/dev/null'
 #
 # Revision 1.15  2002/12/24 12:02:02  mitch
@@ -85,6 +89,7 @@ while true; do
 		| grep -i ^\<TABLE \
 		| grep -i \</TABLE\>\$ \
 		| grep -i IMG \
+		| sed -e 's,</td><tr>,</td></tr><tr>,gi' \
 		| sed 's/ = /=/g'
 	)
 
