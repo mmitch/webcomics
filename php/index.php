@@ -125,7 +125,7 @@ if ($comics[$comic]) {
 	    $id = $premax;
 	}
 
-	echo "<h2>$me[name]<br>$titles[$id]</h2>\n";
+	echo "<h2>$me[name] <small><small>[$id/$premax]</small></small><br>$titles[$id]</h2>\n";
 
 	echo "<table><tr><td align=\"center\">";
 	if ($id > 0) {
@@ -142,11 +142,11 @@ if ($comics[$comic]) {
 	
 	if ($id < $premax) {
 	    echo "<a href=\"$nextref\">";
-	    echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" border=\"0\">";
-	    echo "</a>\n";
 	} else {
-	    echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\">\n";
+	    echo "<a href=\"$myhref\">";
 	}
+	echo "<img src=\"$me[href]/$files[$id]\" alt=\"$titles[$id]\" border=\"0\">";
+	echo "</a>\n";
 
 	echo "<br><br>";
 	if ($id > 0) {
@@ -207,9 +207,14 @@ if ($comics[$comic]) {
     reset ($comics);
     while ( list ($key, $val) = each($comics) ) {
 	if (isset($lastVisited[$key])) {
-	    echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</li></a>\n";
+	    $total = trim(`wc -l < $val[file]/index`) - 1;
+	    echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</a>";
+	    if ($lastVisited[$key] < $total) {
+		echo " (".($total-$lastVisited[$key])." new)";
+	    }
+	    echo "</li>\n";
 	} else {
-	    echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</li></a>\n";
+	    echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</a></li>\n";
 	}
     }
 
@@ -222,6 +227,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:mitch@yggdrasil.mitch.h.shuttle.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.3 $<br>$Date: 2002-09-03 18:13:03 $</small></p>
+    <p><small>$Revision: 1.4 $<br>$Date: 2002-09-03 23:15:58 $</small></p>
   </body>
 </html>
