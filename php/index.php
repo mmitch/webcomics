@@ -127,7 +127,7 @@
 					 "file" => "$localpath/freefall.purrsia.com/under500",
 					 "home" => "http://freefall.purrsia.com"
 					 ),
-		    "apllegeeks" => array (
+		    "applegeeks" => array (
 					 "name" => "Apple Geeks",
 					 "href" => "$netpath/www.applegeeks.com",
 					 "file" => "$localpath/www.applegeeks.com",
@@ -380,6 +380,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.20 $<br>$Date: 2003-10-05 15:13:50 $</small></p>
+    <p><small>$Revision: 1.21 $<br>$Date: 2003-10-07 07:55:15 $</small></p>
   </body>
 </html>
