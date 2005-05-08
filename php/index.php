@@ -1,7 +1,7 @@
 <?
 // cookie handling
 if (isset($comic) && isset($id)) {
-  setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365));
+  setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365 * 5));
 }
 ?>
 
@@ -275,6 +275,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.41 $<br>$Date: 2005-03-06 13:41:20 $</small></p>
+    <p><small>$Revision: 1.42 $<br>$Date: 2005-05-08 08:35:08 $</small></p>
   </body>
 </html>
