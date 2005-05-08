@@ -1,7 +1,7 @@
 <?
 // cookie handling
-if (isset($comic) && isset($id)) {
-  setcookie("lastVisited[$comic]", $id, time()+( 3600 * 24 * 365 * 5));
+if (isset($comic) && isset($id) && isset($tag)) {
+  setcookie("lastVisited[$tag]", $id, time()+( 3600 * 24 * 365 * 5));
 }
 ?>
 
@@ -38,6 +38,7 @@ function create_cache()
 	  list($key, $value) = explode(": ", $line, 2);
 	  if ($key === "TAG") {
 	    $tag = $value;
+	    $newcomic[tag] = $value;
 	  } elseif ($key === "NAME") {
 	    $newcomic[name] = $value;
 	  } elseif ($key === "HOME") {
@@ -89,15 +90,16 @@ function list_all_comics($comics)
 
   reset ($comics);
   while ( list ($key, $val) = each($comics) ) {
-    if (isset($lastVisited[$key])) {
+    $tag = $val[tag];
+    if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
-      echo "<li><a href=\"$myhref?comic=$key&id=$lastVisited[$key]\">$val[name]</a>";
-      if ($lastVisited[$key] < $total) {
-	echo " (".($total-$lastVisited[$key])." new)";
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+      if ($lastVisited[$tag] < $total) {
+	echo " (".($total-$lastVisited[$tag])." new)";
       }
       echo "</li>\n";
     } else {
-      echo "<li><a href=\"$myhref?comic=$key&id=0\">$val[name]</a></li>\n";
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val[name]</a></li>\n";
     }
   }
 
@@ -143,11 +145,13 @@ function show_strip($me, $id)
     $id = 0;
   }
 
+  $tag = $me[tag];
+
   $premax = $max-1;
-  $firstref="$myhref?comic=$comic&id=0";
-  $prevref="$myhref?comic=$comic&id=".($id-1);
-  $nextref="$myhref?comic=$comic&id=".($id+1);
-  $lastref="$myhref?comic=$comic&id=$premax";
+  $firstref="$myhref?comic=$comic&tag=$tag&id=0";
+  $prevref="$myhref?comic=$comic&tag=$tag&id=".($id-1);
+  $nextref="$myhref?comic=$comic&tag=$tag&id=".($id+1);
+  $lastref="$myhref?comic=$comic&tag=$tag&id=$premax";
 
   if ($id >= $max) {
     $id = $premax;
@@ -161,7 +165,7 @@ function show_strip($me, $id)
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\">[&lt;]</a>\n";
   }
-  echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+  echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
   echo "<a href=\"$myhref\">[comics]</a>\n";
   if ($id < $premax) {
     echo "<a href=\"$nextref\">[&gt;]</a>\n";
@@ -207,7 +211,7 @@ function show_strip($me, $id)
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\">[&lt;]</a>\n";
   }
-  echo "<a href=\"$myhref?comic=$comic\">[list]</a>\n";
+  echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
   echo "<a href=\"$myhref\">[comics]</a>\n";
   if ($id < $premax) {
     echo "<a href=\"$nextref\">[&gt;]</a>\n";
@@ -224,19 +228,20 @@ function show_comic($me)
   global $max, $files, $titles;
 
   $revrev = 1 - $rev;
+  $tag = $me[tag];
 
   echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
   echo "<h2>$me[name]</h2>\n";
-  echo "<p><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></p>\n";
+  echo "<p><a href=\"$myhref?comic=$comic&tag=$tag&rev=$revrev\">[reverse]</a></p>\n";
   echo "<ul>\n";
 
   if ($rev) {
     for ($i = $max-1; $i >= 0 ; $i--) {
-      echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
+      echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
     }
   } else {
     for ($i = 0; $i < $max; $i++) {
-      echo "<li><a href=\"$myhref?comic=$comic&id=$i\">$titles[$i]</a></li>\n";
+      echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
     }
   }
 
@@ -275,6 +280,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.42 $<br>$Date: 2005-05-08 08:35:08 $</small></p>
+    <p><small>$Revision: 1.43 $<br>$Date: 2005-05-08 08:52:34 $</small></p>
   </body>
 </html>
