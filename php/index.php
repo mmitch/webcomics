@@ -14,6 +14,11 @@ if (isset($comic) && isset($id) && isset($tag)) {
 <body>
 
 <?
+#echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
+#echo "<h3>";
+#echo serialize($lastVisited);
+#echo "</h3>";
+
 include_once('config.inc');
 
 function create_cache()
@@ -280,6 +285,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.43 $<br>$Date: 2005-05-08 08:52:34 $</small></p>
+    <p><small>$Revision: 1.44 $<br>$Date: 2005-05-08 09:24:43 $</small></p>
   </body>
 </html>
