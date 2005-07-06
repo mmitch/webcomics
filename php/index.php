@@ -109,7 +109,7 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
-  echo "<p><br><small><a href=\"$myhref?recache=1\">find comics</a></small></p>\n";
+  echo "<p><br><small><a href=\"$myhref?recache=1\">rescan comics</a></small></p>\n";
 
 }
 
@@ -285,6 +285,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.44 $<br>$Date: 2005-05-08 09:24:43 $</small></p>
+    <p><small>$Revision: 1.45 $<br>$Date: 2005-07-06 19:26:21 $</small></p>
   </body>
 </html>
