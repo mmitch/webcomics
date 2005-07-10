@@ -1,5 +1,5 @@
 <?
-# $Id: config.inc.template,v 1.2 2005-03-06 12:04:14 mitch Exp $
+# $Id: config.inc.template,v 1.3 2005-07-10 17:30:35 mitch Exp $
 #
 # config template for the webcomic PHP browser
 # copy to config.inc and edit to your needs
@@ -10,7 +10,7 @@ $localpath="/home/mitch/pub/MIRROR";
 # How can the files accessed by http?
 $netpath="/MIRROR";
 
-# How can this very file be accessed by http?
+# How can the main PHP file be accessed by http?
 $myhref="$netpath/php/index.php";
 
 # Where is the comic cache located?
