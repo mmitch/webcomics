@@ -1,8 +1,12 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.9 2003-03-05 22:48:28 mitch Exp $
+# $Id: batch.sh,v 1.10 2005-09-10 18:42:53 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.9  2003-03-05 22:48:28  mitch
+# Revision 1.10  2005-09-10 18:42:53  mitch
+# fix script breakage
+# (didn't nobody not notice this???)
+#
+# Revision 1.9  2003/03/05 22:48:28  mitch
 # - BugFix EXITCODE (Variable wurde in Subshell gesetzt)
 #   Derselbe Fehler wie in megatokyo/batch.sh,1.8
 # - Anzeige Datumsformat einheitlich
@@ -51,6 +55,7 @@ else
 fi
 
 wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
+| sed 's:</option>:</option>\n:g' \
 | grep "<option value=\".*</option>" \
 | sed -e "s/<\/select>$//" \
      -e "s/<\/option>//" \
