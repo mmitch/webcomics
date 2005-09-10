@@ -1,8 +1,11 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.10 2005-09-10 18:42:53 mitch Exp $
+# $Id: batch.sh,v 1.11 2005-09-10 18:56:06 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.10  2005-09-10 18:42:53  mitch
+# Revision 1.11  2005-09-10 18:56:06  mitch
+# fix the fix!
+#
+# Revision 1.10  2005/09/10 18:42:53  mitch
 # fix script breakage
 # (didn't nobody not notice this???)
 #
@@ -82,7 +85,7 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 	    TEXT=${DATE}.txt
 	    wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
 		http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif 2>/dev/null
-	    if [ -s ${FILE} ]; then
+	    if file -i ${FILE} | grep -q image ; then
 		echo "$TITLE" > ${TEXT}
 		echo "OK"
 		EXITCODE=0
@@ -92,7 +95,7 @@ wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
 		FILE=${DATE}.jpg
 		wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
 		    http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg 2>/dev/null
-		if [ -s ${FILE} ]; then
+		if file -i ${FILE} | grep -q image ; then
 		    echo "$TITLE" > ${TEXT}
 		    echo "OK"
 		    EXITCODE=0
