@@ -1,53 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.11 2005-09-10 18:56:06 mitch Exp $
-
-# $Log: batch.sh,v $
-# Revision 1.11  2005-09-10 18:56:06  mitch
-# fix the fix!
-#
-# Revision 1.10  2005/09/10 18:42:53  mitch
-# fix script breakage
-# (didn't nobody not notice this???)
-#
-# Revision 1.9  2003/03/05 22:48:28  mitch
-# - BugFix EXITCODE (Variable wurde in Subshell gesetzt)
-#   Derselbe Fehler wie in megatokyo/batch.sh,1.8
-# - Anzeige Datumsformat einheitlich
-#
-# Revision 1.8  2003/02/16 13:35:10  mitch
-# Die Datei "minimum.year" kann angelegt werden und stoppt das
-# Download-Skript am dort enthaltenen Jahr (damit können dann
-# Unterordner pro Jahr realisiert werden -- sonst würde das Skript immer
-# alles runterladen)
-#
-# Revision 1.7  2003/02/16 13:27:44  mitch
-# Verzicht auf sed (externer Prozess!) zur Datumsumwandlung
-#
-# Revision 1.6  2003/02/16 13:24:40  mitch
-# .txt-Datei braucht das Datum nicht zu enthalten, ist sonst doppelt
-# Runterladen der hochqualitativen Bilder statt der kleinen (h statt l).
-#
-# Revision 1.5  2003/02/12 13:25:21  ikari
-# Bugfix: Versehentlich die falsche Datei committet.
-#
-# Revision 1.6  2002/12/24 12:02:01  mitch
-# --use-proxy=off bei wget entfernt.
-#
-# Revision 1.5  2002/12/24 11:56:50  mitch
-# Ende mit RC=2, wenn kein neues Bild geladen wurde.
-#
-# Revision 1.4  2002/07/27 17:26:48  mitch
-# leere .gif-Dateien werden gelöscht
-#
-# Revision 1.3  2002/07/14 10:14:12  mitch
-# liest jetzt auch die .jpg-Dateien ein
-#
-# Revision 1.2  2002/01/25 15:43:45  mitch
-# Adapted to new Freshmeat page
-#
-# Revision 1.1  2001/10/20 19:04:50  mitch
-# Initial revision
-#
+# $Id: batch.sh,v 1.12 2006-01-19 19:13:17 mitch Exp $
 
 EXITCODE=2
 
@@ -57,44 +9,43 @@ else
     STOP=0
 fi
 
-wget -O - http://www.penny-arcade.com/search.php 2>/dev/null \
-| sed 's:</option>:</option>\n:g' \
-| grep "<option value=\".*</option>" \
-| sed -e "s/<\/select>$//" \
-     -e "s/<\/option>//" \
+USERAGENT=--user-agent="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+
+wget -qO - "${USERAGENT}" http://www.penny-arcade.com/archive \
+| grep -A 1 '<option value=".*"' \
 | perl batch.pl \
 | (
     while read DATE2; do
 	read TITLE
 	read SPACER
 	
-	DATE=${DATE2:0:4}${DATE2:5:2}${DATE2:8:2}
-	YEAR=${DATE2:0:4}
+	DATE=${DATE2:6:4}${DATE2:0:2}${DATE2:3:2}
+	YEAR=${DATE2:6:4}
 	
 	if [ ${YEAR} -lt ${STOP} ]; then
 	    echo "stopped because of minimum.year"
 	    exit ${EXITCODE}
 	fi
 	
+	REFERRER=--referer="http://www.penny-arcade.com/comic/${YEAR}/${DATE2:0:2}/${DATE2:3:2}"
+
 	if [ -s ${DATE}.[gj][ip][fg] ]; then
 	    echo "[${DATE}] skipped"
 	else
 	    echo -n "[${DATE}]: fetching $TITLE   "
 	    
-	    FILE=${DATE}.gif
+	    FILE=${DATE}.jpg
 	    TEXT=${DATE}.txt
-	    wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-		http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif 2>/dev/null
+	    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg
 	    if file -i ${FILE} | grep -q image ; then
 		echo "$TITLE" > ${TEXT}
 		echo "OK"
 		EXITCODE=0
 	    else
 		rm -f ${FILE}
- 	        # Try .jpg
-		FILE=${DATE}.jpg
-		wget -O ${FILE} --referer=http://www.penny-arcade.com/view.php?date=${DATE2}\
-		    http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg 2>/dev/null
+ 	        # Try .gif
+		FILE=${DATE}.gif
+		wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif
 		if file -i ${FILE} | grep -q image ; then
 		    echo "$TITLE" > ${TEXT}
 		    echo "OK"
