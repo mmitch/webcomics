@@ -90,7 +90,25 @@ function list_all_comics($comics)
 // show a list of all comics
 {
   global $lastVisited, $myhref;
-  echo "<h2>Available Comics</h2>\n";
+  echo "<h2>Unread Comics</h2>\n";
+  echo "<ul>\n";
+
+  reset ($comics);
+  while ( list ($key, $val) = each($comics) ) {
+    $tag = $val[tag];
+    if (isset($lastVisited[$tag])) {
+      $total = trim(`wc -l < $val[file]/index`) - 1;
+      if ($lastVisited[$tag] < $total) {
+        echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+	echo " (".($total-$lastVisited[$tag])." new)";
+        echo "</li>\n";
+      }
+    }
+  }
+
+  echo "</ul>\n";
+
+  echo "<h2>All Comics</h2>\n";
   echo "<ul>\n";
 
   reset ($comics);
@@ -285,6 +303,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.45 $<br>$Date: 2005-07-06 19:26:21 $</small></p>
+    <p><small>$Revision: 1.46 $<br>$Date: 2006-01-19 21:18:37 $</small></p>
   </body>
 </html>
