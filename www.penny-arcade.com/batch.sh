@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.12 2006-01-19 19:13:17 mitch Exp $
+# $Id: batch.sh,v 1.13 2006-01-19 20:32:10 mitch Exp $
 
 EXITCODE=2
 
@@ -52,7 +52,27 @@ wget -qO - "${USERAGENT}" http://www.penny-arcade.com/archive \
 		    EXITCODE=0
 		else
 		    rm -f ${FILE}
-		    echo "failed!!!"
+ 	            # Try .jpg low quality
+		    FILE=${DATE}.jpg
+		    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg
+		    if file -i ${FILE} | grep -q image ; then
+			echo "$TITLE" > ${TEXT}
+			echo "OK"
+			EXITCODE=0
+		    else
+			rm -f ${FILE}
+ 	                # Try .gif low quality
+			FILE=${DATE}.gif
+			wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif
+			if file -i ${FILE} | grep -q image ; then
+			    echo "$TITLE" > ${TEXT}
+			    echo "OK"
+			    EXITCODE=0
+			else
+			    rm -f ${FILE}
+			    echo "failed!!!"
+			fi
+		    fi
 		fi
 	    fi
 	fi
