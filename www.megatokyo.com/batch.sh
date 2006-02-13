@@ -1,31 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.8 2003-01-13 17:51:49 mitch Exp $
-
-# $Log: batch.sh,v $
-# Revision 1.8  2003-01-13 17:51:49  mitch
-# BufFix EXITCODE (Variable wurde in Subshell gesetzt -_-;)
-#
-# Revision 1.7  2002/12/24 13:53:05  mitch
-# `wget -q' statt `wget 2>/dev/null'
-#
-# Revision 1.6  2002/12/24 12:02:01  mitch
-# --use-proxy=off bei wget entfernt.
-#
-# Revision 1.5  2002/12/24 11:56:50  mitch
-# Ende mit RC=2, wenn kein neues Bild geladen wurde.
-#
-# Revision 1.4  2002/07/27 17:26:48  mitch
-# leere .gif-Dateien werden gelöscht
-#
-# Revision 1.3  2002/07/14 10:14:12  mitch
-# liest jetzt auch die .jpg-Dateien ein
-#
-# Revision 1.2  2002/01/25 15:43:45  mitch
-# Adapted to new Freshmeat page
-#
-# Revision 1.1  2001/10/20 19:04:50  mitch
-# Initial revision
-#
+# $Id: batch.sh,v 1.9 2006-02-13 21:51:50 mitch Exp $
 
 wget -qO - http://www.megatokyo.com \
 | grep "^<option value='.*</select>" \
