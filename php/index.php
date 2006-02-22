@@ -9,8 +9,13 @@ if (isset($comic) && isset($id) && isset($tag)) {
 <html>
   <head>
     <title>Mitchs PHP Comicbrowser</title>
+<?
+include_once('config.inc');
+if ($css) {
+  echo "<link rel=\"stylesheet\" href=\"$css\">\n";
+}
+?>
   </head>
-
 <body>
 
 <?
@@ -18,8 +23,6 @@ if (isset($comic) && isset($id) && isset($tag)) {
 #echo "<h3>";
 #echo serialize($lastVisited);
 #echo "</h3>";
-
-include_once('config.inc');
 
 function create_cache()
 // dynamically create $comics array
@@ -303,6 +306,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.46 $<br>$Date: 2006-01-19 21:18:37 $</small></p>
+    <p><small>$Revision: 1.47 $<br>$Date: 2006-02-22 22:00:03 $</small></p>
   </body>
 </html>
