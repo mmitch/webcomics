@@ -201,10 +201,12 @@ function show_strip($me, $id)
     echo "<a href=\"$prevref\">[&lt;]</a>\n";
   }
   echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
-  echo "<a href=\"$myhref\">[comics]</a>\n";
   if ($id < $premax) {
+    echo "<a href=\"$myhref\">[comics]</a>\n";
     echo "<a href=\"$nextref\" id=\"autofocus\">[&gt;]</a>\n";
     echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
+  } else {
+    echo "<a href=\"$myhref\" id=\"autofocus\">[comics]</a>\n";
   }
   echo "<br>\n";
 
@@ -315,6 +317,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.48 $<br>$Date: 2006-02-23 21:23:31 $</small></p>
+    <p><small>$Revision: 1.49 $<br>$Date: 2006-02-23 21:51:12 $</small></p>
   </body>
 </html>
