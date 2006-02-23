@@ -16,7 +16,7 @@ if ($css) {
 }
 ?>
   </head>
-<body>
+  <body onLoad="document.getElementById('autofocus').focus();">
 
 <?
 #echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
@@ -96,13 +96,22 @@ function list_all_comics($comics)
   echo "<h2>Unread Comics</h2>\n";
   echo "<ul>\n";
 
+  $first = 1;
+
   reset ($comics);
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val[tag];
     if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
       if ($lastVisited[$tag] < $total) {
-        echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+
+	if ($first) {
+	  echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"autofocus\">$val[name]</a>";
+	  $first = 0;
+	} else {
+	  echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+	}
+
 	echo " (".($total-$lastVisited[$tag])." new)";
         echo "</li>\n";
       }
@@ -194,7 +203,7 @@ function show_strip($me, $id)
   echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
   echo "<a href=\"$myhref\">[comics]</a>\n";
   if ($id < $premax) {
-    echo "<a href=\"$nextref\">[&gt;]</a>\n";
+    echo "<a href=\"$nextref\" id=\"autofocus\">[&gt;]</a>\n";
     echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
   }
   echo "<br>\n";
@@ -306,6 +315,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.47 $<br>$Date: 2006-02-22 22:00:03 $</small></p>
+    <p><small>$Revision: 1.48 $<br>$Date: 2006-02-23 21:23:31 $</small></p>
   </body>
 </html>
