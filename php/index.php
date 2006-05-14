@@ -1,4 +1,13 @@
 <?
+// $Id: index.php,v 1.50 2006-05-14 15:53:52 mitch Exp $
+
+// import variables (for register_globals=off)
+$comic       = $_GET['comic'];
+$id          = $_GET['id'];
+$recache     = $_GET['recache'];
+$tag         = $_GET['tag'];
+$lastVisited = $_COOKIE['lastVisited'];
+
 // cookie handling
 if (isset($comic) && isset($id) && isset($tag)) {
   setcookie("lastVisited[$tag]", $id, time()+( 3600 * 24 * 365 * 5));
@@ -317,6 +326,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.49 $<br>$Date: 2006-02-23 21:51:12 $</small></p>
+    <p><small>$Revision: 1.50 $<br>$Date: 2006-05-14 15:53:52 $</small></p>
   </body>
 </html>
