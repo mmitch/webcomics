@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.13 2006-01-19 20:32:10 mitch Exp $
+# $Id: batch.sh,v 1.14 2006-06-05 22:54:24 mitch Exp $
 
 EXITCODE=2
 
@@ -36,7 +36,8 @@ wget -qO - "${USERAGENT}" http://www.penny-arcade.com/archive \
 	    
 	    FILE=${DATE}.jpg
 	    TEXT=${DATE}.txt
-	    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg
+	    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}.jpg
+
 	    if file -i ${FILE} | grep -q image ; then
 		echo "$TITLE" > ${TEXT}
 		echo "OK"
@@ -45,32 +46,52 @@ wget -qO - "${USERAGENT}" http://www.penny-arcade.com/archive \
 		rm -f ${FILE}
  	        # Try .gif
 		FILE=${DATE}.gif
-		wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif
+		wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}.gif
 		if file -i ${FILE} | grep -q image ; then
 		    echo "$TITLE" > ${TEXT}
 		    echo "OK"
 		    EXITCODE=0
 		else
 		    rm -f ${FILE}
- 	            # Try .jpg low quality
+ 	            # Try .jpg high quality
 		    FILE=${DATE}.jpg
-		    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg
+		    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg
 		    if file -i ${FILE} | grep -q image ; then
 			echo "$TITLE" > ${TEXT}
 			echo "OK"
 			EXITCODE=0
 		    else
 			rm -f ${FILE}
- 	                # Try .gif low quality
+ 	                # Try .gif high quality
 			FILE=${DATE}.gif
-			wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif
+			wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif
 			if file -i ${FILE} | grep -q image ; then
 			    echo "$TITLE" > ${TEXT}
 			    echo "OK"
 			    EXITCODE=0
 			else
 			    rm -f ${FILE}
-			    echo "failed!!!"
+ 	                    # Try .jpg low quality
+			    FILE=${DATE}.jpg
+			    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg
+			    if file -i ${FILE} | grep -q image ; then
+				echo "$TITLE" > ${TEXT}
+				echo "OK"
+				EXITCODE=0
+			    else
+				rm -f ${FILE}
+ 	                        # Try .gif low quality
+				FILE=${DATE}.gif
+				wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif
+				if file -i ${FILE} | grep -q image ; then
+				    echo "$TITLE" > ${TEXT}
+				    echo "OK"
+				    EXITCODE=0
+				else
+				    rm -f ${FILE}
+				    echo "failed!!!"
+				fi
+			    fi
 			fi
 		    fi
 		fi
