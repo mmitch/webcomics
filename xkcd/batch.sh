@@ -1,9 +1,9 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2006-09-10 17:34:39 mitch Exp $
+# $Id: batch.sh,v 1.2 2006-09-10 17:48:38 mitch Exp $
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{3}-.*.jpg' | tail -n 1 | cut -c 1-3 | sed 's/^0*//')
+LATEST=$(ls | egrep '[0-9]{3}-.*.[jp][pn]g' | tail -n 1 | cut -c 1-3 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
@@ -21,7 +21,7 @@ while true; do
     
     HTMLURL="${PAGEBASE}/c${LATEST}.html"
     wget -q -O"${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}"
-    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/jpg".*$/jpg/')
+    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/')
     TITLE=$(grep '<h1>' "${TMPFILE}" | sed -e 's|^.*<h1>||' -e 's|</h1>.*$||')
     
     echo -n "${FILENAME} "
@@ -37,7 +37,7 @@ while true; do
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
-	    echo "${TITLE}" > "${FILE%.jpg}.txt"
+	    echo "${TITLE}" > "${FILE%.???}.txt"
 	    EXITCODE=0
 	else
 	    test -w ${FILE} && rm ${FILE}
