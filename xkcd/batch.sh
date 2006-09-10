@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.2 2006-09-10 17:48:38 mitch Exp $
+# $Id: batch.sh,v 1.3 2006-09-10 17:52:07 mitch Exp $
 
 EXITCODE=2
 
@@ -20,7 +20,11 @@ while true; do
     echo -n "fetching ${LATEST}: "
     
     HTMLURL="${PAGEBASE}/c${LATEST}.html"
-    wget -q -O"${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}"
+    if ! wget -q -O"${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}" ; then
+	echo nok
+	rm -f "$TMPFILE"
+	exit ${EXITCODE}
+    fi
     FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/')
     TITLE=$(grep '<h1>' "${TMPFILE}" | sed -e 's|^.*<h1>||' -e 's|</h1>.*$||')
     
