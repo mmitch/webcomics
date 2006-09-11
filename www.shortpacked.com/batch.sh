@@ -30,30 +30,29 @@ while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
-    EXT=jpg
-    FILE=${DATE}.${EXT}
 
-    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+    if [ -e ${DATE}* -a ! -w ${DATE}* ]; then
 	echo skipping
     else
-
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}a.${EXT}
-	if [ "$(file -bi ${FILE})" = "text/html" ]; then
-	    rm ${FILE}
-	fi
-
-	if [ -s ${FILE} ]; then
-	    echo OK
-	    chmod -w ${FILE}
-	    EXITCODE=0
+	
+	HTMLURL="${PAGEBASE}/${DATE}.html"
+	FILE=$( \
+	    wget -qO- --user-agent="${USERAGENT}" "${HTMLURL}" \
+	    | grep "src=\"/comics/" \
+	    | sed -e 's|^.*src="/comics/||' -e 's/\.gif".*$/.gif/' -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/'
+	)
+	
+	if [ "${FILE:0:8}" != "${DATE}" ] ; then
+	    echo nok
 	else
-	    EXT=gif
-
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}a.${EXT}
+	    
+	    echo -n "${FILE} "
+	    
+	    wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} ${PICBASE}/${FILE}
 	    if [ "$(file -bi ${FILE})" = "text/html" ]; then
 		rm ${FILE}
 	    fi
-	
+	    
 	    if [ -s ${FILE} ]; then
 		echo OK
 		chmod -w ${FILE}
@@ -80,3 +79,4 @@ while true; do
     fi
 
 done
+
