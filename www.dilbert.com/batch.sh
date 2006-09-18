@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.5 2005-02-21 22:30:28 mitch Exp $
+# $Id: batch.sh,v 1.6 2006-09-18 20:29:23 mitch Exp $
 
 EXITCODE=2
 
@@ -18,7 +18,7 @@ echo "Fetching from ${LATEST} to ${CURRENT}."
 
 while [ "${CURRENT}" -gt "${X}" ] ; do
 
-    X=$(date -d "${X} + 1 day" +%Y%m%d)
+    X=$(date -d "${X:0:4}-${X:4:2}-${X:6:2} +1 day" +%Y%m%d)
 
     echo -n "getting ${X}: "
 
