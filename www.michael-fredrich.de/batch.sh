@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2006-10-14 15:43:58 mitch Exp $
+# $Id: batch.sh,v 1.3 2006-10-14 15:53:49 mitch Exp $
 
 EXITCODE=2
 
@@ -20,12 +20,23 @@ while true; do
     echo -n "fetching ${DATE}: "
     EXT=jpg
     FILE=000${DATE}.${EXT}
+    ANNEX=
+
+    # blöde Sonderfälle
+    if [ "$DATE" = "112" ]; then
+	ANNEX=o
+    fi
+    if [ "$DATE" = "328" ]; then
+	ANNEX=a
+	# MÖÖP - hier gibt's zusätzlich b und c!!! TODO TODO TODO keine Lust
+    fi
+
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
@@ -37,7 +48,7 @@ while true; do
 	    EXT=gif
 	    FILE=000${DATE}.${EXT}
 
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	    if [ -s ${FILE} ]; then
 		echo OK
@@ -45,20 +56,8 @@ while true; do
 		EXITCODE=0
 	    else
 		test -w ${FILE} && rm ${FILE}
-
-  	        # blöde Sonderfälle!
-		
-		wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}o.${EXT}
-		
-		if [ -s ${FILE} ]; then
-		    echo OK
-		    chmod -w ${FILE}
-		    EXITCODE=0
-		else
-		    test -w ${FILE} && rm ${FILE}
-		    echo nok
-		    exit ${EXITCODE}
-		fi
+		echo nok
+		exit ${EXITCODE}
 	    fi
 	fi
     fi
