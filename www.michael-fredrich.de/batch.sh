@@ -1,5 +1,6 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.3 2006-10-14 15:53:49 mitch Exp $
+# $Id: batch.sh,v 1.4 2006-10-15 15:48:56 mitch Exp $
+# needs lynx
 
 EXITCODE=2
 
@@ -21,6 +22,7 @@ while true; do
     EXT=jpg
     FILE=000${DATE}.${EXT}
     ANNEX=
+    HTML=${PAGEBASE}${DATE}.htm
 
     # blöde Sonderfälle
     if [ "$DATE" = "112" ]; then
@@ -36,7 +38,30 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
+        # Überschrift besorgen
+	LANG=C lynx --dump ${HTML} \
+	    | perl -ne 's/^\s+//;if(! /^\[/){s/^\s+//;print}' \
+	    | iconv -f iso8859-1 -t utf8 \
+	    | (
+	    read LINE1
+	    read LINE2
+	    TITLE=
+
+	    while [ "${LINE2}" != 'References' ]; do
+		TITLE="${TITLE} ${LINE1}"
+		LINE1="${LINE2}"
+		read LINE2
+	    done
+	    
+	    if [ "${TITLE}" ]; then
+		TITLE="${LINE1} - ${TITLE}"
+	    else
+		TITLE="${LINE1}"
+	    fi
+	    echo ${TITLE} > ./000${DATE}.txt
+	)
+
+	wget --user-agent="${USERAGENT}" --referer={$HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
@@ -48,7 +73,7 @@ while true; do
 	    EXT=gif
 	    FILE=000${DATE}.${EXT}
 
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.htm -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
+	    wget --user-agent="${USERAGENT}" --referer=${HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	    if [ -s ${FILE} ]; then
 		echo OK
