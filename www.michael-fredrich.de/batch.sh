@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2006-10-15 15:48:56 mitch Exp $
+# $Id: batch.sh,v 1.5 2006-10-15 16:55:32 mitch Exp $
 # needs lynx
 
 EXITCODE=2
@@ -38,28 +38,27 @@ while true; do
 	echo skipping
     else
 
-        # Überschrift besorgen
+        # ___ Überschrift besorgen ___
 	LANG=C lynx --dump ${HTML} \
 	    | perl -ne 's/^\s+//;if(! /^\[/){s/^\s+//;print}' \
 	    | iconv -f iso8859-1 -t utf8 \
 	    | (
-	    read LINE1
-	    read LINE2
 	    TITLE=
+	    read LINE
 
-	    while [ "${LINE2}" != 'References' ]; do
-		TITLE="${TITLE} ${LINE1}"
-		LINE1="${LINE2}"
-		read LINE2
+	    while [ "${LINE:2:1}" != '.' -o "${LINE:5:3}" != '.20' ]; do
+		TITLE="${TITLE}${LINE} "
+		read LINE
 	    done
 	    
 	    if [ "${TITLE}" ]; then
-		TITLE="${LINE1} - ${TITLE}"
+		TITLE="${LINE} - ${TITLE}"
 	    else
-		TITLE="${LINE1}"
+		TITLE="${LINE}"
 	    fi
 	    echo ${TITLE} > ./000${DATE}.txt
 	)
+	# ^^^ Ende Überschrift ^^^
 
 	wget --user-agent="${USERAGENT}" --referer={$HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
