@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.50 2006-05-14 15:53:52 mitch Exp $
+// $Id: index.php,v 1.51 2006-10-15 16:06:57 mitch Exp $
 
 // import variables (for register_globals=off)
 $comic       = $_GET['comic'];
@@ -12,6 +12,9 @@ $lastVisited = $_COOKIE['lastVisited'];
 if (isset($comic) && isset($id) && isset($tag)) {
   setcookie("lastVisited[$tag]", $id, time()+( 3600 * 24 * 365 * 5));
 }
+
+// set charset
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -326,6 +329,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.50 $<br>$Date: 2006-05-14 15:53:52 $</small></p>
+    <p><small>$Revision: 1.51 $<br>$Date: 2006-10-15 16:06:57 $</small></p>
   </body>
 </html>
