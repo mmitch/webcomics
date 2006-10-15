@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.5 2006-10-15 16:55:32 mitch Exp $
+# $Id: batch.sh,v 1.6 2006-10-15 17:04:36 mitch Exp $
 # needs lynx
 
 EXITCODE=2
@@ -38,34 +38,13 @@ while true; do
 	echo skipping
     else
 
-        # ___ Überschrift besorgen ___
-	LANG=C lynx --dump ${HTML} \
-	    | perl -ne 's/^\s+//;if(! /^\[/){s/^\s+//;print}' \
-	    | iconv -f iso8859-1 -t utf8 \
-	    | (
-	    TITLE=
-	    read LINE
-
-	    while [ "${LINE:2:1}" != '.' -o "${LINE:5:3}" != '.20' ]; do
-		TITLE="${TITLE}${LINE} "
-		read LINE
-	    done
-	    
-	    if [ "${TITLE}" ]; then
-		TITLE="${LINE} - ${TITLE}"
-	    else
-		TITLE="${LINE}"
-	    fi
-	    echo ${TITLE} > ./000${DATE}.txt
-	)
-	# ^^^ Ende Überschrift ^^^
-
 	wget --user-agent="${USERAGENT}" --referer={$HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
+
 	else
 	    test -w ${FILE} && rm ${FILE}
 
@@ -85,6 +64,30 @@ while true; do
 	    fi
 	fi
     fi
+    
+    # ___ Überschrift besorgen ___
+    LANG=C lynx --dump ${HTML} \
+	| perl -ne 's/^\s+//;if(! /^\[/){s/^\s+//;print}' \
+	| iconv -f iso8859-1 -t utf8 \
+	| (
+	TITLE=
+	read LINE
+	
+	while [ "${LINE:2:1}" != '.' -o "${LINE:5:3}" != '.20' ]; do
+	    TITLE="${TITLE}${LINE} "
+	    read LINE
+	done
+	
+	if [ "${TITLE}" ]; then
+	    TITLE="${LINE} - ${TITLE}"
+	else
+	    TITLE="${LINE}"
+	fi
+	echo ${TITLE} > ./000${DATE}.txt
+    )
+    # ^^^ Ende Überschrift ^^^
+
+
     
     LATEST=$((${LATEST} + 1))
 
