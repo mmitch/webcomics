@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2006-10-15 17:04:36 mitch Exp $
+# $Id: batch.sh,v 1.7 2006-10-20 21:02:52 mitch Exp $
 # needs lynx
 
 EXITCODE=2
@@ -34,7 +34,7 @@ while true; do
     fi
 
 
-    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+    if [ \( -e 000${DATE}.gif -a ! -w 000${DATE}.gif \) -o \( -e 000${DATE}.jpg -a ! -w 000${DATE}.jpg \) ]; then
 	echo skipping
     else
 
