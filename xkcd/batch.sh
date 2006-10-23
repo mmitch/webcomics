@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.3 2006-09-10 17:52:07 mitch Exp $
+# $Id: batch.sh,v 1.4 2006-10-23 20:21:15 mitch Exp $
 
 EXITCODE=2
 
@@ -11,7 +11,7 @@ fi
 echo reading from ${LATEST}
 
 PAGEBASE="http://xkcd.com/"
-PICBASE="http://xkcd.com/comics/"
+PICBASE="http://imgs.xkcd.com/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=./tmp.html
 
