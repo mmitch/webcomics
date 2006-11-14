@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.7 2006-10-20 21:02:52 mitch Exp $
+# $Id: batch.sh,v 1.8 2006-11-14 23:46:09 mitch Exp $
 # needs lynx
 
 EXITCODE=2
@@ -38,7 +38,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer={$HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
+	wget --user-agent="${USERAGENT}" --referer=${HTML} -qO${FILE} ${PICBASE}${DATE}${ANNEX}.${EXT}
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
