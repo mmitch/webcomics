@@ -1,11 +1,12 @@
 <?
-// $Id: index.php,v 1.51 2006-10-15 16:06:57 mitch Exp $
+// $Id: index.php,v 1.52 2006-11-15 21:28:38 mitch Exp $
 
 // import variables (for register_globals=off)
 $comic       = $_GET['comic'];
 $id          = $_GET['id'];
 $recache     = $_GET['recache'];
 $tag         = $_GET['tag'];
+$rev         = $_GET['rev'];
 $lastVisited = $_COOKIE['lastVisited'];
 
 // cookie handling
@@ -285,17 +286,17 @@ function show_comic($me)
   echo "<ul>\n";
 
   if ($rev) {
-    for ($i = $max-1; $i >= 0 ; $i--) {
+    for ($i = 0; $i < $max; $i++) {
       echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
     }
   } else {
-    for ($i = 0; $i < $max; $i++) {
+    for ($i = $max-1; $i >= 0 ; $i--) {
       echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
     }
   }
 
   echo "</ul>\n";
-  echo "<p><a href=\"$myhref?comic=$comic&rev=$reverv\">[reverse]</a></p>\n";
+  echo "<p><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></p>\n";
 }
 
 
@@ -329,6 +330,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.51 $<br>$Date: 2006-10-15 16:06:57 $</small></p>
+    <p><small>$Revision: 1.52 $<br>$Date: 2006-11-15 21:28:38 $</small></p>
   </body>
 </html>
