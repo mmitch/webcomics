@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.52 2006-11-15 21:28:38 mitch Exp $
+// $Id: index.php,v 1.53 2006-11-16 22:47:10 mitch Exp $
 
 // import variables (for register_globals=off)
 $comic       = $_GET['comic'];
@@ -159,7 +159,7 @@ function list_all_comics($comics)
 function get_index($me)
 // read a comic index file
 {
-  global $max, $files, $titles;
+  global $max, $files, $titles, $urls;
 
   $fp = fopen("$me[file]/index", "r");
   if ($fp) {
@@ -169,6 +169,10 @@ function get_index($me)
       if (! preg_match('/^\s*$/', $line)) {
 	list($f, $t) = explode("\t", $line, 2);
 	$files[$max] = chop($f);
+	if (preg_match('/\t/', $t)) {
+	  list($u, $t) = explode("\t", $t, 2);
+	  $urls[$max] = chop($u);
+	}
 	$titles[$max] = chop($t);
 	$max++;
       }
@@ -187,7 +191,7 @@ function show_strip($me, $id)
 // show a single comic strip
 {
   global $comic, $myhref;
-  global $max, $files, $titles;
+  global $max, $files, $titles, $urls;
 
   if ($id < 0) {
     $id = 0;
@@ -205,7 +209,13 @@ function show_strip($me, $id)
     $id = $premax;
   }
 
-  echo "<h2>$me[name] <small><small>[$id/$premax] [<a href=\"$me[home]\">online]</a></small></small><br>$titles[$id]</h2>\n";
+  echo "<h2>$me[name] <small><small>[$id/$premax] ";
+  if ($urls[$id]) {
+    echo "[<a href=\"$urls[$id]\">online</a>]";
+  } else {
+    echo "[<a href=\"$me[home]\">online</a>]";
+  }
+  echo "</small></small><br>$titles[$id]</h2>\n";
 
   // upper navigation
   echo "<table><tr><td align=\"left\">";
@@ -330,6 +340,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.52 $<br>$Date: 2006-11-15 21:28:38 $</small></p>
+    <p><small>$Revision: 1.53 $<br>$Date: 2006-11-16 22:47:10 $</small></p>
   </body>
 </html>
