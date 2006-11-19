@@ -1,8 +1,9 @@
 #!/bin/bash
-# $Id: mkindex.sh,v 1.4 2006-09-10 17:56:11 mitch Exp $
+# $Id: mkindex.sh,v 1.5 2006-11-19 15:53:17 mitch Exp $
 
 ls *.jpg *.png | sort | while read FILE; do
 
-    echo -e "${FILE}\t#$(echo ${FILE:0:3} | sed 's/^0*//') $(cat ${FILE%.???}.txt)"
+    STRIPZERO=$(echo ${FILE:0:3} | sed 's/^0*//')
+    echo -e "${FILE}\thttp://xkcd.com/c${STRIPZERO}.html\t#${STRIPZERO} $(cat ${FILE%.???}.txt)"
 
 done > index

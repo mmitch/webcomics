@@ -45,4 +45,3 @@ ${FILENAME}\t${URL}\t${TITEL}
 ./www.shortpacked.com/mkindex.sh
 ./www.userfriendly.org/mkindex.sh
 ./www.w00t-comic.net/mkindex.sh
-./xkcd/mkindex.sh
