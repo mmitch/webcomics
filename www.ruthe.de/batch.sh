@@ -1,21 +1,26 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2006-11-14 23:45:24 mitch Exp $
+# $Id: batch.sh,v 1.2 2006-11-19 15:15:48 mitch Exp $
 # needs lynx
 
 EXITCODE=2
+
+PAGEBASE="http://www.ruthe.de/strip"
+PICBASE="$PAGEBASE/img/strip_"
+USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 LATEST=$(ls | egrep '[0-9]{6}.(gif|jpg)' | tail -n 1 | cut -c 1-6 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
 
-echo reading from ${LATEST}
+MAXIMUM=$( wget --user-agent="${USERAGENT}" -qO- ${PAGEBASE}/strip.pl | \
+    egrep 'src="img/strip_[0-9]+\.jpg' | \
+    sed -e 's:^.*img/strip_0*::' -e 's/.jpg.*//' \
+)
 
-PAGEBASE="http://www.ruthe.de/strip"
-PICBASE="$PAGEBASE/img/strip_"
-USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+echo reading from ${LATEST} to ${MAXIMUM}
 
-while true; do
+while [ ${LATEST} -le ${MAXIMUM} ] ; do
     DATE=$(printf %04d ${LATEST})
 
     echo -n "fetching ${DATE}: "
