@@ -1,11 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2006-11-20 22:20:56 mitch Exp $
+# $Id: batch.sh,v 1.3 2006-11-20 22:28:34 mitch Exp $
 
 STARTURL=http://www.pbfcomics.com
 
 wget -qO- ${STARTURL} \
 | egrep '<!--bold[0-9]+-->' \
-| sed -e 's/^.*href="//' -e 's:</a>.*::' -e 's/#/ /' -e 's/">/ /' \
+| sed -e 's/^.*href="//' -e 's:</a>.*::' -e 's/#/ /' -e 's/">/ /' -e 's:?cid=:/archive/:' \
 | tac \
 | ( 
     EXITCODE=2
