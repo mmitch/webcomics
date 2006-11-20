@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2006-11-20 22:20:00 mitch Exp $
+# $Id: batch.sh,v 1.2 2006-11-20 22:20:56 mitch Exp $
 
 STARTURL=http://www.pbfcomics.com
 
@@ -14,7 +14,7 @@ wget -qO- ${STARTURL} \
 	FILENAME="${URL#*-}"
 	FILE=${NUMBER}-${FILENAME}
 	if [ -s "$FILE" ]; then
-	    echo "[$NR] skipped"
+	    echo "[$NUMBER] skipped"
 	else
 	    echo -n "[$NUMBER]: fetching $TITLE   "
 	    TEXT=${NUMBER}-${FILENAME%.*}.txt
