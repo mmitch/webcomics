@@ -1,5 +1,8 @@
 <?
-// $Id: index.php,v 1.53 2006-11-16 22:47:10 mitch Exp $
+// $Id: index.php,v 1.54 2006-12-04 11:22:41 mitch Exp $
+
+// import configuration
+include_once('config.inc');
 
 // import variables (for register_globals=off)
 $comic       = $_GET['comic'];
@@ -8,9 +11,12 @@ $recache     = $_GET['recache'];
 $tag         = $_GET['tag'];
 $rev         = $_GET['rev'];
 $lastVisited = $_COOKIE['lastVisited'];
+if ($database) {
+  $username    = $_COOKIE['whoami'];
+}
 
 // cookie handling
-if (isset($comic) && isset($id) && isset($tag)) {
+if (!$database && isset($comic) && isset($id) && isset($tag)) {
   setcookie("lastVisited[$tag]", $id, time()+( 3600 * 24 * 365 * 5));
 }
 
@@ -23,7 +29,6 @@ header('Content-Type: text/html; charset=utf-8');
   <head>
     <title>Mitchs PHP Comicbrowser</title>
 <?
-include_once('config.inc');
 if ($css) {
   echo "<link rel=\"stylesheet\" href=\"$css\">\n";
 }
@@ -340,6 +345,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.53 $<br>$Date: 2006-11-16 22:47:10 $</small></p>
+    <p><small>$Revision: 1.54 $<br>$Date: 2006-12-04 11:22:41 $</small></p>
   </body>
 </html>
