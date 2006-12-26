@@ -1,5 +1,5 @@
 <?
-# $Id: config.inc.template,v 1.5 2006-12-04 11:22:41 mitch Exp $
+# $Id: config.inc.template,v 1.6 2006-12-26 18:20:00 mitch Exp $
 #
 # config template for the webcomic PHP browser
 # copy to config.inc and edit to your needs
@@ -21,4 +21,10 @@ $css="/yuuhi.css";
 
 # Use classic style (cookies) or a database to store read/unread comics?
 $database = 0; # 0==false==classic==cookies
+
+# When using a database, how to reach the database?
+$mysql_host = '';
+$mysql_user = '';
+$mysql_password = '';
+$mysql_database = ''
 ?>
