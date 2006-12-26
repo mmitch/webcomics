@@ -1,5 +1,5 @@
 <?
-# $Id: config.inc.template,v 1.6 2006-12-26 18:20:00 mitch Exp $
+# $Id: config.inc.template,v 1.7 2006-12-26 22:57:23 mitch Exp $
 #
 # config template for the webcomic PHP browser
 # copy to config.inc and edit to your needs
@@ -26,5 +26,5 @@ $database = 0; # 0==false==classic==cookies
 $mysql_host = '';
 $mysql_user = '';
 $mysql_password = '';
-$mysql_database = ''
+$mysql_database = '';
 ?>
