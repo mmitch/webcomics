@@ -1,8 +1,13 @@
 <?
-// $Id: index.php,v 1.55 2006-12-26 17:36:35 mitch Exp $
+// $Id: index.php,v 1.56 2006-12-26 18:09:08 mitch Exp $
 
 // import configuration
 include_once('config.inc');
+if ($database) {
+  include_once('with_db.inc');
+} else {
+  include_once('without_db.inc');
+}
 
 // import variables (for register_globals=off)
 $comic       = $_GET['comic'];
@@ -10,15 +15,11 @@ $id          = $_GET['id'];
 $recache     = $_GET['recache'];
 $tag         = $_GET['tag'];
 $rev         = $_GET['rev'];
+$user        = $_GET['user'];
 $lastVisited = $_COOKIE['lastVisited'];
-if ($database) {
-  $username    = $_COOKIE['whoami'];
-}
+$username    = $_COOKIE['whoami'];
 
-// cookie handling
-if (!$database && isset($comic) && isset($id) && isset($tag)) {
-  setcookie("lastVisited[$tag]", $id, time()+( 3600 * 24 * 365 * 5));
-}
+handle_cookies();
 
 // set charset
 header('Content-Type: text/html; charset=utf-8');
@@ -111,6 +112,9 @@ function list_all_comics($comics)
 // show a list of all comics
 {
   global $lastVisited, $myhref;
+
+  print_login();
+
   echo "<h2>subscribed, unread comics</h2>\n";
   echo "<ul>\n";
 
@@ -187,8 +191,8 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
+  change_login();
   echo "<p><br><small><a href=\"$myhref?recache=1\">rescan comics</a></small></p>\n";
-
 }
 
 function get_index($me)
@@ -376,10 +380,11 @@ if ($comics[$comic]) {
 } else {
     list_all_comics($comics);
 }
+
 ?>
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.55 $<br>$Date: 2006-12-26 17:36:35 $</small></p>
+    <p><small>$Revision: 1.56 $<br>$Date: 2006-12-26 18:09:08 $</small></p>
   </body>
 </html>
