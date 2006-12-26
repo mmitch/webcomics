@@ -1,5 +1,9 @@
 <?
-// $Id: without_db.inc,v 1.1 2006-12-26 18:09:09 mitch Exp $
+// $Id: without_db.inc,v 1.2 2006-12-26 23:24:14 mitch Exp $
+
+//################ Internal functions for only this mode
+
+//################ Public functions for both modes
 
 function handle_cookies()
 {
@@ -15,6 +19,10 @@ function change_login()
 }
 
 function print_login()
+{
+}
+
+function close_db()
 {
 }
 

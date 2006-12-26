@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.56 2006-12-26 18:09:08 mitch Exp $
+// $Id: index.php,v 1.57 2006-12-26 23:24:14 mitch Exp $
 
 // import configuration
 include_once('config.inc');
@@ -381,10 +381,12 @@ if ($comics[$comic]) {
     list_all_comics($comics);
 }
 
+close_db();
+
 ?>
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.56 $<br>$Date: 2006-12-26 18:09:08 $</small></p>
+    <p><small>$Revision: 1.57 $<br>$Date: 2006-12-26 23:24:14 $</small></p>
   </body>
 </html>
