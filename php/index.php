@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.54 2006-12-04 11:22:41 mitch Exp $
+// $Id: index.php,v 1.55 2006-12-26 17:36:35 mitch Exp $
 
 // import configuration
 include_once('config.inc');
@@ -111,7 +111,7 @@ function list_all_comics($comics)
 // show a list of all comics
 {
   global $lastVisited, $myhref;
-  echo "<h2>Unread Comics</h2>\n";
+  echo "<h2>subscribed, unread comics</h2>\n";
   echo "<ul>\n";
 
   $first = 1;
@@ -121,7 +121,7 @@ function list_all_comics($comics)
     $tag = $val[tag];
     if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
-      if ($lastVisited[$tag] < $total) {
+      if ($lastVisited[$tag] < $total && $lastVisited[$tag] >= 0) {
 
 	if ($first) {
 	  echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"autofocus\">$val[name]</a>";
@@ -138,21 +138,51 @@ function list_all_comics($comics)
 
   echo "</ul>\n";
 
-  echo "<h2>All Comics</h2>\n";
+  echo "<h2>new, unsubscribed comics</h2>\n";
   echo "<ul>\n";
+
+  reset ($comics);
+  while ( list ($key, $val) = each($comics) ) {
+    $tag = $val[tag];
+    if (! isset($lastVisited[$tag])) {
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val[name]</a> ";
+      echo "(<a href=\"$myhref?comic=$key&tag=$tag&id=-1\">unsubscribe</a>)";
+      echo "</li>\n";
+    }
+  }
+
+  echo "</ul>\n";
+
+  echo "<h2>subscribed, read comics</h2>\n";
+  echo "<ul>\n";
+
+  $first = 1;
 
   reset ($comics);
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val[tag];
     if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
-      if ($lastVisited[$tag] < $total) {
-	echo " (".($total-$lastVisited[$tag])." new)";
+      if ($lastVisited[$tag] == $total) {
+	echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+        echo "</li>\n";
       }
-      echo "</li>\n";
-    } else {
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val[name]</a></li>\n";
+    }
+  }
+
+  echo "</ul>\n";
+
+  echo "<h2>unsubscribed comics</h2>\n";
+  echo "<ul>\n";
+
+  reset ($comics);
+  while ( list ($key, $val) = each($comics) ) {
+    $tag = $val[tag];
+    if (isset($lastVisited[$tag])) {
+      if ($lastVisited[$tag] < 0) {
+	echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val[name]</a>";
+        echo "</li>\n";
+      }
     }
   }
 
@@ -323,6 +353,11 @@ if ((! is_array($comics)) or (isset($recache))) {
   echo "<p>Cache rebuilt.</p>\n";
 }
 
+// unsubscribe
+if (isset($id) && ($id < 0)) {
+  unset($comic, $id, $tag);
+}
+
 if ($comics[$comic]) {
 
   $selected = $comics[$comic];
@@ -345,6 +380,6 @@ if ($comics[$comic]) {
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.54 $<br>$Date: 2006-12-04 11:22:41 $</small></p>
+    <p><small>$Revision: 1.55 $<br>$Date: 2006-12-26 17:36:35 $</small></p>
   </body>
 </html>
