@@ -1,5 +1,5 @@
-<?
-// $Id: with_db.inc,v 1.2 2006-12-26 23:24:14 mitch Exp $
+ø<?
+// $Id: with_db.inc,v 1.3 2006-12-27 00:05:08 mitch Exp $
 
 //################ Internal functions for only this mode
 
@@ -41,6 +41,11 @@ function handle_cookies()
   if (isset($user)) {
     setcookie('whoami', $user, time()+( 3600 * 24 * 365 * 5));
     $username = $user;
+  }
+
+  if (! (isset($username) && $username) ) {
+    // guest login
+    return;
   }
 
   get_db_handle();
