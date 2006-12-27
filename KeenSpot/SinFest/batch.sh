@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2006-12-27 17:41:21 mitch Exp $
+# $Id: batch.sh,v 1.2 2006-12-27 21:29:17 mitch Exp $
 
 EXITCODE=2
 
@@ -21,7 +21,7 @@ while true; do
 	| sed -e "s,^.*src=\"${PICBASE},," -e 's/".*$//' \
 	)
 
-    echo -n "fetching ${FILENAME:0:10}: "
+    echo -n "fetching ${LATEST} / ${FILENAME:0:10}: "
     FILE="$(printf %04d $LATEST)-$FILENAME"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
@@ -37,7 +37,10 @@ while true; do
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
-	    exit ${EXITCODE}
+	    # skip known broken comics
+	    if [ ${LATEST} != 669 ] ; then
+		exit ${EXITCODE}
+	    fi
 	fi
     fi
     
