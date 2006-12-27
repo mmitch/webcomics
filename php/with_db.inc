@@ -1,5 +1,5 @@
-ø<?
-// $Id: with_db.inc,v 1.3 2006-12-27 00:05:08 mitch Exp $
+<?
+// $Id: with_db.inc,v 1.4 2006-12-27 00:06:33 mitch Exp $
 
 //################ Internal functions for only this mode
 
