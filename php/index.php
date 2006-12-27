@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.57 2006-12-26 23:24:14 mitch Exp $
+// $Id: index.php,v 1.58 2006-12-27 00:06:47 mitch Exp $
 
 // import configuration
 include_once('config.inc');
@@ -167,7 +167,7 @@ function list_all_comics($comics)
     $tag = $val[tag];
     if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
-      if ($lastVisited[$tag] == $total) {
+      if ($lastVisited[$tag] >= $total) {
 	echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
         echo "</li>\n";
       }
@@ -387,6 +387,6 @@ close_db();
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.57 $<br>$Date: 2006-12-26 23:24:14 $</small></p>
+    <p><small>$Revision: 1.58 $<br>$Date: 2006-12-27 00:06:47 $</small></p>
   </body>
 </html>
