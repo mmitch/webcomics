@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2005-07-06 19:24:38 mitch Exp $
+# $Id: batch.sh,v 1.3 2006-12-27 17:29:36 mitch Exp $
 
 EXITCODE=2
 
@@ -11,7 +11,7 @@ fi
 echo reading from ${LATEST}
 
 PAGEBASE="http://manga.clone-army.org/t42r.php?page="
-PICBASE="http://manga.clone-army.org/t42r//tomoyo"
+PICBASE="http://manga.clone-army.org/t42r/tomoyo"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while true; do
