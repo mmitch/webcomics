@@ -1,5 +1,5 @@
 <?
-// $Id: with_db.inc,v 1.4 2006-12-27 00:06:33 mitch Exp $
+// $Id: with_db.inc,v 1.5 2006-12-28 09:37:02 mitch Exp $
 
 //################ Internal functions for only this mode
 
@@ -45,6 +45,7 @@ function handle_cookies()
 
   if (! (isset($username) && $username) ) {
     // guest login
+    $lastVisited = array();
     return;
   }
 
