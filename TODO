@@ -8,14 +8,8 @@ ${FILENAME}\t${URL}\t${TITEL}
 ./Drowtales/mkindex.sh
 ./Flipside/mkindex.sh
 ./IrregularWebcomic/mkindex.sh
-./KeenSpot/Ghastly/mkindex.sh
-./KeenSpot/RaveKitty/mkindex.sh
-./KeenSpot/SinFest/mkindex.sh
-./KeenSpot/TheLounge/mkindex.sh
-./KeenSpot/TwoLumps/mkindex.sh
 ./manga.clone-army.org/mkindex.sh
 ./manga.clone-army.org/nana/mkindex.sh
-./manga.clone-army.org/nana/mkindex.sh~
 ./SexyLosers/mkindex.sh
 ./SnafuComics/PowerPuffGirls/mkindex.sh
 ./Sokora/mkindex.sh
