@@ -1,4 +1,4 @@
-$Id: README,v 1.3 2005-03-06 13:49:51 mitch Exp $
+$Id: README,v 1.4 2007-01-15 22:57:33 mitch Exp $
 
 HOW TO USE THE PHP WEBCOMIC BROWSER
 
@@ -64,6 +64,17 @@ HOME: The original URL of the comic that can be reached via the
 
 2)  Create an empty $cachefile and make it writeable for your PHP
     interpreter.
+
+3)  If you want to use the database backend, you need to create
+    a table like this (directly taken from a database dump):
+
+CREATE TABLE `bookmark` (
+  `user` varchar(32) NOT NULL default '',
+  `comic` varchar(255) NOT NULL default '',
+  `current` smallint(5) NOT NULL default '0',
+  PRIMARY KEY  (`user`,`comic`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 You're done!  Browse the php/index.html and there you go.
 
