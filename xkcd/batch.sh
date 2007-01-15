@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.4 2006-10-23 20:21:15 mitch Exp $
+# $Id: batch.sh,v 1.5 2007-01-15 18:56:26 mitch Exp $
 
 EXITCODE=2
 
@@ -26,6 +26,7 @@ while true; do
 	exit ${EXITCODE}
     fi
     FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/')
+    LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//')
     TITLE=$(grep '<h1>' "${TMPFILE}" | sed -e 's|^.*<h1>||' -e 's|</h1>.*$||')
     
     echo -n "${FILENAME} "
@@ -42,6 +43,7 @@ while true; do
 	    echo OK
 	    chmod -w ${FILE}
 	    echo "${TITLE}" > "${FILE%.???}.txt"
+	    echo "${LONGTEXT}" >> "${FILE%.???}.txt"
 	    EXITCODE=0
 	else
 	    test -w ${FILE} && rm ${FILE}
