@@ -1,0 +1,10 @@
+--- KeenSpot.py.orig	2006-12-31 15:47:42.000000000 +0100
++++ KeenSpot.py	2006-12-31 15:48:27.000000000 +0100
+@@ -282,6 +282,7 @@
+         'Queer': 'http://queer.comicgenesis.com/',
+         'RallyHippo': 'http://annie.comicgenesis.com/',
+         'Rangers': 'http://rangers.comicgenesis.com/',
++        'RaveKitty': 'http://ravekitty.comicgenesis.com/',
+         'ReadyOrNot': 'http://ron.comicgen.com/',
+         'ReasonedCognition': 'http://www.reasonedcognition.com/',
+         'RecklessYouth': 'http://recklessyouth.comicgen.com/',
