@@ -1,8 +1,11 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.7 2002-12-24 13:53:07 mitch Exp $
+# $Id: batch.sh,v 1.8 2007-04-13 17:43:14 mitch Exp $
 
 # $Log: batch.sh,v $
-# Revision 1.7  2002-12-24 13:53:07  mitch
+# Revision 1.8  2007-04-13 17:43:14  mitch
+# fixup for Etch (date command has changed?)
+#
+# Revision 1.7  2002/12/24 13:53:07  mitch
 # `wget -q' statt `wget 2>/dev/null'
 #
 # Revision 1.6  2002/12/24 13:34:24  mitch
@@ -36,7 +39,7 @@ TODAY=$(date +%Y%m%d)
 
 while [ "${TODAY}" -gt "${X}" ] ; do
 
-    X=$(date -d "${X} + 1 day" +%Y%m%d)
+    X=$(date -d "${X:0:4}-${X:4:2}-${X:6:2} + 1 day" +%Y%m%d)
 
     echo -n "getting ${X}: "
     URL="http://ars.userfriendly.org/cartoons/?mode=classic&id=${X}"
