@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.7 2007-01-15 18:59:57 mitch Exp $
+# $Id: batch.sh,v 1.8 2007-04-13 17:41:07 mitch Exp $
 
 EXITCODE=2
 
@@ -43,7 +43,7 @@ while true; do
 	    echo OK
 	    chmod -w ${FILE}
 	    if [ "${LONGTEXT}" ] ; then 
-		echo "${TITLE}<br>${LONGTEXT}" > "${FILE%.???}.txt"
+		echo "${TITLE}<br><br>${LONGTEXT}" > "${FILE%.???}.txt"
 		else
 		echo "${TITLE}" > "${FILE%.???}.txt"
 	    fi
