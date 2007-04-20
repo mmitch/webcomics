@@ -1,5 +1,5 @@
 <?
-// $Id: index.php,v 1.58 2006-12-27 00:06:47 mitch Exp $
+// $Id: index.php,v 1.59 2007-04-20 07:03:56 mitch Exp $
 
 // import configuration
 include_once('config.inc');
@@ -121,23 +121,31 @@ function list_all_comics($comics)
   $first = 1;
 
   reset ($comics);
+  $unreadkey = array();
+  $unreadcount = array();
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val[tag];
     if (isset($lastVisited[$tag])) {
       $total = trim(`wc -l < $val[file]/index`) - 1;
       if ($lastVisited[$tag] < $total && $lastVisited[$tag] >= 0) {
-
-	if ($first) {
-	  echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"autofocus\">$val[name]</a>";
-	  $first = 0;
-	} else {
-	  echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
-	}
-
-	echo " (".($total-$lastVisited[$tag])." new)";
-        echo "</li>\n";
+        array_push($unreadkey, $key);
+        array_push($unreadcount, $total-$lastVisited[$tag]);
       }
     }
+  }
+  array_multisort($unreadcount, $unreadkey);
+  while ( list (, $key) = each($unreadkey) ) {
+    $unread = array_shift($unreadcount);
+    $val = $comics[$key];
+    $tag = $val[tag];
+    if ($first) {
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"autofocus\">$val[name]</a>";
+      $first = 0;
+    } else {
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
+    }
+    echo " ($unread new)";
+    echo "</li>\n";
   }
 
   echo "</ul>\n";
@@ -387,6 +395,6 @@ close_db();
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.58 $<br>$Date: 2006-12-27 00:06:47 $</small></p>
+    <p><small>$Revision: 1.59 $<br>$Date: 2007-04-20 07:03:56 $</small></p>
   </body>
 </html>
