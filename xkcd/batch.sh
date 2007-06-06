@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.9 2007-06-06 21:06:20 mitch Exp $
+# $Id: batch.sh,v 1.10 2007-06-06 21:09:54 mitch Exp $
 
 EXITCODE=2
 
@@ -31,20 +31,20 @@ while true; do
     
     echo -n "${FILENAME} "
     
+    # test for big image (original filename contains "_small")
+    if [[ ${FILENAME} == *_small.* ]] ; then
+	FILENAME_SHORT="${FILENAME/_small./.}"
+	if wget -qO/dev/null "${PICBASE}${FILENAME}" ; then
+	    FILENAME="${FILENAME_SHORT}"
+	    echo -n "...using big variant... "
+	fi
+    fi
+
     FILE="$(printf "%03d-%s" "${LATEST}" "${FILENAME}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
     else
-
-	# test for big image (original filename contains "_small")
-	if [[ ${FILENAME} == *_small.* ]] ; then
-	    FILENAME_SHORT="${FILENAME/_small./.}"
-	    if wget -qO/dev/null "${PICBASE}${FILENAME}" ; then
-		FILENAME="${FILENAME_SHORT}"
-		echo -n "...using big variant... "
-	    fi
-	fi
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${FILENAME}"
 	
