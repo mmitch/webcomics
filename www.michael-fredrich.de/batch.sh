@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.8 2006-11-14 23:46:09 mitch Exp $
+# $Id: batch.sh,v 1.9 2007-08-06 19:13:35 mitch Exp $
 # needs lynx
 
 EXITCODE=2
@@ -72,11 +72,13 @@ while true; do
 	| (
 	TITLE=
 	read LINE
-	
-	while [ "${LINE:2:1}" != '.' -o "${LINE:5:3}" != '.20' ]; do
-	    TITLE="${TITLE}${LINE} "
-	    read LINE
-	done
+
+	if [ "${LINE}" ] ; then
+	    while [ "${LINE:2:1}" != '.' -o "${LINE:5:3}" != '.20' ]; do
+		TITLE="${TITLE}${LINE} "
+		read LINE
+	    done
+	fi
 	
 	if [ "${TITLE}" ]; then
 	    TITLE="${LINE} - ${TITLE}"
