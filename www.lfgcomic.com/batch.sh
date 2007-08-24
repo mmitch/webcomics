@@ -1,9 +1,9 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2007-08-24 18:25:23 mitch Exp $
+# $Id: batch.sh,v 1.2 2007-08-24 18:30:53 mitch Exp $
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{3}-.*.[jpg][pni][gf]' | tail -n 1 | cut -c 1-3 | sed 's/^0*//')
+LATEST=$(ls | egrep '[0-9]{3}-.*.gif' | tail -n 1 | cut -c 1-3 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
