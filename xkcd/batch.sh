@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.10 2007-06-06 21:09:54 mitch Exp $
+# $Id: batch.sh,v 1.11 2007-08-24 18:11:35 mitch Exp $
 
 EXITCODE=2
 
@@ -19,7 +19,7 @@ while true; do
 
     echo -n "fetching ${LATEST}: "
     
-    HTMLURL="${PAGEBASE}/c${LATEST}.html"
+    HTMLURL="${PAGEBASE}${LATEST}/"
     if ! wget -q -O"${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}" ; then
 	echo nok
 	rm -f "$TMPFILE"
