@@ -1,9 +1,9 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.2 2007-08-25 17:45:45 mitch Exp $
+# $Id: batch.sh,v 1.3 2007-08-25 17:48:37 mitch Exp $
 
 EXITCODE=2
 
-LATEST=$(ls | egrep 'MF[0-9]{3}.jpg' | tail -n 1 | cut -c 3-5 | sed 's/^0*//')
+LATEST=$(ls | egrep 'MF[0-9]{4}.jpg' | tail -n 1 | cut -c 3-6 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
@@ -22,7 +22,7 @@ while true; do
 
     echo -n "${FILENAME} "
     
-    FILE="$(printf "MF%03d.jpg" "${LATEST}")"
+    FILE="$(printf "MF%04d.jpg" "${LATEST}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
