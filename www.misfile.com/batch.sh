@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2007-08-25 09:30:47 ranma Exp $
+# $Id: batch.sh,v 1.2 2007-08-25 17:45:45 mitch Exp $
 
 EXITCODE=2
 
@@ -30,7 +30,7 @@ while true; do
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${LATEST}"
 	
-	if [ -s ${FILE} ]; then
+	if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
