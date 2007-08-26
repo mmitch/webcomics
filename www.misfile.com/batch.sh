@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.3 2007-08-25 17:48:37 mitch Exp $
+# $Id: batch.sh,v 1.4 2007-08-26 16:27:00 mitch Exp $
 
 EXITCODE=2
 
@@ -20,8 +20,6 @@ while true; do
     
     HTMLURL="${PAGEBASE}"
 
-    echo -n "${FILENAME} "
-    
     FILE="$(printf "MF%04d.jpg" "${LATEST}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
