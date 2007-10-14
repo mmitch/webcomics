@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2006-08-30 20:39:05 mitch Exp $
+# $Id: batch.sh,v 1.2 2007-10-14 09:04:30 mitch Exp $
 
 EXITCODE=2
 
@@ -27,9 +27,8 @@ YS=$(echo ${YS} | sed 's/^0*//')
 MS=$(echo ${MS} | sed 's/^0*//')
 DS=$(echo ${DS} | sed 's/^0*//')
 
-while true; do
-    DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
-
+fetch()
+{
     echo -n "fetching ${DATE}: "
     EXT=jpg
     FILE=${DATE}.${EXT}
@@ -65,6 +64,20 @@ while true; do
 	    fi
 	fi
     fi
+}
+
+## fetch just one strip
+if [ "$1" ] ; then
+    DATE="$1"
+    echo fetching only $DATE
+    fetch
+    exit ${EXITCODE}
+fi
+
+while true; do
+    DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
+
+    fetch
     
     if [ ${DATE} = ${YE}${ME}${DE} ]; then
 	exit ${EXITCODE}
