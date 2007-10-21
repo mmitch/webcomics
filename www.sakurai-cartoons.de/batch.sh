@@ -1,20 +1,22 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.1 2007-10-20 13:55:34 mitch Exp $
+# $Id: batch.sh,v 1.2 2007-10-21 08:21:59 mitch Exp $
 
 EXITCODE=2
 
 LATEST=$(ls | egrep '^[0-9]{5}.*gif$' | tail -n 1 | cut -c 1-5 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
-    LATEST=2  # first strip ever
+    LATEST=1  # first strip ever
 fi
 
-echo reading from ${LATEST}
+STOP=$(wget -qO- www.sakurai-cartoons.de/actual.php3 | fgrep 'href=actual.php3?gross=' | head -1 | sed -e 's/^.*gross=//' -e 's/>.*$//')
+
+echo reading from ${LATEST} up to ${STOP}
 
 PAGEBASE="http://www.sakurai-cartoons.de/actual.php3?gross="
 PICBASE="http://www.sakurai-cartoons.de/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
-while true; do
+while [ ${LATEST} -le ${STOP} ] ; do
 
     echo -n "fetching ${LATEST}: "
     
@@ -42,7 +44,6 @@ while true; do
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
-	    exit ${EXITCODE}
 	fi
     fi
     
