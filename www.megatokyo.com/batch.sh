@@ -1,51 +1,66 @@
-#!/bin/sh
-# $Id: batch.sh,v 1.9 2006-02-13 21:51:50 mitch Exp $
+#!/bin/bash
+# $Id: batch.sh,v 1.10 2007-11-24 21:47:06 mitch Exp $
 
-wget -qO - http://www.megatokyo.com \
-| grep "^<option value='.*</select>" \
-| sed -e "s/<\/select>$//" \
-      -e "s/<\/option>/\\
-/g" \
-| perl batch.pl \
-| ( 
-    EXITCODE=2
-    while read IDX; do
-	read DATE
-	read NR
-	read TITLE
-	read SPACER
-	if [ -s ${NR}.[gj][ip][fg] ]; then
-	    echo "[$NR] skipped"
+EXITCODE=2
+
+LATEST=$(ls | egrep '^[0-9]+\.(jpg|gif)$' | sort -n | cut -d . -f 1 | tail -1)
+if [ -z ${LATEST} ]; then
+    LATEST=1  # first strip ever
+fi
+
+echo reading from ${LATEST}
+
+PAGEBASE="http://www.megatokyo.com"
+PICBASE="http://www.megatokyo.com/strips"
+USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+
+while true; do
+
+    echo -n "fetching ${LATEST}: "
+    
+    HTMLURL="${PAGEBASE}/index.php?strip_id=${LATEST}"
+
+    TITLE=$(wget -qO- "${HTMLURL}" | grep '<div id="title">' | sed -e 's:"</div>.*$::' -e 's/^.*<div id="title">"//')
+
+    FILE="${LATEST}.gif"
+
+    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+	echo skipping
+    else
+
+	wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -qO"${FILE}" "${PICBASE}/${FILE}"
+	
+	if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
+	    echo OK
+	    chmod -w ${FILE}
+	    echo "[${LATEST}] ${TITLE}" > "${LATEST}.txt"
+	    EXITCODE=0
 	else
-	    echo -n "[$NR]: fetching $DATE $TITLE   "
-	    FILE=${NR}.gif
-	    TEXT=${NR}.txt
-	    wget -qO${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.gif
-	    if [ -s ${FILE} ]; then
-		echo "[$NR] $DATE $TITLE" > ${TEXT}
-		echo "OK"
-		EXITCODE=0
+	    
+	    rm "${FILE}"
+	    FILE="${LATEST}.jpg"
+	    
+	    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+		echo skipping
 	    else
-		rm -f ${FILE}
-	        # Try .jpg
-		FILE=${NR}.jpg
-		wget -qO${FILE} --referer=http://www.megatokyo.com http://www.megatokyo.com/strips/${IDX}.jpg
-		if [ -s ${FILE} ]; then
-		    echo "[$NR] $DATE $TITLE" > ${TEXT}
-		    echo "OK"
+		
+		wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -qO"${FILE}" "${PICBASE}/${FILE}"
+		
+		if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
+		    echo OK
+		    chmod -w ${FILE}
+		    echo "[${LATEST}] ${TITLE}" > "${LATEST}.txt"
 		    EXITCODE=0
 		else
-		    rm -f ${FILE}
-		    echo "failed!!!"
+		    test -w ${FILE} && rm ${FILE}
+		    echo nok
+		    exit ${EXITCODE}
 		fi
 	    fi
 	fi
-    done
-    exit ${EXITCODE}
-)
+    fi
+    
+    LATEST=$((${LATEST} + 1))
 
-EXITCODE=$?
+done
 
-echo "fini"
-
-exit ${EXITCODE}
