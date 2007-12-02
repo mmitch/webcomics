@@ -1,16 +1,16 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.4 2007-03-17 16:37:19 mitch Exp $
+# $Id: batch.sh,v 1.5 2007-12-02 22:52:30 mitch Exp $
 
 STARTURL=http://www.pbfcomics.com
 
 wget -qO- ${STARTURL} \
 | fgrep 'href="?cid=' \
-| sed -e 's/^.*href="//' -e 's:</a>.*::' -e 's/#/ /' -e 's/">/ /' -e "s,?cid=,${STARTURL}/archive/," \
+| sed -e 's/^.*href="//' -e 's:</a>.*::' -e 's/#/ /' -e 's/">/ /' -e "s,?cid=,${STARTURL}/archive_b/," \
 | tac \
 | ( 
     EXITCODE=2
-    while read URL NUMBER TITLE; do
-	NUMBER=$(printf %04d $NUMBER)
+    while read URL TITLE; do
+	NUMBER=$(printf %04d ${URL:38:3})
 	FILENAME="${URL#*-}"
 	FILE=${NUMBER}-${FILENAME}
 	if [ -s "$FILE" ]; then
