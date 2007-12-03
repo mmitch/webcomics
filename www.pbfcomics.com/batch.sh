@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.6 2007-12-03 21:31:32 mitch Exp $
+# $Id: batch.sh,v 1.7 2007-12-03 21:32:14 mitch Exp $
 
 STARTURL=http://www.pbfcomics.com
 
@@ -10,7 +10,7 @@ wget -qO- ${STARTURL} \
 | ( 
     EXITCODE=2
     while read URL TITLE; do
-	NUMBER=$(printf %04d $( echo ${URL:38:3} | sed -e 's/^0*//') )
+	NUMBER=$(printf %04d $( echo ${URL:38:3} | sed -e 's/^0\+//') )
 	FILENAME="${URL#*-}"
 	FILE=${NUMBER}-${FILENAME}
 	if [ -s "$FILE" ]; then
