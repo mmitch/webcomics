@@ -44,6 +44,7 @@ while true; do
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
+	    rm -f "$TMPFILE"
 	    exit ${EXITCODE}
 	fi
     fi
