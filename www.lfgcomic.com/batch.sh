@@ -14,7 +14,7 @@ PAGEBASE="http://www.lfgcomic.com/page/"
 PICBASE="http://archive.lfgcomic.com/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=./tmp.html
-LASTFILENAME=xxx
+LASTFILENAME=$(ls $(printf %03d $LATEST)-*.gif | cut -c 5-)
 
 while true; do
 
@@ -30,16 +30,16 @@ while true; do
     
     echo -n "${FILENAME} "
     
-    if [ "${LASTFILENAME}" = "${FILENAME}" ] ; then
-	echo -n "abort, filename unchanged (prevent endless download)"
-	exit ${EXITCODE}
-    fi
-
     FILE="$(printf "%03d-%s" "${LATEST}" "${FILENAME}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
     else
+
+	if [ "${LASTFILENAME}" = "${FILENAME}" ] ; then
+	    echo "abort, filename unchanged (prevent endless download)"
+	    exit ${EXITCODE}
+	fi
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${FILENAME}"
 	
