@@ -14,6 +14,7 @@ PAGEBASE="http://www.lfgcomic.com/page/"
 PICBASE="http://archive.lfgcomic.com/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=./tmp.html
+LASTFILENAME=xxx
 
 while true; do
 
@@ -29,6 +30,11 @@ while true; do
     
     echo -n "${FILENAME} "
     
+    if [ "${LASTFILENAME}" = "${FILENAME}" ] ; then
+	echo -n "abort, filename unchanged (prevent endless download)"
+	exit ${EXITCODE}
+    fi
+
     FILE="$(printf "%03d-%s" "${LATEST}" "${FILENAME}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
@@ -40,6 +46,7 @@ while true; do
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
+	    LASTFILENAME="${FILENAME}"
 	    EXITCODE=0
 	else
 	    test -w ${FILE} && rm ${FILE}
