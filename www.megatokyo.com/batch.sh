@@ -18,11 +18,11 @@ while true; do
 
     echo -n "fetching ${LATEST}: "
     
-    HTMLURL="${PAGEBASE}/index.php?strip_id=${LATEST}"
+    HTMLURL="${PAGEBASE}/strip/${LATEST}"
 
     TITLE=$(wget -qO- "${HTMLURL}" | grep '<div id="title">' | sed -e 's:"</div>.*$::' -e 's/^.*<div id="title">"//')
 
-    FILE="${LATEST}.gif"
+    FILE="${LATEST}.png"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
@@ -45,16 +45,34 @@ while true; do
 	    else
 		
 		wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -qO"${FILE}" "${PICBASE}/${FILE}"
-		
+	
 		if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
 		    echo OK
 		    chmod -w ${FILE}
 		    echo "[${LATEST}] ${TITLE}" > "${LATEST}.txt"
 		    EXITCODE=0
 		else
-		    test -w ${FILE} && rm ${FILE}
-		    echo nok
-		    exit ${EXITCODE}
+		    
+		    rm "${FILE}"
+		    FILE="${LATEST}.gif"
+		    
+		    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+			echo skipping
+		    else
+			
+			wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -qO"${FILE}" "${PICBASE}/${FILE}"
+			
+			if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
+			    echo OK
+			    chmod -w ${FILE}
+			    echo "[${LATEST}] ${TITLE}" > "${LATEST}.txt"
+			    EXITCODE=0
+			else
+			    test -w ${FILE} && rm ${FILE}
+			    echo nok
+			    exit ${EXITCODE}
+			fi
+		    fi
 		fi
 	    fi
 	fi
