@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.11 2007-08-24 18:11:35 mitch Exp $
 
 EXITCODE=2
 
@@ -23,6 +22,7 @@ while true; do
     if ! wget -q -O"${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}" ; then
 	echo nok
 	rm -f "$TMPFILE"
+	[ "${LATEST}" == 404 ] && LATEST=405 && continue
 	exit ${EXITCODE}
     fi
     FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/')
