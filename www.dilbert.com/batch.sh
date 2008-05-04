@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.6 2006-09-18 20:29:23 mitch Exp $
 
 EXITCODE=2
 
@@ -10,7 +9,7 @@ if [ -z ${LATEST} ]; then
 fi
 
 X=${LATEST}
-BASEURL="http://www.dilbert.com/comics/dilbert/archive/"
+BASEURL="http://www.dilbert.com"
 CURRENT=$(date +%Y%m%d)
 TMP=pic.tmp
 
@@ -23,13 +22,13 @@ while [ "${CURRENT}" -gt "${X}" ] ; do
     echo -n "getting ${X}: "
 
 
-    PAGEURL=${BASEURL}dilbert-${X}.html
+    PAGEURL=${BASEURL}/fast/${X:0:4}-${X:4:2}-${X:6:2}/
     PICNAME=$(
 	wget -qO- ${PAGEURL} |
-	grep 'ALT="Today' | 
-	sed -e 's,^.*IMG SRC="*/comics/dilbert/archive/images/,,' -e 's," .*$,,'
+	grep '<img src="/dyn/str_strip/' | 
+	sed -e 's,^.*img src=",,' -e 's," .*$,,'
     )
-    PICURL=${BASEURL}images/${PICNAME}
+    PICURL=${BASEURL}${PICNAME}
     EXT=$( echo ${PICNAME} | sed 's/^.*\.//' )
     wget -qO${TMP} --referer=${PAGEURL} ${PICURL}
     if [ -s ${TMP} ]; then
