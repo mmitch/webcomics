@@ -4,8 +4,8 @@ EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
-    # only the last month's archive is online!
-    LATEST=$(date +%Y%m%d -d "1 month ago")
+	# first strip online (at time of writing)
+	LATEST=19990101
 fi
 
 X=${LATEST}
