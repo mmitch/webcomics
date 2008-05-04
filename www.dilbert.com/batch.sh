@@ -5,7 +5,7 @@ EXITCODE=2
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
 if [ -z ${LATEST} ]; then
 	# first strip online (at time of writing)
-	LATEST=19990101
+	LATEST=19981231
 fi
 
 X=${LATEST}
