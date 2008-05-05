@@ -15,7 +15,6 @@ ${FILENAME}\t${URL}\t${TITEL}
 ./ComicsDotCom/arlonjanis/mkindex.sh
 ./Drowtales/mkindex.sh
 ./Flipside/mkindex.sh
-./IrregularWebcomic/mkindex.sh
 ./manga.clone-army.org/mkindex.sh
 ./manga.clone-army.org/nana/mkindex.sh
 ./SexyLosers/mkindex.sh
