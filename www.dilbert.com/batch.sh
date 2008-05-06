@@ -21,13 +21,16 @@ while [ "${CURRENT}" -gt "${X}" ] ; do
 
     echo -n "getting ${X}: "
 
-
     PAGEURL=${BASEURL}/fast/${X:0:4}-${X:4:2}-${X:6:2}/
     PICNAME=$(
 	wget -qO- ${PAGEURL} |
 	grep '<img src="/dyn/str_strip/' | 
 	sed -e 's,^.*img src=",,' -e 's," .*$,,'
     )
+    if [ "$PICNAME" = '/dyn/str_strip/default_th.gif' ] ; then
+	echo "new picture not ready yet"
+	exit ${EXITCODE}
+    fi
     PICURL=${BASEURL}${PICNAME}
     EXT=$( echo ${PICNAME} | sed 's/^.*\.//' )
     wget -qO${TMP} --referer=${PAGEURL} ${PICURL}
