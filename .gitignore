@@ -1,0 +1,15 @@
+# don't look at downloaded strips, text files and indices
+*.jpg
+*.gif
+*.png
+*.jpeg
+*.txt
+*.htm
+*.swf
+index
+# individual settings
+archive/
+php/comic.cache
+php/config.inc
+www.lfgcomic.com/tmp.html
+www.penny-arcade.com/minimum.year
