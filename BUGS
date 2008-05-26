@@ -1,0 +1,4 @@
+Bug tracking is done via Bugs Everywhere, a distributed bug tracker.
+See http://bugseverywhere.org/ for details and downloads.
+Currently the .git backend needs at least a patch, see the mailing list
+archives.
