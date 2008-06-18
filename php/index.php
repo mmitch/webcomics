@@ -1,5 +1,4 @@
 <?
-// $Id: index.php,v 1.59 2007-04-20 07:03:56 mitch Exp $
 
 // import configuration
 include_once('config.inc');
@@ -395,6 +394,5 @@ close_db();
 
     <hr>
     <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
-    <p><small>$Revision: 1.59 $<br>$Date: 2007-04-20 07:03:56 $</small></p>
   </body>
 </html>
