@@ -1,4 +1,6 @@
 <?
+// 2002-2008 (C) by Christian Garbs <mitch@cgarbs.de>
+// licensed under GNU GPL v2 and no later versions
 
 // import configuration
 include_once('config.inc');
