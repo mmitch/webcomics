@@ -8,8 +8,6 @@ ${FILENAME}\t${TITEL}
 auf
 ${FILENAME}\t${URL}\t${TITEL}
 
-./ComicsDotCom/arlonjanis/mkindex.sh
-./SexyLosers/mkindex.sh
 ./VGCats/mkindex.sh
 ./www.applegeeks.com/lite/mkindex.sh
 ./www.applegeeks.com/mkindex.sh
