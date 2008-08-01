@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Sequential Art
+desc: |-
+  starting at http://www.collectedcurios.com/sequentialart.php?s=1
+  requested by psy
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:37:45.832145 Z
+references: []
+
+id: e2320156a26b43b3b10eeb46674b5d891e01ee1c
+log_events: 
+- - 2008-08-01 20:37:46.579644 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
