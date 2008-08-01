@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Freefall: add/finish"
+desc: ""
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:28:45.106422 Z
+references: []
+
+id: 018f1205248693929c4869e86f4f85d92aa792cc
+log_events: 
+- - 2008-08-01 20:28:45.710101 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

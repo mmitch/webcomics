@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Wellington Grey
+desc: see http://www.wellingtongrey.net/miscellanea/archive/2007-10-08--stargate-ikea.html
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:27:02.964673 Z
+references: []
+
+id: e38742bdce1e9bfee4f4700274c3768f94e82cc2
+log_events: 
+- - 2008-08-01 20:27:04.064529 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

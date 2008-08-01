@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Chugworth Academy: add/fix"
+desc: ""
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:27:53.447066 Z
+references: []
+
+id: 579b76d75cd53a99f9b4bc109952de3cab4d4758
+log_events: 
+- - 2008-08-01 20:27:54.018598 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

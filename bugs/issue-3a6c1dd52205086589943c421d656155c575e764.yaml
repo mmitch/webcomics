@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: ruthe is broken
+desc: ""
+type: :bugfix
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:35:31.254701 Z
+references: []
+
+id: 3a6c1dd52205086589943c421d656155c575e764
+log_events: 
+- - 2008-08-01 20:35:31.890362 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "upevil: fix/finish"
+desc: ""
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-01 20:29:03.514520 Z
+references: []
+
+id: 710b47aae5633f9e0031902713923d5b35cceb30
+log_events: 
+- - 2008-08-01 20:29:04.710101 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

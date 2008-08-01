@@ -1,0 +1,8 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: webcomics
+version: "0.4"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: webcomics
+releases: []
+

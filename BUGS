@@ -1,4 +1,2 @@
-Bug tracking is done via Bugs Everywhere, a distributed bug tracker.
-See http://bugseverywhere.org/ for details and downloads.
-Currently the .git backend needs at least a patch, see the mailing list
-archives.
+Bug tracking is done via ditz, a distributed bug tracker.
+See http://ditz.rubyforge.org/ for details and downloads.
