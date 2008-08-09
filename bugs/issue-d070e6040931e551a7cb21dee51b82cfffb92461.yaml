@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add VGcats other comics
+desc: |-
+  http://www.vgcats.com/othercomics/?strip_id=24
+  should be the same script as VGCats
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-09 12:21:03.479213 Z
+references: []
+
+id: d070e6040931e551a7cb21dee51b82cfffb92461
+log_events: 
+- - 2008-08-09 12:21:08.548008 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
