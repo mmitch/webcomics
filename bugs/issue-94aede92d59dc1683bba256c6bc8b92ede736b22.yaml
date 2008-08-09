@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Spider and Scorpion
+desc: http://www.collectedcurios.com/spiderandscorpion.html
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2008-08-09 11:36:59.483217 Z
+references: []
+
+id: 94aede92d59dc1683bba256c6bc8b92ede736b22
+log_events: 
+- - 2008-08-09 11:36:59.930198 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-08-09 11:37:42.736513 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - "easy: it's the same as Sequential Art, only the filename differs"
