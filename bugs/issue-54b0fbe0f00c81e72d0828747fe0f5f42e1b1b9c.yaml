@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add kawaii not
+desc: http://www.kawaiinot.com/?p=1 ff.
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-17 17:43:38.429480 Z
+references: []
+
+id: 54b0fbe0f00c81e72d0828747fe0f5f42e1b1b9c
+log_events: 
+- - 2008-08-17 17:43:39.213156 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
