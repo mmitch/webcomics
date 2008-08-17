@@ -5,8 +5,8 @@ type: :feature
 component: webcomics
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-08-01 20:27:53.447066 Z
 references: []
 
@@ -16,3 +16,9 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - created
   - ""
+- - 2008-08-17 16:09:25.756712 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - |-
+    revived Chugworth
+    this needs dosage-1.6.0 (available for Debian etch at http://www.cgarbs.de/stuff/deb-repository.html)
