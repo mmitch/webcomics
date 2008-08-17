@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add minus
+desc: http://www.kiwisbybeat.com/minus21.html
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-17 21:36:22.380061 Z
+references: []
+
+id: 5fe1a1dc12376ff2c30a695c6939b6037d6b0553
+log_events: 
+- - 2008-08-17 21:36:23.282091 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
