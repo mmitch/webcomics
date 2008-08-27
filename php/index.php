@@ -395,6 +395,6 @@ close_db();
 ?>
 
     <hr>
-    <address><a href="mailto:comicbrowser@cgarbs.de">Christian Garbs [Master Mitch]</a></address>
+    <address><small>brought to you by the <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/webcomics.git">webcomics</a> script</small></address>
   </body>
 </html>
