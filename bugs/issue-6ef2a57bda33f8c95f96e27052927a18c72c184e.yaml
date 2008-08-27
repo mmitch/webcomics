@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add unsubscribe link
+desc: there is no way to unsubscribe from a comic except to edit it's URL in view mode to &id=-1
+type: :bugfix
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-27 20:10:44.459625 Z
+references: []
+
+id: 6ef2a57bda33f8c95f96e27052927a18c72c184e
+log_events: 
+- - 2008-08-27 20:11:07.582325 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - don't clutter up the main page, think of something elegant
