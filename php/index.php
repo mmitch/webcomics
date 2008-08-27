@@ -116,7 +116,7 @@ function list_all_comics($comics)
 
   print_login();
 
-  echo "<h2>subscribed, unread comics</h2>\n";
+  echo "<h2>subscribed comics with unread strips</h2>\n";
   echo "<ul>\n";
 
   $first = 1;
@@ -151,7 +151,7 @@ function list_all_comics($comics)
 
   echo "</ul>\n";
 
-  echo "<h2>new, unsubscribed comics</h2>\n";
+  echo "<h2>new comics</h2>\n";
   echo "<ul>\n";
 
   reset ($comics);
@@ -159,14 +159,14 @@ function list_all_comics($comics)
     $tag = $val[tag];
     if (! isset($lastVisited[$tag])) {
       echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val[name]</a> ";
-      echo "(<a href=\"$myhref?comic=$key&tag=$tag&id=-1\">unsubscribe</a>)";
+      echo "(<a href=\"$myhref?comic=$key&tag=$tag&id=-1\">don't subscribe</a>)";
       echo "</li>\n";
     }
   }
 
   echo "</ul>\n";
 
-  echo "<h2>subscribed, read comics</h2>\n";
+  echo "<h2>subscribed comics, no unread strips</h2>\n";
   echo "<ul>\n";
 
   $first = 1;
