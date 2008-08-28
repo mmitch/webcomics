@@ -5,8 +5,8 @@ type: :bugfix
 component: webcomics
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-08-27 20:10:44.459625 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - created
   - don't clutter up the main page, think of something elegant
+- - 2008-08-28 19:21:28.302489 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - an unsubscribe link is now below every comic strip

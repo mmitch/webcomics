@@ -248,6 +248,7 @@ function show_strip($me, $id)
   $tag = $me[tag];
 
   $premax = $max-1;
+  $unsubref="$myhref?comic=$comic&tag=$tag&id=-1";
   $firstref="$myhref?comic=$comic&tag=$tag&id=0";
   $prevref="$myhref?comic=$comic&tag=$tag&id=".($id-1);
   $nextref="$myhref?comic=$comic&tag=$tag&id=".($id+1);
@@ -325,6 +326,8 @@ function show_strip($me, $id)
     echo "<a href=\"$nextref\">[&gt;]</a>\n";
     echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
   }
+  echo "</td></tr><tr><td>\n";
+  echo "<small><a href=\"$unsubref\">[unsubscribe]</a></small>\n";
   echo "</td></tr></table>\n";
 }
 
