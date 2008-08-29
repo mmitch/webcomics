@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "add: ThreePanelSoul"
+desc: |-
+  http://www.threepanelsoul.com/index.php
+  successor to MacHall
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-29 21:34:42.855898 Z
+references: []
+
+id: ae6f5894092a4dff7b47a149823c8d7a9f331892
+log_events: 
+- - 2008-08-29 21:34:43.979383 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
