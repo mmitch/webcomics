@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add BC
+desc: http://www.comics.com/creators/bc/index.html
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-30 17:05:50.295126 Z
+references: []
+
+id: 500aaae85116db7f3d6c0b2132d70e8f92023316
+log_events: 
+- - 2008-08-30 17:05:50.862595 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
