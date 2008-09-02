@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "{issue 500aaae85116db7f3d6c0b2132d70e8f92023316}"
+desc: LFGComic broken
+type: :bugfix
+component: webcomics
+release: 
+reporter: Andreas Geisenhainer <psycorama@opensecure.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-02 17:43:58.424737 Z
+references: []
+
+id: f5d45bf231673664ad40e743a8b93b5f18f51f9e
+log_events: 
+- - 2008-09-02 17:44:02.236753 Z
+  - Andreas Geisenhainer <psycorama@opensecure.de>
+  - created
+  - ""
