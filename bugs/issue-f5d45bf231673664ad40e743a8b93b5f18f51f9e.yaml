@@ -5,8 +5,8 @@ type: :bugfix
 component: webcomics
 release: 
 reporter: Andreas Geisenhainer <psycorama@opensecure.de>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-09-02 17:43:58.424737 Z
 references: []
 
@@ -24,3 +24,7 @@ log_events:
   - Andreas Geisenhainer <psycorama@opensecure.de>
   - changed status from unstarted to in_progress
   - started to work on re-using another batch.sh file
+- - 2008-09-02 18:28:30.419285 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - works again, thanks to psycorama
