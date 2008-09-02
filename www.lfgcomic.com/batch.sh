@@ -8,8 +8,7 @@ if [ -z ${LATEST} ]; then
 fi
 
 echo reading from ${LATEST}
-#echo "latte: $LATEST"
-#exit 1
+
 PAGEBASE="http://www.lfgcomic.com/page/"
 PICBASE="http://www.lfgcomic.com/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
