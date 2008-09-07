@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: mkindex.sh,v 1.1 2007-10-20 13:55:34 mitch Exp $
 
 ls *.gif | sort -n | while read FILE; do
 

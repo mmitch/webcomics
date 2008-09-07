@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: main.sh,v 1.3 2003-03-07 21:30:34 mitch Exp $
 
 # $Log: main.sh,v $
 # Revision 1.3  2003-03-07 21:30:34  mitch

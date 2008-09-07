@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.9 2007-08-06 19:13:35 mitch Exp $
 # needs lynx
 
 EXITCODE=2

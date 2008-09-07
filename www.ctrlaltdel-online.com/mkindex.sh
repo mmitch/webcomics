@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: mkindex.sh,v 1.1 2004-11-05 22:52:03 mitch Exp $
 
 ls *.[gj][ip][fg] | sort | while read FILE; do
 

@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.0 2003/12/23 00:22:02 Psycorama
 
 # Taken the original script of Freefall from mitch
 # modded some bit an now it works for Dorktower

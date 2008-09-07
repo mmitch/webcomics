@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: batch.sh,v 1.4 2007-08-26 16:27:00 mitch Exp $
 
 EXITCODE=2
 

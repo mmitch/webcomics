@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.1 2006-06-13 11:10:33 mitch Exp $
 
 BASEURL=http://www.applegeeks.com/lite/
 

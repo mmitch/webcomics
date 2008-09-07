@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: mkindex.sh,v 1.1 2006-08-27 10:06:35 mitch Exp $
 
 ls *.jpeg *.dwf 2>/dev/null | perl -e '
 my @lines;

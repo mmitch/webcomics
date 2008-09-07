@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.7 2007-12-03 21:32:14 mitch Exp $
 
 STARTURL=http://www.pbfcomics.com
 

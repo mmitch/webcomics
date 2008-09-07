@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: mkindex.sh,v 1.1 2002-07-14 10:05:07 mitch Exp $
 
 # $Log: mkindex.sh,v $
 # Revision 1.1  2002-07-14 10:05:07  mitch

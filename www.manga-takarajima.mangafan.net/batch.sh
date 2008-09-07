@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: batch.sh,v 1.2 2002-12-24 13:53:05 mitch Exp $
 
 # $Log: batch.sh,v $
 # Revision 1.2  2002-12-24 13:53:05  mitch
