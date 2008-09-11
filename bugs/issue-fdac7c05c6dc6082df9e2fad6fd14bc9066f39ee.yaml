@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "xkcd: remove HTML"
+desc: |-
+  HTML might creep into the title and alt-text, disrupting the PHP display
+  an example is 472-house_of_pancakes
+type: :bugfix
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-11 08:43:14.354862 Z
+references: []
+
+id: fdac7c05c6dc6082df9e2fad6fd14bc9066f39ee
+log_events: 
+- - 2008-09-11 08:43:15.776499 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
