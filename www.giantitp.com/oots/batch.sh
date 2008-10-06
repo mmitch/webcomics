@@ -20,7 +20,7 @@ while true; do
     echo -n "fetching ${DATE}: "
     HTML="${PAGEBASE}oots${DATE}.html"
 
-    if [ \( -e 000${DATE}.gif -a ! -w 000${DATE}.gif \) -o \( -e 000${DATE}.jpg -a ! -w 000${DATE}.jpg \) ]; then
+    if [ \( -e 00${DATE}.gif -a ! -w 00${DATE}.gif \) -o \( -e 00${DATE}.jpg -a ! -w 00${DATE}.jpg \) ]; then
 	echo skipping
     else
 
