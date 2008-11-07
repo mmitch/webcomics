@@ -27,8 +27,6 @@ ${FILENAME}\t${URL}\t${TITEL}
 ./ChugworthAcademy/mkindex.sh
 ./Drowtales/mkindex.sh
 ./Flipside/mkindex.sh
-./manga.clone-army.org/mkindex.sh
-./manga.clone-army.org/nana/mkindex.sh
 ./SnafuComics/PowerPuffGirls/mkindex.sh
 ./Sokora/mkindex.sh
 ./TheParkingLotIsFull/mkindex.sh
