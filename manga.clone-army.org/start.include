@@ -2,7 +2,7 @@ EXITCODE=2
 
 LATEST=$(ls | egrep "[0-9]{6}.${DEFEXT}" | tail -n 1 | cut -c 1-6 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then  
-    LATEST=1  # first strip ever
+    LATEST=${FIRSTEVAR:-1}  # first strip ever
 fi
 
 echo reading from ${LATEST}
