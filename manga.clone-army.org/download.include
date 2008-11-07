@@ -2,7 +2,7 @@ while true; do
     DATE=$(printf %03d ${LATEST})
 
     echo -n "fetching ${DATE}: "
-    EXT=png
+    EXT=${DEFEXT}
     FILE=000${DATE}.${EXT}
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
@@ -16,6 +16,7 @@ while true; do
 	    chmod -w ${FILE}
 	    EXITCODE=0
 	else
+
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
 	    exit ${EXITCODE}
