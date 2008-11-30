@@ -26,8 +26,12 @@ while true; do
     else
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${LATEST}"
+	TYPE=$(file -bi "${FILE}")
 	
-	if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
+	if [ -s "${FILE}" -a \
+	     \( "${TYPE}" = "image/jpeg" -o \
+	       "${TYPE}" = "image/png" \) -a \
+	     $( stat -c %s "${FILE}" ) -gt 100 ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
