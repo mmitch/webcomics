@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ls *.jpg | sort | while read FILE; do
+ls *.jpg | sort | cut -c 3-6 | sed 's/^0*//' | while read STRIPZERO; do
 
-    STRIPZERO=$(echo ${FILE:2:4} | sed 's/^0*//')
+    FILE=$(printf MF%04d.jpg $STRIPZERO)
     echo -e "${FILE}\thttp://www.misfile.com/?page=${STRIPZERO}\t#${STRIPZERO}"
 
 done > index
