@@ -13,7 +13,14 @@ PAGEBASE="http://www.misfile.com/"
 PICBASE="http://www.misfile.com/overlay.php?pageCalled="
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
-while true; do
+# get current strip ID
+MAXID="$(
+    wget --user-agent="${USERAGENT}" -qO- "${PAGEBASE}" \
+    | grep pageCalled= \
+    | sed -e 's/^.*pageCalled=//' -e 's/[^0-9].*//'
+    )"
+
+while [ ${LATEST} -le ${MAXID} ]; do
 
     echo -n "fetching ${LATEST}: "
     
@@ -38,7 +45,6 @@ while true; do
 	else
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
-	    exit ${EXITCODE}
 	fi
     fi
     
@@ -46,3 +52,4 @@ while true; do
 
 done
 
+exit ${EXITCODE}
