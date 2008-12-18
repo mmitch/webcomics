@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Questionable Content
+desc: http://www.questionablecontent.net/
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-18 21:07:01.173187 Z
+references: []
+
+id: f14bc7cf6744d98e11ac0346a7e807cb36efad8b
+log_events: 
+- - 2008-12-18 21:07:04.946997 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - request by Lalufu
