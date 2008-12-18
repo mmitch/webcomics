@@ -5,7 +5,7 @@ type: :feature
 component: webcomics
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2008-12-18 21:07:01.173187 Z
 references: []
@@ -16,3 +16,7 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - created
   - request by Lalufu
+- - 2008-12-18 21:09:58.358241 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
+  - ""
