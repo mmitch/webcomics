@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix Arlo&Janis
+desc: new url?  http://comics.com/arlo&janis/
+type: :bugfix
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-18 21:00:39.642835 Z
+references: []
+
+id: af4340d1f91d55a5738dfd47c14785823ff22e76
+log_events: 
+- - 2008-12-18 21:00:40.190841 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
