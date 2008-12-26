@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Twentysided Tale
+desc: http://www.shamusyoung.com/twentysidedtale/
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-26 19:56:24.158882 Z
+references: []
+
+id: c182f68c9fd3fd759aa82ef0870709ac5053c5f4
+log_events: 
+- - 2008-12-26 19:56:25.234085 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Darths and Droids
+desc: http://darthsanddroids.net/
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-26 19:55:54.542016 Z
+references: []
+
+id: 696e0e5db79701916f19512635ee2b0ce2294eaa
+log_events: 
+- - 2008-12-26 19:55:55.938395 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

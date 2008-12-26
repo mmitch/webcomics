@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Square Root of Minus Garfield
+desc: http://www.mezzacotta.net/garfield/
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-26 19:57:40.198148 Z
+references: []
+
+id: 5d1eb872c0e2a087ba2683ecafb6e569870b2f12
+log_events: 
+- - 2008-12-26 19:57:40.799234 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
