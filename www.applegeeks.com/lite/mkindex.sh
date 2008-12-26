@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ls *.[gj][ip][fg] | sort | while read FILE; do
+ls | egrep '\.(jpg|gif)$' | sort | while read FILE; do
 
     NUMBER=${FILE%jpg}
     NUMBER=${NUMBER%gif}
