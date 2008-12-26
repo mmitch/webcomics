@@ -1,8 +1,7 @@
 #!/bin/bash
 
-ls *.jpeg *.gif 2>/dev/null | sort | while read FILE; do
+ls | egrep '\.(jpeg|gif)$' | sort | sed -e 's/^\([^0-9]*0*\([0-9]*\).*\)$/\1 \2/' | while read FILE NR; do
 
-    NR=$(echo ${FILE:5:4} | sed s/^0+//)
-    echo -e "${FILE}\thttp://www.irregularwebcomic.net/${NR}.html\t[${FILE:5:4}]"
+    echo -e "${FILE}\thttp://www.irregularwebcomic.net/${NR}.html\t[${NR}]"
 
 done > index
