@@ -1,0 +1,33 @@
+while true; do
+    DATE=$(printf %04d ${LATEST})
+
+    echo -n "fetching ${DATE}: "
+    EXT=${DEFEXT}
+    FILE=00${DATE}.${EXT}
+
+    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+	echo skipping
+    else
+
+	HTMLURL=${PAGEBASE}${DATE}.html
+	wget --user-agent="${USERAGENT}" ${HTMLURL} -qO- \
+	    | grep '<b>Episode' \
+	    | sed -e 's,</b>.*,,' -e 's,^.*<b>Episode [0-9]*: *,,' \
+	    > ${FILE}.text
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} ${PICBASE}darths${DATE}.${EXT}
+	
+	if [ -s ${FILE} ]; then
+	    echo OK
+	    chmod -w ${FILE}
+	    EXITCODE=0
+	else
+
+	    test -w ${FILE} && rm ${FILE} ${FILE}.text
+	    echo nok
+	    exit ${EXITCODE}
+	fi
+    fi
+    
+    LATEST=$((${LATEST} + 1))
+
+done

@@ -4,12 +4,16 @@
 *.png
 *.jpeg
 *.txt
+*.text
 *.htm
 *.swf
 index
+*~
+/html/
 # individual settings
 archive/
 php/comic.cache
 php/config.inc
 www.lfgcomic.com/tmp.html
 www.penny-arcade.com/minimum.year
+.ditz-plugins

@@ -5,8 +5,8 @@ type: :feature
 component: webcomics
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-12-18 21:07:01.173187 Z
 references: []
 
@@ -24,3 +24,7 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - commented
   - dosage does not pull any pictures?!
+- - 2008-12-29 23:11:36.748941 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""
