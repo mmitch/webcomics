@@ -1,0 +1,29 @@
+while true; do
+    DATE=$(printf %06d ${LATEST})
+
+    echo -n "fetching ${DATE}: "
+    EXT=${DEFEXT}
+    FILE=${DATE}.${EXT}
+
+    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+	echo skipping
+    else
+
+	HTMLURL=${PAGEBASE}${LATEST}
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} ${PICBASE}${LATEST}.${EXT}
+	
+	if [ -s ${FILE} ]; then
+	    echo OK
+	    chmod -w ${FILE}
+	    EXITCODE=0
+	else
+
+	    test -w ${FILE} && rm ${FILE} ${FILE}.text
+	    echo nok
+	    exit ${EXITCODE}
+	fi
+    fi
+    
+    LATEST=$((${LATEST} + 1))
+
+done

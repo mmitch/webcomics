@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ls | egrep '\.png$' | sort | while read FILE; do
+ls | grep \.png$ | sort | sed -e 's/^\(0*\([0-9]*\)\..*$\)/\1 \2/' | while read FILE STRIPZERO; do
 
-    echo -e "${FILE}\thttp://www.questionablecontent.net/comics/${FILE:0:3}.png\t[${FILE:0:3}]"
+    echo -e "${FILE}\thttp://questionablecontent.net/view.php?comic=${STRIPZERO}\t#${STRIPZERO}"
 
 done > index
