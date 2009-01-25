@@ -36,7 +36,22 @@ if ($css) {
 }
 ?>
   </head>
-  <body onLoad="document.getElementById('autofocus').focus();">
+  <body onload="document.getElementById('linknext').focus();" onkeydown="keypress(event);">
+
+<script type="text/javascript">
+function keypress(e)
+{
+        var keynum;
+        if(e.which) { keynum = e.which; }// Netscape/Firefox/Opera
+        else
+        if(window.event) { keynum = e.keyCode; } // IE
+
+        if (keynum == 37) { window.location = document.getElementById("linkprev").href; }
+        else
+        if (keynum == 39) { window.location = document.getElementById("linknext").href; }
+}
+</script>
+
 
 <?
 #echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
@@ -270,15 +285,15 @@ function show_strip($me, $id)
   echo "<table><tr><td align=\"left\">";
   if ($id > 0) {
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
-    echo "<a href=\"$prevref\">[&lt;]</a>\n";
+    echo "<a href=\"$prevref\" id=\"linkprev\">[&lt;]</a>\n";
   }
   echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
   if ($id < $premax) {
     echo "<a href=\"$myhref\">[comics]</a>\n";
-    echo "<a href=\"$nextref\" id=\"autofocus\">[&gt;]</a>\n";
+    echo "<a href=\"$nextref\" id=\"linknext\">[&gt;]</a>\n";
     echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
   } else {
-    echo "<a href=\"$myhref\" id=\"autofocus\">[comics]</a>\n";
+    echo "<a href=\"$myhref\" id=\"linknext\">[comics]</a>\n";
   }
   echo "<br>\n";
 
