@@ -155,7 +155,7 @@ function list_all_comics($comics)
     $val = $comics[$key];
     $tag = $val[tag];
     if ($first) {
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"autofocus\">$val[name]</a>";
+      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"linknext\">$val[name]</a>";
       $first = 0;
     } else {
       echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val[name]</a>";
