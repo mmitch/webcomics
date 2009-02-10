@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add Thorn
+desc: http://www.mimisgrotto.com/thorn/001.html
+type: :feature
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2009-02-10 20:22:19.514351 Z
+references: []
+
+id: 940373ddfc07de595e3e15353b2c8cb29f2558cd
+log_events: 
+- - 2009-02-10 20:22:20.848416 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
