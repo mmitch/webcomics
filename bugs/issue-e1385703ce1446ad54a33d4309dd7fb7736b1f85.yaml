@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Penny Arcade does not download anything
+desc: last comic is 2008-03-31!
+type: :bugfix
+component: webcomics
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2009-04-24 16:35:29.255235 Z
+references: []
+
+id: e1385703ce1446ad54a33d4309dd7fb7736b1f85
+log_events: 
+- - 2009-04-24 16:35:30.688825 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
