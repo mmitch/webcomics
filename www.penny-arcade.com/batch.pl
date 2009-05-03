@@ -5,7 +5,7 @@ use strict;
 
 while (my $in = <>) {
     chomp $in;
-    if ($in =~ m|^\s+(\d\d/\d\d/\d{4})\s(.*)$|) {
+    if ($in =~ m|">(\d\d/\d\d/\d{4})\s(.*)</option>|) {
 	printf "%s\n%s\n*-------*\n", $1, $2;
     }
 }

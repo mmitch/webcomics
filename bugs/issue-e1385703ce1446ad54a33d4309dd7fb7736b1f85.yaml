@@ -5,8 +5,8 @@ type: :bugfix
 component: webcomics
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2009-04-24 16:35:29.255235 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2009-04-24 16:35:30.688825 Z
   - Christian Garbs <mitch@cgarbs.de>
   - created
+  - ""
+- - 2009-05-03 15:59:11.011226 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
   - ""
