@@ -21,9 +21,28 @@ while true; do
 	    EXITCODE=0
 	else
 
-	    test -w ${FILE} && rm ${FILE} ${FILE}.text
-	    echo nok
-	    exit ${EXITCODE}
+	    rm -f "${FILE}"
+
+	    EXT=gif
+	    FILE=00${DATE}.${EXT}
+
+	    wget --user-agent="${USERAGENT}" ${PAGEBASE}${LATEST} -qO- \
+		| grep '<h2>' \
+		| sed -e 's,</h2>.*,,' -e 's,^.*<h2>No\. [0-9]*: *,,' \
+		> ${FILE}.text
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${LATEST} -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	    
+	    if [ -s ${FILE} ]; then
+		echo OK
+		chmod -w ${FILE}
+		EXITCODE=0
+	    else
+		
+		test -w ${FILE} && rm ${FILE} ${FILE}.text
+		echo nok
+		exit ${EXITCODE}
+
+	    fi
 	fi
     fi
     
