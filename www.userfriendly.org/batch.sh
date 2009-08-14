@@ -1,31 +1,5 @@
 #!/bin/sh
 
-# $Log: batch.sh,v $
-# Revision 1.8  2007-04-13 17:43:14  mitch
-# fixup for Etch (date command has changed?)
-#
-# Revision 1.7  2002/12/24 13:53:07  mitch
-# `wget -q' statt `wget 2>/dev/null'
-#
-# Revision 1.6  2002/12/24 13:34:24  mitch
-# Ordentliche Abbruchbedingung
-#
-# Revision 1.5  2002/12/24 13:18:50  mitch
-# Holt automatisch alle Comics ab Beginn
-#
-# Revision 1.4  2002/07/27 17:40:13  mitch
-# Funktioniert wieder -- fester Pfad für wget war böse
-#
-# Revision 1.3  2001/11/08 21:09:40  mitch
-# wget mit Pfadangabe
-#
-# Revision 1.2  2001/10/20 17:29:43  mitch
-# Meldung bei nicht existenter URL
-#
-# Revision 1.1  2001/10/20 17:22:17  mitch
-# Initial revision
-#
-
 EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
@@ -36,9 +10,7 @@ fi
 X=${LATEST}
 TODAY=$(date +%Y%m%d)
 
-while [ "${TODAY}" -gt "${X}" ] ; do
-
-    X=$(date -d "${X:0:4}-${X:4:2}-${X:6:2} + 1 day" +%Y%m%d)
+while [ "${TODAY}" -ge "${X}" ] ; do
 
     echo -n "getting ${X}: "
     URL="http://ars.userfriendly.org/cartoons/?mode=classic&id=${X}"
@@ -52,16 +24,25 @@ while [ "${TODAY}" -gt "${X}" ] ; do
 	echo "wrong date?"
 	exit ${EXITCODE}
     else
-	wget -qO${X}.gif --referer=${URL} ${PICURL}
-	if [ -s ${X}.gif ]; then
-	    echo "OK"
-	    EXITCODE=0
+
+	if [ -e ${X}.gif -a ! -w ${X}.gif ]; then
+	    echo skipping
 	else
-	    rm -f ${X}.gif
-	    echo "fetch failed!!!"
-	    exit ${EXITCODE}
+
+	    wget -qO${X}.gif --referer=${URL} ${PICURL}
+	    if [ -s ${X}.gif -a $( stat -c %s ${X}.gif ) -gt 100 ]; then
+		echo OK
+		chmod -w ${X}.gif
+		EXITCODE=0
+	    else
+		rm -f ${X}.gif
+		echo "fetch failed!!!"
+		exit ${EXITCODE}
+	    fi
 	fi
     fi
+
+    X=$(date -d "${X:0:4}-${X:4:2}-${X:6:2} + 1 day" +%Y%m%d)
 
 done
 
