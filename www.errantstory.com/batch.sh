@@ -60,7 +60,7 @@ DE=$(date +%d)
 echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
 
 PAGEBASE="http://www.errantstory.com/d/"
-PICBASE="http://www.errantstory.com/comics/es"
+PICBASE="http://www.errantstory.com/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 YS=$(echo ${YS} | sed 's/^0*//')
@@ -69,6 +69,7 @@ DS=$(echo ${DS} | sed 's/^0*//')
 
 while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
+    URLDATE=$(printf %04d-%02d-%02d ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
     EXT=gif
@@ -78,7 +79,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
+	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${URLDATE}.${EXT}
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
@@ -93,7 +94,7 @@ while true; do
 		echo skipping
 	    else
 
-		wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${DATE}.${EXT}
+		wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${DATE}.html -qO${FILE} ${PICBASE}${URLDATE}.${EXT}
 		if [ -s ${FILE} ]; then
 		    echo OK
 		    chmod -w ${FILE}
