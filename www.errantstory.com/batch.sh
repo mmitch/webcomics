@@ -1,47 +1,5 @@
 #!/bin/sh
 
-# $Log: batch.sh,v $
-# Revision 1.12  2004-08-03 08:24:58  mitch
-# skipping auch bei JPEGs
-#
-# Revision 1.11  2003/07/12 11:17:04  mitch
-# Fix der letzten Änderung
-#
-# Revision 1.10  2003/07/12 11:14:44  mitch
-# Keine `20030709.gif: Permission denied'-Meldungen mehr.
-#
-# Revision 1.9  2002/12/24 13:53:03  mitch
-# `wget -q' statt `wget 2>/dev/null'
-#
-# Revision 1.8  2002/12/24 12:02:00  mitch
-# --use-proxy=off bei wget entfernt.
-#
-# Revision 1.7  2002/12/24 11:51:49  mitch
-# Ende mit RC=2, wenn kein neues Bild geladen wurde.
-#
-# Revision 1.6  2002/12/04 16:33:58  mitch
-# Umgeschrieben auf Errant Story
-# Kopierquelle: Exploitation Now
-#
-# Revision 1.5  2002/01/12 12:10:58  mitch
-# Jetzt werden auch .jpg-Bilder erkannt
-#
-# Revision 1.4  2001/12/23 10:28:29  mitch
-# Cronjob-Fehlermeldung hoffentlich beseitigt
-# (warum tritt die Meldung beim händischen Start nicht auf?)
-#
-# rm: cannot remove `20011222.gif': No such file or directory
-#
-# Revision 1.3  2001/12/22 12:47:01  mitch
-# Fertig geladene Bilder werden scheibgeschützt
-#
-# Revision 1.2  2001/12/20 18:50:02  mitch
-# Lädt automatisch alles ab dem letzten (bzw. ersten) Strip herunter
-#
-# Revision 1.1  2001/12/20 18:28:31  mitch
-# Initial revision
-#
-
 EXITCODE=2
 
 LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
