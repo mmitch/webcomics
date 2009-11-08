@@ -1,108 +1,92 @@
-#!/bin/bash
+#!/bin/sh
 
 EXITCODE=2
 
-if [ -r minimum.year ]; then
-    read STOP < minimum.year
-else
-    STOP=0
+LATEST=$(ls | egrep '[0-9]{8}.(gif|jpg)' | tail -1 | cut -c 1-8)
+if [ -z ${LATEST} ]; then
+    LATEST=19981118  # first strip ever
 fi
 
-USERAGENT=--user-agent="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+YS=$(echo ${LATEST} | cut -c 1-4)
+MS=$(echo ${LATEST} | cut -c 5-6)
+DS=$(echo ${LATEST} | cut -c 7-8)
 
-wget -qO - "${USERAGENT}" http://www.penny-arcade.com/archive \
-| grep -A 1 '<option value=".*"' \
-| perl batch.pl \
-| (
-    while read DATE2; do
-	read TITLE
-	read SPACER
-	
-	DATE=${DATE2:6:4}${DATE2:0:2}${DATE2:3:2}
-	YEAR=${DATE2:6:4}
-	
-	if [ ${YEAR} -lt ${STOP} ]; then
-	    echo "stopped because of minimum.year"
-	    exit ${EXITCODE}
-	fi
-	
-	REFERRER=--referer="http://www.penny-arcade.com/comic/${YEAR}/${DATE2:0:2}/${DATE2:3:2}"
+YE=$(date +%Y)
+ME=$(date +%m)
+DE=$(date +%d)
 
-	if [ -s ${DATE}.[gj][ip][fg] ]; then
-	    echo "[${DATE}] skipped"
-	else
-	    echo -n "[${DATE}]: fetching $TITLE   "
-	    
-	    FILE=${DATE}.jpg
-	    TEXT=${DATE}.txt
-	    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}.jpg
+echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
 
-	    if file -i ${FILE} | grep -q image ; then
-		echo "$TITLE" > ${TEXT}
-		echo "OK"
-		EXITCODE=0
+PAGEBASE="http://www.penny-arcade.com/comic/"
+PICBASE="http://art.penny-arcade.com/photos/"
+PICBASE2="http://www.penny-arcade.com/images/"
+USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+
+YS=$(echo ${YS} | sed 's/^0*//')
+MS=$(echo ${MS} | sed 's/^0*//')
+DS=$(echo ${DS} | sed 's/^0*//')
+
+TMPFILE=pennyarcade.tmp
+
+while true; do
+    DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
+    URLDATE=$(printf %04d/%02d/%02d/ ${YS} ${MS} ${DS})
+
+    echo -n "fetching ${DATE}: "
+
+    wget --user-agent="${USERAGENT}" -qO${TMPFILE} ${PAGEBASE}${URLDATE}
+
+    if ! grep -q 'name="Date" value="'${DATE}'"' ${TMPFILE} ; then
+	echo nok
+    else
+
+	STRIPTITLE=$(grep ${PICBASE} ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
+	FILENAME=$(grep ${PICBASE} ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
+	FULLURL=${PICBASE}${FILENAME}
+
+	if [ -z ${FILENAME} ] ; then
+	    STRIPTITLE=$(grep ${PICBASE2} ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
+	    FILENAME=$(grep ${PICBASE2} ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
+	    if [[ $FILENAME =~ ^http ]] ; then
+		FULLURL=${FILENAME}
 	    else
-		rm -f ${FILE}
- 	        # Try .gif
-		FILE=${DATE}.gif
-		wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}.gif
-		if file -i ${FILE} | grep -q image ; then
-		    echo "$TITLE" > ${TEXT}
-		    echo "OK"
-		    EXITCODE=0
-		else
-		    rm -f ${FILE}
- 	            # Try .jpg high quality
-		    FILE=${DATE}.jpg
-		    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.jpg
-		    if file -i ${FILE} | grep -q image ; then
-			echo "$TITLE" > ${TEXT}
-			echo "OK"
-			EXITCODE=0
-		    else
-			rm -f ${FILE}
- 	                # Try .gif high quality
-			FILE=${DATE}.gif
-			wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}h.gif
-			if file -i ${FILE} | grep -q image ; then
-			    echo "$TITLE" > ${TEXT}
-			    echo "OK"
-			    EXITCODE=0
-			else
-			    rm -f ${FILE}
- 	                    # Try .jpg low quality
-			    FILE=${DATE}.jpg
-			    wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.jpg
-			    if file -i ${FILE} | grep -q image ; then
-				echo "$TITLE" > ${TEXT}
-				echo "OK"
-				EXITCODE=0
-			    else
-				rm -f ${FILE}
- 	                        # Try .gif low quality
-				FILE=${DATE}.gif
-				wget -qO ${FILE} "${USERAGENT}" ${REFERRER} http://www.penny-arcade.com/images/${YEAR}/${DATE}l.gif
-				if file -i ${FILE} | grep -q image ; then
-				    echo "$TITLE" > ${TEXT}
-				    echo "OK"
-				    EXITCODE=0
-				else
-				    rm -f ${FILE}
-				    echo "failed!!!"
-				fi
-			    fi
-			fi
-		    fi
-		fi
+		FULLURL=${PICBASE2}${FILENAME}
 	    fi
 	fi
-    done
+	EXT=${FILENAME##*.}
+	FILE=${DATE}.${EXT}
+
+	if [ -e ${FILE} -a ! -w ${FILE} ]; then
+	    echo skipping
+	else
+
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${URLDATE} -qO${FILE} ${FULLURL}
+	
+	    if [ -s ${FILE} ]; then
+		echo OK
+		echo "$STRIPTITLE" > ${DATE}.txt
+		chmod -w ${FILE}
+		EXITCODE=0
+	    else
+		test -w ${FILE} && rm ${FILE}
+		echo NOK
+	    fi
+	fi
+    fi
     
-    exit ${EXITCODE}
-)
+    if [ ${DATE} = ${YE}${ME}${DE} ]; then
+	rm ${TMPFILE}
+	exit ${EXITCODE}
+    fi
 
-EXITCODE=$?
+    DS=$((${DS} + 1))
+    if [ ${DS} -gt 31 ]; then
+	DS=1
+	MS=$((${MS} + 1))
+	if [ ${MS} -gt 12 ]; then
+	    MS=1
+	    YS=$((${YS} + 1))
+	fi
+    fi
 
-echo "fini"
-
-exit ${EXITCODE}
+done
