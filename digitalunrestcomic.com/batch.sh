@@ -25,8 +25,6 @@ YS=$(echo ${YS} | sed 's/^0*//')
 MS=$(echo ${MS} | sed 's/^0*//')
 DS=$(echo ${DS} | sed 's/^0*//')
 
-TMPFILE=pennyarcade.tmp
-
 while true; do
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
     URLDATE=$(printf %04d-%02d-%02d ${YS} ${MS} ${DS})
@@ -53,7 +51,6 @@ while true; do
     fi
     
     if [ ${DATE} = ${YE}${ME}${DE} ]; then
-	rm ${TMPFILE}
 	exit ${EXITCODE}
     fi
 
