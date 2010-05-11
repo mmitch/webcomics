@@ -12,7 +12,7 @@
 # Kopierbasis: www.errantstory.com/mkindex.sh Rev. 1.1
 #
 
-ls *.[gj][ip][fg] | sort | while read FILE; do
+ls *.[gjp][ipn][fg] | sort | while read FILE; do
 
     TITLEFILE=${FILE:0:8}.txt
     if [ -s ${TITLEFILE} ] ; then
