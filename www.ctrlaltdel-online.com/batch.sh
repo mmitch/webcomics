@@ -18,8 +18,8 @@ DE=${TODAY:6:2}
 
 echo reading from ${YS}-${MS}-${DS} up to  ${YE}-${ME}-${DE}
 
-PAGEBASE="http://www.ctrlaltdel-online.com/"
-PICBASE="http://www.ctrlaltdel-online.com/comics/"
+PAGEBASE="http://www.cad-comic.com/cad/"
+PICBASE="http://www.cad-comic.com/comics/cad/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 YS=$(echo ${YS} | sed 's/^0*//')
@@ -37,7 +37,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}.${EXT}
+	wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE} -qO${FILE} ${PICBASE}/${DATE}.${EXT}
 	if [ "$(file -bi ${FILE})" = "text/html" ]; then
 	    rm ${FILE}
 	fi
@@ -49,7 +49,7 @@ while true; do
 	else
 	    EXT=gif
 
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE}.html -qO${FILE} ${PICBASE}/${DATE}.${EXT}
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE} -qO${FILE} ${PICBASE}/${DATE}.${EXT}
 	    if [ "$(file -bi ${FILE})" = "text/html" ]; then
 		rm ${FILE}
 	    fi
