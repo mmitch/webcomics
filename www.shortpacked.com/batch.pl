@@ -8,6 +8,7 @@ use HTML::TokeParser;
 my $url = 'http://shortpacked.com/';
 my $next = $url;
 my $ua = LWP::UserAgent->new;
+my $exitcode = 2;
 
 while (1) {
     my $res = $ua->get($next);
@@ -22,12 +23,13 @@ while (1) {
                 my $filename = (split(/.*\//, $image))[1];
                 if (-e $filename) {
                     print "Finished.\n";
-                    exit 0;
+                    exit $exitcode;
                 }
                 print "fetching $filename: ";
                 $res = $ua->mirror($image, $filename);
                 if ($res->is_success) {
                     print "ok\n";
+                    $exitcode = 0;
                 } else {
                     print "nok\n";
                 }
