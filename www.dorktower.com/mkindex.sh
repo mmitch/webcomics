@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ls dorktower*.jpg | sort | while read FILE; do
+ls | egrep '\.(gif|jpg|mp4)$' | sort | while read FILE; do
 
-    echo -e "${FILE}\t[${FILE:9:3}]"
+    echo -e "${FILE}\t${FILE:6:2}.${FILE:4:2}.${FILE:0:4}"
 
 done > index
