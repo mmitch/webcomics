@@ -11,7 +11,9 @@ YS=${LATEST:0:4}
 MS=${LATEST:4:2}
 DS=${LATEST:6:2}
 
-TODAY=$(date +%Y%m%d)
+# comic has already ended
+TODAY=20050720
+#TODAY=$(date +%Y%m%d)
 YE=${TODAY:0:4}
 ME=${TODAY:4:2}
 DE=${TODAY:6:2}
