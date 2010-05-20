@@ -4,7 +4,7 @@
 EXITCODE=2
 
 PAGEBASE="http://www.ruthe.de"
-PICBASE="$PAGEBASE/gallery/cpg1410/albums/userpics/10001/strip_"
+PICBASE="$PAGEBASE/cartoons/strip_"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 LATEST=$(ls | egrep '[0-9]{6}.(gif|jpg)' | tail -n 1 | cut -c 1-6 | sed 's/^0*//')
@@ -13,8 +13,8 @@ if [ -z ${LATEST} ]; then
 fi
 
 MAXIMUM=$( wget --user-agent="${USERAGENT}" -qO- ${PAGEBASE}/ | \
-    egrep 'alt="strip_[0-9]+\.jpg' | \
-    sed -e 's:^.*alt="strip_0*::' -e 's/.jpg.*//' \
+    egrep 'strip_[0-9]+\.jpg' | \
+    sed -e 's/.*strip_\(.\{4\}\)\.jpg.*/\1/' \
 )
 
 echo reading from ${LATEST} to ${MAXIMUM}
