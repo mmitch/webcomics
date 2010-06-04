@@ -27,7 +27,7 @@ sub download {
     my $res = $ua->mirror($info->{'image'}, $info->{'filename'});
     if ($res->is_success()) {
         print "ok\n";
-        $exitcode = 0;
+        ${$exitcode} = 0;
     } else {
         print "nok\n";
     }
