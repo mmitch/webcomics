@@ -9,8 +9,8 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE="http://yafgc.shipsinker.com/index.php?strip_id"
-PICBASE="http://yafgc.shipsinker.com/istrip_files/strips"
+PAGEBASE="http://yafgc.net/?id"
+PICBASE="http://yafgc.net/img/comic"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=".tmp"
 
@@ -21,14 +21,14 @@ while true; do
     HTMLURL="${PAGEBASE}=${LATEST}"
     wget -qO "${TMPFILE}" --user-agent="${USERAGENT}" "${HTMLURL}"
 
-    if ! grep -q "^Strip $LATEST:" "${TMPFILE}"; then
+    if ! grep -q "<h2>Strip $LATEST:" "${TMPFILE}"; then
 	rm -f "${TMPFILE}"
 	echo nok
 	exit ${EXITCODE}
     fi
 
-    TITLE=$(grep "^Strip $LATEST:" .tmp | sed -e "s/^Strip ${LATEST}: //" -e 's!</font.*!!')
-    FILE=$(grep "^<img src=\"istrip_files/strips/" .tmp | sed -e 's!^.*/strips/!!' -e 's/".*//')
+    TITLE=$(grep "<h2>Strip $LATEST:" ${TMPFILE} | sed -e "s/^.*<h2>Strip ${LATEST}: //" -e 's!</h2.*!!')
+    FILE=$(grep "<img src=\"${PICBASE}/" ${TMPFILE} | sed -e 's!^.*/comic/!!' -e 's/".*//')
     NUMBER=$(printf %06d ${LATEST})
     FNAME=${NUMBER}.jpg
 
