@@ -14,6 +14,7 @@ fi
 
 MAXIMUM=$( wget --user-agent="${USERAGENT}" -qO- ${PAGEBASE}/ | \
     egrep 'strip_[0-9]+\.jpg' | \
+    tail -n 1 | \
     sed -e 's/.*strip_\(.\{4\}\)\.jpg.*/\1/' \
 )
 
