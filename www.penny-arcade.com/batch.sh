@@ -34,9 +34,7 @@ while true; do
 
     echo -n "fetching ${DATE}: "
 
-    wget --user-agent="${USERAGENT}" -qO${TMPFILE} ${PAGEBASE}${URLDATE}
-
-    if ! grep -q 'name="Date" value="'${DATE}'"' ${TMPFILE} ; then
+    if ! wget --max-redirect 0 --user-agent="${USERAGENT}" -qO${TMPFILE} ${PAGEBASE}${URLDATE}; then
 	echo nok
     else
 
