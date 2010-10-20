@@ -37,8 +37,8 @@ sub get_comics {
     my ($next, $tags, $end) = @_;
     my $exitcode = 2;
     my $ua = LWP::UserAgent->new;
-    my %info;
     while (1) {
+        my %info = ();
         my $res = $ua->get($next);
         unless ($res->is_success) {
             die "Could not download URL $next: ", $res->status_line, ".\n";
