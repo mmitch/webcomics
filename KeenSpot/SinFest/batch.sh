@@ -37,7 +37,7 @@ while true; do
 	    test -w ${FILE} && rm ${FILE}
 	    echo nok
 	    # skip known broken comics
-	    if [ ${LATEST} != 669 ] ; then
+	    if [ ${LATEST} != 669 -a  ${LATEST} != 3613 ] ; then
 		exit ${EXITCODE}
 	    fi
 	fi
