@@ -1,6 +1,6 @@
 <?
-// 2002-2008 (C) by Christian Garbs <mitch@cgarbs.de>
-// licensed under GNU GPL v2 and no later versions
+// Copyright (C) 2002-2008,2010   Christian Garbs <mitch@cgarbs.de>
+// licensed under GNU GPL v3 or later
 
 // import configuration
 include_once('config.inc');
@@ -413,6 +413,6 @@ close_db();
 ?>
 
     <hr>
-    <address><small>brought to you by the <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/webcomics.git">webcomics</a> script</small></address>
+    <address><small>brought to you by the <a href="http://github.com/mmitch/webcomics">webcomics</a> script</small></address>
   </body>
 </html>
