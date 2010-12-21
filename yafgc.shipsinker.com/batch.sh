@@ -11,6 +11,7 @@ echo reading from ${LATEST}
 
 PAGEBASE="http://yafgc.net/?id"
 PICBASE="http://www.yafgc.net/img/comic"
+PICREGEXP="http://(www.)?yafgc.net/img/comic"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=".tmp"
 
@@ -28,7 +29,7 @@ while true; do
     fi
 
     TITLE=$(grep "<h2>Strip $LATEST:" ${TMPFILE} | sed -e "s/^.*<h2>Strip ${LATEST}: //" -e 's!</h2.*!!')
-    FILE=$(grep "<img src=\"${PICBASE}/" ${TMPFILE} | sed -e 's!^.*/comic/!!' -e 's/".*//')
+    FILE=$(grep -E "<img src=\"${PICREGEXP}/" ${TMPFILE} | sed -e 's!^.*/comic/!!' -e 's/".*//')
     NUMBER=$(printf %06d ${LATEST})
     FNAME=${NUMBER}.jpg
 
