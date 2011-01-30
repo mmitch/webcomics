@@ -24,6 +24,10 @@ get_comics($url,
 			   if (tag_property($tag, 'id', 'comic_image')) {
                                $info->{'image'} = $tag->[1]->{'src'};
                                $info->{'filename'} = $info->{'date'} . '-' . basename($info->{'image'});
+			       my $titlefile = $info->{'filename'}.'.txt';
+			       open TITLE, '>', $titlefile or die "can't open `$titlefile': $!\n";
+			       print TITLE $info->{'title'}."\n";
+			       close TITLE or die "can't close `$titlefile': $!\n";
                            }
                        },
 	    'h2' => sub { my ($tag, $parser, $info) = @_;
@@ -39,7 +43,9 @@ get_comics($url,
 			  }
                        },
 	    'h1' => sub { my ($tag, $parser, $info) = @_;
-			  $info->{'title'} = $parser->get_text(); ## what to do with this?  only first match per page is relevant!  store where?
+			  unless (exists $info->{'title'}) {
+			      $info->{'title'} = $parser->get_text();
+			  }
                        },
            },
            \&file_exists);
