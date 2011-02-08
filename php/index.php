@@ -134,7 +134,7 @@ function list_all_comics($comics)
   echo "<h2>subscribed comics with unread strips</h2>\n";
   echo "<ul>\n";
 
-  $first = 1;
+  $first = ' id="linknext"';
 
   reset ($comics);
   $unreadkey = array();
@@ -142,7 +142,8 @@ function list_all_comics($comics)
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
-      $total = trim(`wc -l < $val['file']/index`) - 1;
+      $filename = $val['file'].'/index';
+      $total = trim(`wc -l < $filename`) - 1;
       if ($lastVisited[$tag] < $total && $lastVisited[$tag] >= 0) {
         array_push($unreadkey, $key);
         array_push($unreadcount, $total-$lastVisited[$tag]);
@@ -154,12 +155,9 @@ function list_all_comics($comics)
     $unread = array_shift($unreadcount);
     $val = $comics[$key];
     $tag = $val['tag'];
-    if ($first) {
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\" id=\"linknext\">$val['name']</a>";
-      $first = 0;
-    } else {
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val['name']</a>";
-    }
+    printf('<li><a href="%s?comic=%s&tag=%s&id=%s"%s>%s</a>',
+	   $myhref, $key, $tag, $lastVisited[$tag], $first, $val['name']);
+    $first = '';
     echo " ($unread new)";
     echo "</li>\n";
   }
@@ -173,7 +171,8 @@ function list_all_comics($comics)
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val['tag'];
     if (! isset($lastVisited[$tag])) {
-      echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val['name']</a> ";
+      printf('<li><a href="%s?comic=%s&tag=%s&id=0">%s</a> ',
+	     $myhref, $key, $tag, $val['name']);
       echo "(<a href=\"$myhref?comic=$key&tag=$tag&id=-1\">don't subscribe</a>)";
       echo "</li>\n";
     }
@@ -190,9 +189,11 @@ function list_all_comics($comics)
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
-      $total = trim(`wc -l < $val['file']/index`) - 1;
+      $filename = $val['file'].'/index';
+      $total = trim(`wc -l < $filename`) - 1;
       if ($lastVisited[$tag] >= $total) {
-	echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=$lastVisited[$tag]\">$val['name']</a>";
+	printf('<li><a href="%s?comic=%s&tag=%s&id=%s">%s</a>',
+	       $myhref, $key, $tag, $lastVisited[$tag], $val['name']);
         echo "</li>\n";
       }
     }
@@ -208,7 +209,8 @@ function list_all_comics($comics)
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
       if ($lastVisited[$tag] < 0) {
-	echo "<li><a href=\"$myhref?comic=$key&tag=$tag&id=0\">$val['name']</a>";
+	printf('<li><a href="%s?comic=%s&tag=%s&id=0">%s</a>',
+	       $myhref, $key, $tag, $val['name']);
         echo "</li>\n";
       }
     }
@@ -224,7 +226,8 @@ function get_index($me)
 {
   global $max, $files, $titles, $urls;
 
-  $fp = fopen("$me['file']/index", "r");
+  $filename = $me['file'].'/index';
+  $fp = fopen($filename, "r");
   if ($fp) {
 
     while (! feof($fp)) {
@@ -273,13 +276,12 @@ function show_strip($me, $id)
     $id = $premax;
   }
 
-  echo "<h2>$me['name'] <small><small>[$id/$premax] ";
-  if ($urls[$id]) {
-    echo "[<a href=\"$urls[$id]\">online</a>]";
-  } else {
-    echo "[<a href=\"$me['home']\">online</a>]";
-  }
-  echo "</small></small><br>$titles[$id]</h2>\n";
+  printf('<h2>%s <small><small>[%s/%s] ',
+	 $me['name'], $id, $premax);
+  printf('[<a href="%s">online</a>]',
+	 $urls[$id] ? $urls[$id] : $me['home']);
+  printf("</small></small><br>%s</h2>\n",
+	 $titles[$id]);
 
   // upper navigation
   echo "<table><tr><td align=\"left\">";
@@ -303,13 +305,14 @@ function show_strip($me, $id)
   } else {
     echo "<a href=\"$myhref\">";
   }
-  echo "<img src=\"$me['href']/$files[$id]\" alt=\"$titles[$id]\" title=\"$titles[$id]\" border=\"0\">";
+  printf('<img src="%s/%s" alt="%s" title="%s" border="0">',
+	 $me['href'], $files[$id], $titles[$id], $titles[$id]);
   echo "</a>\n";
 
   // liner's notes
   $file = preg_replace("/^.*\/([^\/]+)$/", "$1", $files[$id]);
   $file = preg_replace("/\.[^.]*$/", ".htm", $file);
-  $file = "$me['file']/$file";
+  $file = $me['file'].'/'.$file;
 
   if ( file_exists($file) ) {
     $fp = fopen("$file", "r");
@@ -357,7 +360,8 @@ function show_comic($me)
   $tag = $me['tag'];
 
   echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
-  echo "<h2>$me['name']</h2>\n";
+  printf("<h2>%s</h2>\n",
+	 $me['name']);
   echo "<p><a href=\"$myhref?comic=$comic&tag=$tag&rev=$revrev\">[reverse]</a></p>\n";
   echo "<ul>\n";
 
