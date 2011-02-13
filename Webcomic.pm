@@ -3,6 +3,7 @@ package Webcomic;
 use warnings;
 use strict;
 
+use Cwd;
 use LWP::UserAgent;
 use HTML::TokeParser;
 
@@ -74,6 +75,7 @@ sub tag_property {
 
 sub file_exists {
     my %info = @_;
+    die cwd unless exists $info{'filename'};
     return (-e $info{'filename'});
 }
 
