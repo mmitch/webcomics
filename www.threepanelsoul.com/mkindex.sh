@@ -2,6 +2,6 @@
 
 ls | egrep '\.(gif|jpg|png)$' | sort | while read FILE; do
 
-    echo -e "${FILE}\t${FILE:6:2}.${FILE:4:2}.${FILE:0:4}"
+    echo -e "${FILE}\t${FILE:8:2}.${FILE:5:2}.${FILE:0:4}"
 
 done > index
