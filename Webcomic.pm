@@ -1,27 +1,23 @@
 package Webcomic;
 
-use warnings;
-use strict;
-
+use Any::Moose;
+use Tag;
 use Cwd;
 use LWP::UserAgent;
 use HTML::TokeParser;
 
-BEGIN {
-    use Exporter   ();
-    our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+has 'url' => ( is => 'ro',
+               isa => 'Str',
+               required => 1 );
 
-    $VERSION     = 1.00;
+has 'tags' => ( is => 'rw',
+                isa => 'HashRef[CodeRef]' );
 
-    @ISA         = qw(Exporter);
-    @EXPORT      = qw(&get_comics &file_exists &tag_property &basename);
-    %EXPORT_TAGS = ( );
+has 'end' => ( is => 'ro',
+               isa => 'CodeRef',
+               default => sub { \&_file_exists } );
 
-    @EXPORT_OK   = qw();
-}
-our @EXPORT_OK;
-
-sub download {
+sub _download {
     my ($info, $ua, $exitcode) = @_;
     $| = 1;
     print "fetching $info->{'filename'}: ";
@@ -34,10 +30,12 @@ sub download {
     }
 }
 
-sub get_comics {
-    my ($next, $tags, $end) = @_;
+sub update {
+    my $self = shift;
+    my $next = $self->url();
     my $exitcode = 2;
     my $ua = LWP::UserAgent->new;
+    my $tags = $self->tags();
     while (1) {
         my %info = ();
         my $res = $ua->get($next);
@@ -46,44 +44,32 @@ sub get_comics {
         }
         my $parser = HTML::TokeParser->new(\$res->decoded_content());
         while (my $tag = $parser->get_tag(keys %$tags)) {
-            $tags->{$tag->[0]}->($tag, $parser, \%info, $ua);
+            $self->tags()->{$tag->[0]}->(Tag->new(tag => $tag, parser => $parser), \%info);
             last if ($info{'end'});
         }
-        $info{'end'} = 0;
-        if ($end->(%info)) {
+        unless (defined $info{'filename'}) {
+            $info{'filename'} = $self->basename($info{'image'});
+        }
+        if ($self->end()->(%info)) {
             print "Finished.\n";
             exit $exitcode;
         }
-        download(\%info, $ua, \$exitcode);
+        _download(\%info, $ua, \$exitcode);
         $next = $info{'next'};
     }
 }
 
-sub tag_property {
-    my ($tag, $property, $value, $contains) = @_;
-    if (defined($tag->[1]->{$property})) {
-        if (defined($contains)) {
-            return ($tag->[1]->{$property} =~ /$value/);
-        } else {
-            return ($tag->[1]->{$property} eq $value);
-        }
-    } else {
-        return 0;
-    }
-}
-
-
-sub file_exists {
+sub _file_exists {
     my %info = @_;
     die cwd unless exists $info{'filename'};
     return (-e $info{'filename'});
 }
 
 sub basename {
-    my $image = shift;
+    my ($self, $image) = @_;
     return (split(/.*\//, $image))[1];
 }
 
-END { }
+no Any::Moose;
 
-1;
+__PACKAGE__->meta->make_immutable;

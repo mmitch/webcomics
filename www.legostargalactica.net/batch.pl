@@ -4,16 +4,15 @@ use strict;
 use lib '..';
 use Webcomic;
 
-my $url = 'http://www.legostargalactica.net/';
+my $comic = Webcomic->new(url => 'http://www.legostargalactica.net/');
 
-get_comics($url,
-           { 'div' => sub { my ($tag, $parser, $info) = @_;
-                            if (tag_property($tag, 'id', 'comic')) {
-                                $info->{'image'} = $parser->get_tag('img')->[1]->{'src'};
-                                $info->{'filename'} = basename($info->{'image'});
-                            } elsif (tag_property($tag, 'class', 'nav-previous')) {
-                                $info->{'next'} = $parser->get_tag('a')->[1]->{'href'};
-                            }
-                        }
-           },
-           \&file_exists);
+$comic->tags({ 'div' => sub { my ($tag, $info) = @_;
+                              if ($tag->has_property('id', 'comic')) {
+                                  $info->{'image'} = $tag->next_image();
+                              } elsif ($tag->has_property('class', 'nav-previous')) {
+                                  $info->{'next'} = $tag->next_link();
+                              }
+                          }
+             });
+
+$comic->update();

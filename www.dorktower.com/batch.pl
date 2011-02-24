@@ -4,29 +4,30 @@ use strict;
 use lib '..';
 use Webcomic;
 
-my $url = 'http://www.dorktower.com/';
+my $comic = Webcomic->new(url => 'http://www.dorktower.com/',
+                          end => sub { my %info = @_;
+                                       return (-e $info{'filename'} and ($info{'filename'} !~ /797|DTcartoon/))
+                                   });
 
-get_comics($url,
-           { 'a' => sub { my ($tag, $parser, $info) = @_;
-                          if (tag_property($tag, 'title', '(DORK TOWER)|(Permanent Link)', 1)) {
-                              my ($y, $m, $d) = ($tag->[1]->{'href'} =~ /(\d{4})\/(\d{2})\/(\d{2})/);
-                              $info->{'date'} = "$y$m$d";
-                          } elsif ($parser->get_text() eq '< - Previous') {
-                              $info->{'next'} = $url . $tag->[1]->{'href'};
-                          }
-                      },
-             'div' => sub { my ($tag, $parser, $info) = @_;
-                            if (tag_property($tag, 'class', 'entry')) {
-                                $info->{'image'} = $parser->get_tag('img')->[1]->{'src'};
-                                unless ($info->{'image'} =~ /^http/) {
-                                    $info->{'image'} = $url . $info->{'image'};
-                                }
-                                my ($orig) = ($info->{'image'} =~ /.*\/(.*)/);
-                                $info->{'filename'} = $info->{'date'}."-$orig";
-                                $info->{'end'} = 1;
+$comic->tags({ 'a' => sub { my ($tag, $info) = @_;
+                            if ($tag->has_property('title', '(DORK TOWER)|(Permanent Link)', 1)) {
+                                my ($y, $m, $d) = ($tag->get_property('href') =~ /(\d{4})\/(\d{2})\/(\d{2})/);
+                                $info->{'date'} = "$y$m$d";
+                            } elsif ($tag->get_text() eq '< - Previous') {
+                                $info->{'next'} = $comic->url() . $tag->get_property('href');
                             }
-                        }
-           },
-           sub { my %info = @_;
-                 return (-e $info{'filename'} and ($info{'filename'} !~ /797|DTcartoon/))
+                        },
+               'div' => sub { my ($tag, $info) = @_;
+                              if ($tag->has_property('class', 'entry')) {
+                                  $info->{'image'} = $tag->next_image();
+                                  unless ($info->{'image'} =~ /^http/) {
+                                      $info->{'image'} = $comic->url() . $info->{'image'};
+                                  }
+                                  my ($orig) = ($info->{'image'} =~ /.*\/(.*)/);
+                                  $info->{'filename'} = $info->{'date'}."-$orig";
+                                  $info->{'end'} = 1;
+                              }
+                          }
              });
+
+$comic->update();

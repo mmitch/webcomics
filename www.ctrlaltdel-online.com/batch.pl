@@ -5,25 +5,22 @@ use lib '..';
 use Webcomic;
 
 my $baseurl = 'http://www.cad-comic.com';
-my $comicurl = 'http://www.cad-comic.com/cad/';
+my $comic = Webcomic->new(url => 'http://www.cad-comic.com/cad/');
 
-get_comics($comicurl,
-           { 'title' => sub { my ($tag, $parser, $info) = @_;
-                              my ($y, $m, $d) = ($parser->get_text() =~ /\((\d{4})-(\d{2})-(\d{2})\)/);
-                              $info->{'date'} = "$y$m$d";
+$comic->tags({ 'div' => sub { my ($tag, $info) = @_;
+                              if ($tag->has_property('class', 'navigation')) {
+                                  unless (defined ($info->{'image'})) {
+                                      $info->{'image'} = $tag->next_image();
+                                      $info->{'filename'} = $info->{'image'};
+                                      $info->{'filename'} =~ s/.*(\d{4}\d{2}\d{2}).*(\.\w{3})/$1$2/;
+                                  }
+                              }
                           },
-             'div' => sub { my ($tag, $parser, $info) = @_;
-                            if (tag_property($tag, 'class', 'navigation')) {
-                                unless (defined ($info->{'image'})) {
-                                    $info->{'image'} = $parser->get_tag('img')->[1]->{'src'};
-                                    $info->{'filename'} = $info->{'date'} . "." . (split(/.*\./, $info->{'image'}))[1];
-                                }
+               'a' => sub { my ($tag, $info) = @_;
+                            if ($tag->has_property('class', 'nav-back')) {
+                                $info->{'next'} = $baseurl  . $tag->get_property('href');
                             }
-                        },
-             'a' => sub { my ($tag, $parser, $info) = @_;
-                          if (tag_property($tag, 'class', 'nav-back')) {
-                              $info->{'next'} = $baseurl  . $tag->[1]->{'href'};
-                          }
-                      }
-           },
-           \&file_exists);
+                        }
+             });
+
+$comic->update();

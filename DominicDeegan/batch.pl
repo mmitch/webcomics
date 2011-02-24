@@ -4,21 +4,22 @@ use strict;
 use lib '..';
 use Webcomic;
 
-my $url = 'http://www.dominic-deegan.com/';
-get_comics($url,
-           {'a' => sub { my ($tag, $parser, $info) = @_;
-                         if (tag_property($parser->get_tag('img'), 'alt', 'Previous')) {
-                             $info->{'next'} = $url . $tag->[1]->{'href'};
-                         }
-                     },
-            'div' => sub { my ($tag, $parser, $info) = @_;
-                           if (tag_property($tag, 'class', 'comic')) {
-                               $info->{'image'} = $parser->get_tag('img')->[1]->{'src'};
-                               $info->{'filename'} = basename($info->{'image'});
-                               if ($info->{'filename'} eq 'deegan2324.jpg') {
-                                   $info->{'filename'} = '20100824.jpg'
-                               }
+my $comic = Webcomic->new(url => 'http://www.dominic-deegan.com/');
+
+$comic->tags({'a' => sub { my ($tag, $info) = @_;
+                           if ($tag->next('img')->has_property('alt', 'Previous')) {
+                               $info->{'next'} = $comic->url() . $tag->get_property('href');
                            }
                        },
-           },
-           \&file_exists);
+              'div' => sub { my ($tag, $info) = @_;
+                             if ($tag->has_property('class', 'comic')) {
+                                 $info->{'image'} =  $comic->url() . $tag->next_image();
+                                 $info->{'filename'} = $comic->basename($info->{'image'});
+                                 if ($info->{'filename'} eq 'deegan2324.jpg') {
+                                     $info->{'filename'} = '20100824.jpg'
+                                 }
+                             }
+                         },
+             });
+
+$comic->update();

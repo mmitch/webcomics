@@ -4,19 +4,18 @@ use strict;
 use lib '../..';
 use Webcomic;
 
-my $url = 'http://www.vgcats.com/super/';
+my $comic = Webcomic->new(url => 'http://www.vgcats.com/super/');
 
-get_comics($url,
-           { 'td' => sub { my ($tag, $parser, $info) = @_;
-                            if (tag_property($tag, 'background', 'siteimages/comicbg.gif')) {
-                                $info->{'image'} = $url . $parser->get_tag('img')->[1]->{'src'};
-                                $info->{'filename'} = basename($info->{'image'});
+$comic->tags({ 'td' => sub { my ($tag, $info) = @_;
+                             if ($tag->has_property('background', 'siteimages/comicbg.gif')) {
+                                 $info->{'image'} = $comic->url() . $tag->next_image();
+                             }
+                         },
+               'table' => sub { my ($tag, $info) = @_;
+                                if ($tag->has_property('width', '518')) {
+                                    $info->{'next'} = $comic->url() . $tag->next_link();
+                                }
                             }
-                        },
-             'table' => sub { my ($tag, $parser, $info) = @_;
-                          if (tag_property($tag, 'width', '518')) {
-                              $info->{'next'} = $url . $parser->get_tag('a')->[1]->{'href'};
-                          }
-                      }
-           },
-          \&file_exists);
+             });
+
+$comic->update();
