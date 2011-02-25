@@ -1,7 +1,7 @@
 package Webcomic;
 
 use Any::Moose;
-use Tag;
+use Webcomic::Tag;
 use Cwd;
 use LWP::UserAgent;
 use HTML::TokeParser;
@@ -44,7 +44,7 @@ sub update {
         }
         my $parser = HTML::TokeParser->new(\$res->decoded_content());
         while (my $tag = $parser->get_tag(keys %$tags)) {
-            $self->tags()->{$tag->[0]}->(Tag->new(tag => $tag, parser => $parser), \%info);
+            $self->tags()->{$tag->[0]}->(Webcomic::Tag->new(tag => $tag, parser => $parser), \%info);
             last if ($info{'end'});
         }
         unless (defined $info{'filename'}) {

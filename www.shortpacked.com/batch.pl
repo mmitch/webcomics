@@ -2,20 +2,8 @@
 
 use strict;
 use lib '..';
-use Webcomic;
+use Webcomic::Comicpress;
 
-my $comic = Webcomic->new(url => 'http://shortpacked.com/');
-
-$comic->tags({ 'div' => sub { my ($tag, $info) = @_;
-                              if ($tag->has_property('id', 'comic')) {
-                                  $info->{'image'} = $tag->next_image();
-                              }
-                          },
-               'a' => sub { my ($tag, $info) = @_;
-                            if ($tag->has_property('class', 'navi-prev', 1)) {
-                                $info->{'next'} = $tag->get_property('href');
-                            }
-                        }
-             });
+my $comic = Webcomic::Comicpress->new(url => 'http://shortpacked.com/');
 
 $comic->update();

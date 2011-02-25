@@ -2,17 +2,8 @@
 
 use strict;
 use lib '..';
-use Webcomic;
+use Webcomic::Comicpress;
 
-my $comic = Webcomic->new(url => 'http://www.threepanelsoul.com/');
-
-$comic->tags({ 'div' => sub { my ($tag, $info) = @_;
-                              if ($tag->has_property('id', 'comic')) {
-                                  $info->{'image'} = $tag->next_image();
-                              } elsif ($tag->has_property('class', 'nav-previous')) {
-                                  $info->{'next'} = $tag->next_link();
-                              }
-                          },
-             });
+my $comic = Webcomic::Comicpress->new(url => 'http://www.threepanelsoul.com/');
 
 $comic->update();

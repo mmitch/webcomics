@@ -1,4 +1,4 @@
-package Tag;
+package Webcomic::Tag;
 
 use Any::Moose;
 
@@ -28,8 +28,8 @@ sub get_property {
 
 sub next {
     my ($self, $tag) = @_;
-    return Tag->new(tag => $self->parser()->get_tag($tag),
-                    parser => $self->parser());
+    return Webcomic::Tag->new(tag => $self->parser()->get_tag($tag),
+                              parser => $self->parser());
 }
 
 sub get_text {
