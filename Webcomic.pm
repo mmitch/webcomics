@@ -34,7 +34,7 @@ sub update {
     my $self = shift;
     my $next = $self->url();
     my $exitcode = 2;
-    my $ua = LWP::UserAgent->new;
+    my $ua = LWP::UserAgent->new('agent' => 'Firefox');
     my $tags = $self->tags();
     while (1) {
         my %info = ();
