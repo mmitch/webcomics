@@ -7,4 +7,4 @@
 
 INDEXURL=guest
 
-source ../main.sh
+. ../main.sh

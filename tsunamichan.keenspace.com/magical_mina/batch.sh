@@ -7,4 +7,4 @@
 
 INDEXURL=mina
 
-source ../main.sh
+. ../main.sh

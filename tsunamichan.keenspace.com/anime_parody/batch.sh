@@ -7,4 +7,4 @@
 
 INDEXURL=parody
 
-source ../main.sh
+. ../main.sh

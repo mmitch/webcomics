@@ -7,4 +7,4 @@
 
 INDEXURL=katwalk
 
-source ../main.sh
+. ../main.sh

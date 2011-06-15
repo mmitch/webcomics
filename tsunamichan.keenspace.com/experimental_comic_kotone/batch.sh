@@ -7,4 +7,4 @@
 
 INDEXURL=kotone
 
-source ../main.sh
+. ../main.sh
