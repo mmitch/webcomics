@@ -9,7 +9,7 @@ my $comic = Webcomic->new(url => 'http://grim.snafu-comics.com/');
 $comic->tags({ 'img' => sub { my ($tag, $info) = @_;
                               if ($tag->get_property('src') =~ m!/comics/!) {
                                   $info->{'image'} = $tag->get_property('src');
-                                  ($info->{'filename'} = $comic->basename($info->{'image'})) =~ s/_ppg//;
+                                  ($info->{'filename'} = $comic->basename($info->{'image'})) =~ s/_grim//;
                                   $info->{'filename'} =~ s/\.jpg$/.jpeg/;
                               }
                           },
