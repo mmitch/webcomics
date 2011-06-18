@@ -9,15 +9,15 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE="http://www.alpha-shade.com/www/picPages/"
-PICBASE="http://www.alpha-shade.com/www/ASpages/"
+PAGEBASE="http://www.alpha-shade.com/0Comics"
+PICBASE="http://www.alpha-shade.com/1Pages"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while true; do
 
     echo -n "fetching ${LATEST}: "
     
-    HTMLURL="${PAGEBASE}HPages.htm"
+    HTMLURL="${PAGEBASE}/pages.php"
 
     FILE="$(printf "AS%03d.jpg" "${LATEST}")"
 
@@ -25,7 +25,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${FILE}"
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}/${FILE}"
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
