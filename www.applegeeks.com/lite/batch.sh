@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 BASEURL=http://www.applegeeks.com/lite/
 
