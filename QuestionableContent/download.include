@@ -19,8 +19,22 @@ while true; do
 	else
 
 	    test -w ${FILE} && rm ${FILE}
-	    echo nok
-	    exit ${EXITCODE}
+
+	    EXT=gif
+	    FILE=${DATE}.${EXT}
+	    wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} ${PICBASE}${LATEST}.${EXT}
+	
+	    if [ -s ${FILE} ]; then
+		echo OK
+		chmod -w ${FILE}
+		EXITCODE=0
+	    else
+
+		test -w ${FILE} && rm ${FILE}
+		echo nok
+		exit ${EXITCODE}
+
+	    fi
 	fi
     fi
     
