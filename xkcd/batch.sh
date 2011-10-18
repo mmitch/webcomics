@@ -25,7 +25,7 @@ while true; do
 	[ "${LATEST}" == 404 ] && LATEST=405 && continue
 	exit ${EXITCODE}
     fi
-    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/')
+    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/')
     LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//')
     TITLE=$(grep '<h1>' "${TMPFILE}" | sed -e 's|^.*<h1>||' -e 's|</h1>.*$||')
     
