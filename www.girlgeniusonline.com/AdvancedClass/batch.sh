@@ -36,24 +36,29 @@ fetch()
 	echo skipping
     else
 	wget --user-agent="${USERAGENT}" -qO${HTMLFILE} ${PAGEBASE}${DATE}
-	PICURL=`< ${HTMLFILE} grep -i "<img.*${PICBASE}" | sed -e "s@.*\\(${PICBASE}/ggmain[0-9]\\{8\\}\....\\).*@\1@"`
+	PICURL=`< ${HTMLFILE} sed -ne "s@.*\\(${PICBASE}/ggmain[0-9]\\{8\\}[a-z]*\....\\)[\"'].*@\\1@;T;p"`
+	ENCODING=`< ${HTMLFILE} sed -ne "s@.*content=\"text/html; charset=\\([^\"]*\\).*@\\1@;T;p"`
+	test -z "${ENCODING}" && ENCODING="iso-8859-1"
+	TITLE=`iconv -f ${ENCODING} ${HTMLFILE} | sed -ne "s@.*' selected>\\([^<]*\\).*@\\1@;T;p"`
 	EXT=${PICURL:(-3)}
-	FILE=${DATE}.${EXT}
+	IMGFILE=${DATE}.${EXT}
+	TXTFILE=${DATE}.txt
 	if [ "${PICURL}" = "" ]; then
 	    echo nok: `head -1 ${HTMLFILE}`
 	else
-	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE} -qO${FILE} ${PICURL}
-	    if [ "$(file -bi ${FILE})" = "text/html" ]; then
-	        rm ${FILE}
+	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}/${DATE} -qO${IMGFILE} ${PICURL}
+	    if [ "$(file -bi ${IMGFILE})" = "text/html" ]; then
+	        rm ${IMGFILE}
 	    fi
 
-	    if [ -s ${FILE} ]; then
-	        echo OK
-	        chmod -w ${FILE}
+	    if [ -s ${IMGFILE} ]; then
+	        echo OK $TITLE
+	        chmod -w ${IMGFILE}
 	        test -w ${HTMLFILE} && rm ${HTMLFILE}
+	        echo $TITLE > ${TXTFILE}
 	        EXITCODE=0
 	    else
-	        test -w ${FILE} && rm ${FILE}
+	        test -w ${IMGFILE} && rm ${IMGFILE}
 	        echo nok
 	    fi
 	fi
