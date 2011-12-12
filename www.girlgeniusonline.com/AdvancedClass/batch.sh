@@ -30,7 +30,7 @@ fetch()
 {
     echo -n "fetching ${DATE}: "
     HTMLFILE=${DATE}.html
-    FILE=${DATE}.{jpg,gif,png}
+    FILE=${DATE}.[gjp][inp][fg]
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
