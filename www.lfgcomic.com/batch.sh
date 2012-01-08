@@ -10,7 +10,7 @@ fi
 echo reading from ${LATEST}
 
 PAGEBASE="http://www.lfgcomic.com/page/"
-PICBASE="http://www.lfgcomic.com/comics/"
+PICBASE="http://www.lfgcomic.com/uploads/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while true; do
@@ -26,9 +26,9 @@ while true; do
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
     else
+	SOURCE_FILE=`lynx --dump ${PAGEBASE}${LATEST}|grep .gif|perl -p -e s'/[\[\] ]//g'`
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${SOURCE_FILE}"
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${FILENAME}"
-	
 	if [ -s ${FILE} ]; then
 	    echo OK
 	    chmod -w ${FILE}
