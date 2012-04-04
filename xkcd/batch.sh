@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{3}-.*.[jp][pn]g' | tail -n 1 | cut -c 1-3 | sed 's/^0*//')
+LATEST=$(ls | egrep '[0-9]{3}[0-9]?-.*.[jp][pn]g' | sort -n | tail -n 1 | cut -f 1 -d - | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
@@ -27,7 +27,7 @@ while true; do
     fi
     FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/')
     LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//')
-    TITLE=$(grep '<h1>' "${TMPFILE}" | sed -e 's|^.*<h1>||' -e 's|</h1>.*$||')
+    TITLE=$(grep '<div.*id="ctitle".*>' "${TMPFILE}" | sed -e 's|^.*id="ctitle">||' -e 's|</div.*$||')
     
     echo -n "${FILENAME} "
     
