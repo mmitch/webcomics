@@ -17,6 +17,7 @@ $recache     = $_GET['recache'];
 $tag         = $_GET['tag'];
 $rev         = $_GET['rev'];
 $user        = $_GET['user'];
+$startid     = $_GET['startid'];
 $lastVisited = $_COOKIE['lastVisited'];
 $username    = $_COOKIE['whoami'];
 
@@ -159,6 +160,10 @@ function list_all_comics($comics)
 	   $myhref, $key, $tag, $lastVisited[$tag], $first, $val['name']);
     $first = '';
     echo " ($unread new)";
+    if ($unread > 1) {
+      printf(' <small><a href="%s?comic=%s&tag=%s&id=%s&startid=%s">show all new</a></small>',
+	     $myhref, $key, $tag, ($lastVisited[$tag] + $unread), $lastVisited[$tag]);
+    }
     echo "</li>\n";
   }
 
@@ -403,7 +408,13 @@ if ($comics[$comic]) {
   get_index($selected);
 
   if (isset($id)) {
-    show_strip($selected, $id);
+    if (isset($startid)) {
+      for ($i = $startid; $i <= $id; $i++) {
+	show_strip($selected, $i);
+      }
+    } else {
+      show_strip($selected, $id);
+    }
   } else {
     show_comic($selected);
   }
