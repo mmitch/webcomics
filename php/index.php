@@ -161,7 +161,7 @@ function list_all_comics($comics)
     $first = '';
     echo " ($unread new)";
     if ($unread > 1) {
-      if ($unread <= 3) {
+      if ($unread <= 32) {
 	printf(' <small><a href="%s?comic=%s&tag=%s&id=%s&startid=%s">show all new</a></small>',
 	       $myhref, $key, $tag, ($lastVisited[$tag] + $unread), $lastVisited[$tag]);
       } else {
