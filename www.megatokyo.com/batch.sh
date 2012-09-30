@@ -4,7 +4,7 @@ EXITCODE=2
 
 LATEST=$(ls | egrep '^[0-9]+\.(jpg|gif)$' | sort -n | cut -d . -f 1 | tail -1)
 if [ -z ${LATEST} ]; then
-    LATEST=1  # first strip ever
+    LATEST=0001  # first strip ever
 fi
 
 echo reading from ${LATEST}
@@ -77,7 +77,7 @@ while true; do
 	fi
     fi
     
-    LATEST=$((${LATEST} + 1))
+    LATEST=`printf "%04d" $((${LATEST} + 1))`
 
 done
 
