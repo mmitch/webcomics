@@ -7,11 +7,11 @@ if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
 
-STOP=$(wget -qO- www.sakurai-cartoons.de/actual.php3 | fgrep 'href=actual.php3?gross=' | head -1 | sed -e 's/^.*gross=//' -e 's/>.*$//')
+STOP=$(wget -qO- www.sakurai-cartoons.de/actual.php | fgrep 'href=actual.php?gross=' | head -1 | sed -e 's/^.*gross=//' -e 's/>.*$//')
 
 echo reading from ${LATEST} up to ${STOP}
 
-PAGEBASE="http://www.sakurai-cartoons.de/actual.php3?gross="
+PAGEBASE="http://www.sakurai-cartoons.de/actual.php?gross="
 PICBASE="http://www.sakurai-cartoons.de/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
