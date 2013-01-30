@@ -35,6 +35,7 @@ sub update {
     my $next = $self->url();
     my $exitcode = 2;
     my $ua = LWP::UserAgent->new('agent' => 'Firefox');
+    $ua->default_header('Referer' => $self->url());
     my $tags = $self->tags();
     while (1) {
         my %info = ();
