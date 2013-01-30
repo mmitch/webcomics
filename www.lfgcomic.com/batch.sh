@@ -29,7 +29,7 @@ while true; do
 	SOURCE_FILE=`lynx --dump ${PAGEBASE}${LATEST}|grep .gif|perl -p -e s'/[\[\] ]//g'`
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${SOURCE_FILE}"
 
-	if [ -s ${FILE} ]; then
+	if [ -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
 	    echo OK
 	    chmod -w ${FILE}
 	    LASTFILENAME="${FILENAME}"
