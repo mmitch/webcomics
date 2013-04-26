@@ -7,11 +7,11 @@ if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
 
-STOP=$(wget -qO- www.sakurai-cartoons.de/actual.php | fgrep 'href=actual.php?gross=' | head -1 | sed -e 's/^.*gross=//' -e 's/>.*$//')
+STOP=$(wget -qO- http://www.sakurai-cartoons.de/actual.php5 | fgrep 'href=actual.php5?gross=' | head -1 | sed -e 's/^.*gross=//' -e 's/>.*$//')
 
 echo reading from ${LATEST} up to ${STOP}
 
-PAGEBASE="http://www.sakurai-cartoons.de/actual.php?gross="
+PAGEBASE="http://www.sakurai-cartoons.de/actual.php5?gross="
 PICBASE="http://www.sakurai-cartoons.de/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
@@ -32,7 +32,7 @@ while [ ${LATEST} -le ${STOP} ] ; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${IMAGE}"
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${IMAGE}"
 	
 	if [ -s "${FILE}" -a $( stat -c %s "${FILE}" ) -gt 100 ]; then
 	    echo OK
