@@ -37,9 +37,10 @@ fetch()
     else
 	wget --user-agent="${USERAGENT}" -qO${HTMLFILE} ${PAGEBASE}${DATE}
 	PICURL=`< ${HTMLFILE} sed -ne "s@.*\\(${PICBASE}/ggmain[0-9]\\{8\\}[a-z]*\....\\)[\"'].*@\\1@;T;p"`
-	ENCODING=`< ${HTMLFILE} sed -ne "s@.*content=\"text/html; charset=\\([^\"]*\\).*@\\1@;T;p"`
+#	ENCODING=`< ${HTMLFILE} sed -ne "s@.*content=\"text/html; charset=\\([^\"]*\\).*@\\1@;T;p"`
 	test -z "${ENCODING}" && ENCODING="iso-8859-1"
-	TITLE=`iconv -f ${ENCODING} ${HTMLFILE} | sed -ne "s@.*' selected>\\([^<]*\\).*@\\1@;T;p"`
+#	TITLE=`iconv -f ${ENCODING} ${HTMLFILE} | sed -ne "s@.*' selected>\\([^<]*\\).*@\\1@;T;p"`
+	TITLE=`sed -ne "s@.*' selected>\\([^<]*\\).*@\\1@;T;p" ${HTMLFILE}`
 	EXT=${PICURL:(-3)}
 	IMGFILE=${DATE}.${EXT}
 	TXTFILE=${DATE}.txt
