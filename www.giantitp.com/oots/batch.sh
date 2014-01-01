@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{6}.(gif|jpg)' | tail -n 1 | cut -c 1-6 | sed 's/^0*//')
+LATEST=$(ls | egrep '[0-9]{6}.(gif|jpg|png)' | tail -n 1 | cut -c 1-6 | sed 's/^0*//')
 if [ -z ${LATEST} ]; then
     LATEST=1  # first strip ever
 fi
