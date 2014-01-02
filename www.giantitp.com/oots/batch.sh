@@ -15,12 +15,12 @@ USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 export USERAGENT
 
 while true; do
-    DATE=$(printf %04d ${LATEST})
+    CURRENT=$(printf %06d ${LATEST})
 
-    echo -n "fetching ${DATE}: "
-    HTML="${PAGEBASE}oots${DATE}.html"
+    echo -n "fetching ${CURRENT}: "
+    HTML="${PAGEBASE}oots${CURRENT}.html"
 
-    if [ \( -e 00${DATE}.gif -a ! -w 00${DATE}.gif \) -o \( -e 00${DATE}.png -a ! -w 00${DATE}.png \) -o \( -e 00${DATE}.jpg -a ! -w 00${DATE}.jpg \) ]; then
+    if [ \( -e ${CURRENT}.gif -a ! -w ${CURRENT}.gif \) -o \( -e ${CURRENT}.png -a ! -w ${CURRENT}.png \) -o \( -e ${CURRENT}.jpg -a ! -w ${CURRENT}.jpg \) ]; then
 	echo skipping
     else
 
@@ -32,7 +32,7 @@ while true; do
 		| sed -e 's,^.*/comics/images/,,' -e 's,".*$,,'
 	    )"
 	
-	FILE="00${DATE}.${FILENAME#*.}"
+	FILE="${CURRENT}.${FILENAME#*.}"
 
 	wget --user-agent="${USERAGENT}" --referer="${HTML}" -qO"${FILE}" "${PICBASE}${FILENAME}"
 	
