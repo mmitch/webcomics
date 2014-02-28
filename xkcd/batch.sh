@@ -25,8 +25,8 @@ while true; do
 	[ "${LATEST}" == 404 ] && LATEST=405 && continue
 	exit ${EXITCODE}
     fi
-    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/')
-    LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//')
+    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/' | head -n 1)
+    LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//' | head -n 1)
     TITLE=$(grep '<div.*id="ctitle".*>' "${TMPFILE}" | sed -e 's|^.*id="ctitle">||' -e 's|</div.*$||')
     
     echo -n "${FILENAME} "
@@ -40,7 +40,10 @@ while true; do
 	fi
     fi
 
-    FILE="$(printf "%03d-%s" "${LATEST}" "${FILENAME}")"
+    # remove path, if present (e.g. comic #1331)
+    FILE="${FILENAME##*/}"
+
+    FILE="$(printf "%03d-%s" "${LATEST}" "${FILE}")"
 
     if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	echo skipping
