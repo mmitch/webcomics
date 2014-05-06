@@ -1,5 +1,5 @@
 <?
-// Copyright (C) 2002-2008,2010   Christian Garbs <mitch@cgarbs.de>
+// Copyright (C) 2002-2008,2010,2014   Christian Garbs <mitch@cgarbs.de>
 // licensed under GNU GPL v3 or later
 
 // import configuration
@@ -33,27 +33,12 @@ header('Content-Type: text/html; charset=utf-8');
     <title>Mitchs PHP Comicbrowser</title>
 <?
 if ($css) {
-  echo "<link rel=\"stylesheet\" href=\"$css\">\n";
+  echo "    <link rel=\"stylesheet\" href=\"$css\">\n";
 }
 ?>
+    <script src="js.js" type="text/javascript"></script>
   </head>
   <body onload="document.getElementById('linknext').focus();" onkeydown="keypress(event);">
-
-<script type="text/javascript">
-function keypress(e)
-{
-        var keynum;
-        if(e.which) { keynum = e.which; }// Netscape/Firefox/Opera
-        else
-        if(window.event) { keynum = e.keyCode; } // IE
-
-        if (keynum == 37) { window.location = document.getElementById("linkprev").href; }
-        else
-        if (keynum == 39) { window.location = document.getElementById("linknext").href; }
-}
-</script>
-
-
 <?
 #echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
 #echo "<h3>";
