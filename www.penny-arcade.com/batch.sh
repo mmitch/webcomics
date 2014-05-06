@@ -29,22 +29,25 @@ DS=$(echo ${DS} | sed 's/^0*//')
 TMPFILE=pennyarcade.tmp
 
 while true; do
+
     DATE=$(printf %04d%02d%02d ${YS} ${MS} ${DS})
     URLDATE=$(printf %04d/%02d/%02d/ ${YS} ${MS} ${DS})
 
     echo -n "fetching ${DATE}: "
 
     if ! wget --max-redirect 0 --user-agent="${USERAGENT}" -qO${TMPFILE} ${PAGEBASE}${URLDATE}; then
-	echo nok
+	echo 'nok (no comic)'
     else
 
-	STRIPTITLE=$(grep ${PICBASE} ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
-	FILENAME=$(grep ${PICBASE} ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
+	PATTERN="src=\"http://(art\\.)?penny-arcade(\\.smugmug)?\\.com/photos/"
+	STRIPTITLE=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
+	FILENAME=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
 	FULLURL=${PICBASE}${FILENAME}
 
 	if [ -z ${FILENAME} ] ; then
-	    STRIPTITLE=$(grep ${PICBASE2} ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
-	    FILENAME=$(grep ${PICBASE2} ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
+	    PATTERN="src=\"${PICBASE2}"
+	    STRIPTITLE=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
+	    FILENAME=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
 	    if [[ $FILENAME =~ ^http ]] ; then
 		FULLURL=${FILENAME}
 	    else
@@ -56,6 +59,8 @@ while true; do
 
 	if [ -e ${FILE} -a ! -w ${FILE} ]; then
 	    echo skipping
+	elif [ -z "${EXT}" ]; then
+	    echo 'nok (no extension)'
 	else
 
 	    wget --user-agent="${USERAGENT}" --referer=${PAGEBASE}${URLDATE} -qO${FILE} ${FULLURL}
@@ -67,7 +72,7 @@ while true; do
 		EXITCODE=0
 	    else
 		test -w ${FILE} && rm ${FILE}
-		echo NOK
+		echo 'nok (no image)'
 	    fi
 	fi
     fi
