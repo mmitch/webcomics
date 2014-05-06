@@ -67,7 +67,7 @@ function keypress(e)
 
 
 // ****************** Swipe navigation *******************
-// very very loosely based on the buggy example from http://stackoverflow.com/a/23230280
+// very loosely based on the example from http://stackoverflow.com/a/23230280
 
 var xDown = null;
 var yDown = null;
