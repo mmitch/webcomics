@@ -38,7 +38,7 @@ if ($css) {
 ?>
     <script src="js.js" type="text/javascript"></script>
   </head>
-  <body onload="document.getElementById('linknext').focus();" onkeydown="keypress(event);">
+  <body onload="init();">
 <?
 #echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
 #echo "<h3>";
