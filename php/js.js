@@ -9,9 +9,6 @@ function init()
     document.getElementById('linknext').focus()
 
     addEventHandler('touchstart', handleTouchStart);
-    addEventHandler('touchend', handleTouchEnd);
-    addEventHandler('touchleave', handleTouchEnd);
-    addEventHandler('touchcancel', handleTouchCancel);
     addEventHandler('touchmove', handleTouchMove);
     addEventHandler('keydown', keypress);
 }
@@ -67,14 +64,10 @@ function keypress(e)
 
 
 // ****************** Swipe navigation *******************
-// very loosely based on the example from http://stackoverflow.com/a/23230280
+// based on the example from http://stackoverflow.com/a/23230280
 
 var xDown = null;
 var yDown = null;
-
-// minimum pixel distance to trigger swipe effect
-var xThreshold = 100;
-var yThreshold = 100;
 
 // remember start position of swipe
 function handleTouchStart(evt)
@@ -87,32 +80,32 @@ function handleTouchStart(evt)
 }
 
 // check end position of swipe
-function handleTouchEnd(evt)
+function handleTouchMove(evt)
 {
     if ( ! xDown || ! yDown )
     {
         return;
     }
 
-    if (evt.changedTouches.length == 0)
+    if (evt.touches.length == 0)
     {
 	return;
     }
 
-    var xUp = evt.changedTouches[0].clientX
-    var yUp = evt.changedTouches[0].clientY;
+    var xUp = evt.touches[0].clientX
+    var yUp = evt.touches[0].clientY;
 
     var xDiff = xDown - xUp;
     var yDiff = yDown - yUp;
 
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) /*most significant*/
     { 
-        if ( xDiff >= xThreshold )
+        if ( xDiff > 0 )
 	{
             /* left swipe */
 	    navigate_next();
         }
-	else if ( xDiff <= -xThreshold )
+	else
 	{
             /* right swipe */
 	    navigate_prev();
@@ -120,29 +113,17 @@ function handleTouchEnd(evt)
     }
     else
     {
-        if ( yDiff >= yThreshold )
+        if ( yDiff > 0 )
 	{
             /* up swipe */
         }
-	else if (yDiff <= -yThreshold )
+	else
 	{ 
             /* down swipe */
 	}
     }
     /* reset values */
-    handleTouchReset();
-}
-
-function handleTouchCancel(evt)
-{
     xDown = null;
     yDown = null;
-}
-
-function handleTouchMove(evt)
-{
-    // prevent additional mouse events besides the initial click
-    // TODO: check if needed, remove?
-    evt.preventDefault();
 }
 
