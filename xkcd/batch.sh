@@ -16,6 +16,15 @@ TMPFILE=./tmp.html
 
 while true; do
 
+    # SKIP VERY SPECIAL COMICS
+    case ${LATEST} in
+	1350)   # pure javascript
+	    echo "skipping ${LATEST}..."
+	    LATEST=$((${LATEST} + 1))
+	    continue
+	    ;;
+    esac
+
     echo -n "fetching ${LATEST}: "
     
     HTMLURL="${PAGEBASE}${LATEST}/"
