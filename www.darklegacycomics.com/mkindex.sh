@@ -10,9 +10,9 @@ ls *.[gjp][ipn][fg] | sort | while read FILE; do
     TITLEFILE=${NUMBER0}.txt
     if [ -s ${TITLEFILE} ] ; then
 	read TEXT < ${TITLEFILE}
-	TEXT="${NUMBER0}: ${TEXT}"
+	TEXT="${NUMBER}: ${TEXT}"
     else
-	TEXT=${NUMBER0}
+	TEXT=${NUMBER}
     fi
 
     echo -e "${FILE}\t${URL}\t${TEXT}"
