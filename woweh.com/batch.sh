@@ -34,7 +34,7 @@ while true; do
     ALTTEXT="$(fgrep comicpane ${TMPFILE} | sed -e 's/^.* alt="//' -e 's/".*$//')"
     TITLETEXT="$(fgrep comicpane ${TMPFILE} | sed -e 's/^.* title="//' -e 's/".*$//')"
     PICURL="$(fgrep comicpane ${TMPFILE} | sed -e 's/^.* src="//' -e 's/".*$//')"
-    NEXTURL="$(fgrep navi-next ${TMPFILE} | sed -e 's/^.* href="//' -e 's/".*$//')"
+    NEXTURL="$(fgrep navi-next ${TMPFILE} | fgrep -v navi-void | sed -e 's/^.* href="//' -e 's/".*$//')"
 
 #    case ${LATEST} in
 #	186|209)
@@ -50,7 +50,7 @@ while true; do
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} "${PICURL}"
 
-	if [ -n ${NEXTURL} -a -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
+	if [ -n "${NEXTURL}" -a -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
 	    if [ "${TITLETEXT}" = "${ALTTEXT}" ] ; then
 		echo "${TITLETEXT}" > ${TEXT}
 	    else
