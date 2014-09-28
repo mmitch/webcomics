@@ -51,7 +51,7 @@ while true; do
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} "${PICURL}"
 
-	if [ -n ${NEXTURL} -a -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
+	if [ -n "${NEXTURL}" -a -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
 	    echo "${TITLENAME}<br><small>${TITLETEXT}<br><small>${ALTTEXT}</small></small>" > ${TEXT}
 	    echo "${PAGEURL}" > ${LINK}
 	    chmod -w ${FILE}
