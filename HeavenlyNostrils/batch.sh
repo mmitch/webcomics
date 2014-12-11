@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{8}.gif' | tail -n 1 | cut -c -8)
+LATEST=$(ls | egrep '[0-9]{8}.(gif|jpeg)' | tail -n 1 | cut -c -8)
 if [ -z ${LATEST} ]; then
     LATEST=20120422  # first strip ever
 fi
@@ -25,6 +25,8 @@ while [[ "${LATEST}" ]] ; do
 
     case $PICEXT in
 	gif)
+	    ;;
+	jpeg)
 	    ;;
 	*)
 	    echo "unknown PICEXT <${PICEXT}>" >&2
