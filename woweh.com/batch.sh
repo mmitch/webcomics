@@ -68,8 +68,14 @@ while true; do
 	fi
     fi
     
-    if [ ${NEXTURL} = ${PAGEBASE} ]; then
+    if [ "${NEXTURL}" = "${PAGEBASE}" ]; then
 	echo at end: stop.
+	rm -f "$TMPFILE"
+	exit ${EXITCODE}
+    fi
+    
+    if [ -z "${NEXTURL}" ]; then
+	echo NO NEXTURL: stop.
 	rm -f "$TMPFILE"
 	exit ${EXITCODE}
     fi
