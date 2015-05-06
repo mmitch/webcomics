@@ -1,4 +1,4 @@
-<?
+<?php
 // $Id: with_db.inc,v 1.5 2006-12-28 09:37:02 mitch Exp $
 
 //################ Internal functions for only this mode

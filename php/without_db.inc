@@ -1,4 +1,4 @@
-<?
+<?php
 // $Id: without_db.inc,v 1.2 2006-12-26 23:24:14 mitch Exp $
 
 //################ Internal functions for only this mode

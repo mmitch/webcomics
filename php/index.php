@@ -1,4 +1,4 @@
-<?
+<?php
 // Copyright (C) 2002-2008,2010,2014   Christian Garbs <mitch@cgarbs.de>
 // licensed under GNU GPL v3 or later
 
@@ -31,7 +31,7 @@ header('Content-Type: text/html; charset=utf-8');
 <html>
   <head>
     <title>Mitchs PHP Comicbrowser</title>
-<?
+<?php
 if ($css) {
   echo "    <link rel=\"stylesheet\" href=\"$css\">\n";
 }
@@ -39,7 +39,7 @@ if ($css) {
     <script src="js.js" type="text/javascript"></script>
   </head>
   <body onload="init();">
-<?
+<?php
 #echo "<h1>tag=$tag <br>id=$id <br>comic=$comic <br>lV=$lastVisited</h1>";
 #echo "<h3>";
 #echo serialize($lastVisited);
