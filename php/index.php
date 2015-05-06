@@ -1,5 +1,5 @@
 <?php
-// Copyright (C) 2002-2008,2010,2014   Christian Garbs <mitch@cgarbs.de>
+// Copyright (C) 2002-2008,2010,2014-2015   Christian Garbs <mitch@cgarbs.de>
 // licensed under GNU GPL v3 or later
 
 // import configuration
@@ -11,15 +11,25 @@ if ($database) {
 }
 
 // import variables (for register_globals=off)
-$comic       = $_GET['comic'];
-$id          = $_GET['id'];
-$recache     = $_GET['recache'];
-$tag         = $_GET['tag'];
-$rev         = $_GET['rev'];
-$user        = $_GET['user'];
-$startid     = $_GET['startid'];
-$lastVisited = $_COOKIE['lastVisited'];
-$username    = $_COOKIE['whoami'];
+//
+// DIRTY HACK(?) AHEAD!
+//
+// As we do this only for shorter, cleaner code ($foo instead of $_GET['foo'])
+// and the code below uses isset($foo) and expects these to be unset sometime,
+// we take the crappy short route and ignore the "Undefined index" notices by
+// throwing away ALL errors (using @).
+// This should not be a security problem because there are no deeper checks
+// anyway.  And something like this would be totally nuts:
+// if (isset($_GET['foo']) { $foo = $_GET['foo'] } else { unset $foo };
+$comic       = @$_GET['comic'];
+$id          = @$_GET['id'];
+$recache     = @$_GET['recache'];
+$tag         = @$_GET['tag'];
+$rev         = @$_GET['rev'];
+$user        = @$_GET['user'];
+$startid     = @$_GET['startid'];
+$lastVisited = @$_COOKIE['lastVisited'];
+$username    = @$_COOKIE['whoami'];
 
 handle_cookies();
 
@@ -388,7 +398,7 @@ if (isset($id) && ($id < 0)) {
   unset($comic, $id, $tag);
 }
 
-if ($comics[$comic]) {
+if (isset($comics[$comic])) {
 
   $selected = $comics[$comic];
   $files  = array();
