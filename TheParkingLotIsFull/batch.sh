@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# needs dosage from http://slipgate.za.net/dosage
-# Debian testing package available
+# needs dosage from http://dosage.rocks/
 #
-mainline -b .. -c TheParkingLotIsFull
+dosage -b .. -c TheParkingLotIsFull
 

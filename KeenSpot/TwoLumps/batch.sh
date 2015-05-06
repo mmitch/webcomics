@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# needs dosage from http://slipgate.za.net/dosage or Debian
+# needs dosage from http://dosage.rocks/
 #
-mainline -b ../.. -c KeenSpot/TwoLumps
+dosage -b ../.. -c KeenSpot/TwoLumps
 
