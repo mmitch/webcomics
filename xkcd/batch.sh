@@ -10,7 +10,7 @@ fi
 echo reading from ${LATEST}
 
 PAGEBASE="http://xkcd.com/"
-PICBASE="http://imgs.xkcd.com/comics/"
+PICBASE="//imgs.xkcd.com/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=./tmp.html
 
@@ -18,7 +18,7 @@ while true; do
 
     # SKIP VERY SPECIAL COMICS
     case ${LATEST} in
-	1350)   # pure javascript
+	1350|1416|1525)
 	    echo "skipping ${LATEST}..."
 	    LATEST=$((${LATEST} + 1))
 	    continue
@@ -34,7 +34,7 @@ while true; do
 	[ "${LATEST}" == 404 ] && LATEST=405 && continue
 	exit ${EXITCODE}
     fi
-    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/' | head -n 1)
+    FILENAME=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e "s|^.*src=\"${PICBASE}||" -e 's/\.jpg".*$/.jpg/' -e 's/\.png".*$/.png/' -e 's/\.gif".*$/.gif/' | head -n 1)
     LONGTEXT=$(grep "src=\"${PICBASE}" "${TMPFILE}" | sed -e 's/^.*title="//' -e 's/".*$//' | head -n 1)
     TITLE=$(grep '<div.*id="ctitle".*>' "${TMPFILE}" | sed -e 's|^.*id="ctitle">||' -e 's|</div.*$||')
     
@@ -43,7 +43,7 @@ while true; do
     # test for big image (original filename contains "_small")
     if [[ ${FILENAME} == *_small.* ]] ; then
 	FILENAME_SHORT="${FILENAME/_small./.}"
-	if wget -qO/dev/null "${PICBASE}${FILENAME}" ; then
+	if wget -qO/dev/null http:"${PICBASE}${FILENAME}" ; then
 	    FILENAME="${FILENAME_SHORT}"
 	    echo -n "...using big variant... "
 	fi
@@ -58,7 +58,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}${FILENAME}"
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" http:"${PICBASE}${FILENAME}"
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
