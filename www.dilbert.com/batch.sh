@@ -22,11 +22,18 @@ while [ "${CURRENT}" -gt "${X}" ] ; do
     echo -n "getting ${X}: "
 
     PAGEURL=${BASEURL}/fast/${X:0:4}-${X:4:2}-${X:6:2}/
-    PICURL=$(
+    IMGTAG=$(
 	wget -qO- ${PAGEURL} |
-	grep '<img .* class="img-responsive' |
-	sed -e 's,^.* src=",,' -e 's," .*$,,'
-    )
+	    grep '<img.* class="img-responsive'
+       )
+    PICURL=$(
+	echo $IMGTAG |
+	    sed -e 's,^.* src=",,' -e 's," .*$,,'
+	  )
+    ALTTEXT=$(
+	echo $IMGTAG |
+	    sed -e 's,^.* alt=",,' -e 's," .*$,,'
+	  )
     if [ "$PICURL" = '/dyn/str_strip/default_th.gif' ] ; then
 	echo "new picture not ready yet"
 	exit ${EXITCODE}
@@ -35,6 +42,7 @@ while [ "${CURRENT}" -gt "${X}" ] ; do
     wget -qO${TMP} --referer=${PAGEURL} ${PICURL}
     if [ -s ${TMP} ]; then
 	mv ${TMP} ${X}.${EXT}
+	echo "$ALTTEXT" > ${X}.txt
         echo "OK"
         EXITCODE=0
     else
