@@ -87,7 +87,7 @@ function change_login()
 {
   global $myhref;
 
-  echo '<p><form action="'.$myhref.'" method=\"post\">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></p>';
+  echo '<section><form action="'.$myhref.'" method=\"post\">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></section>';
   echo "\n";
 }
 
@@ -96,9 +96,9 @@ function print_login()
   global $username;
 
   if ($username) {
-    echo '<p>Welcome, '.htmlspecialchars($username).'</p>';
+    echo '<section>Welcome, '.htmlspecialchars($username).'</section>';
   } else {
-    echo '<p>You are not logged in.</p>';
+    echo '<section>You are not logged in.</section>';
   }
   echo "\n";
 

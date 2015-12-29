@@ -37,16 +37,17 @@ handle_cookies();
 header('Content-Type: text/html; charset=utf-8');
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
   <head>
     <title>Mitchs PHP Comicbrowser</title>
+    <meta charset="UTF-8">
 <?php
 if ($css) {
   echo "    <link rel=\"stylesheet\" href=\"$css\">\n";
 }
 ?>
-    <script src="js.js" type="text/javascript"></script>
+    <script src="js.js"></script>
   </head>
   <body onload="init();">
 <?php
@@ -127,6 +128,7 @@ function list_all_comics($comics)
 
   print_login();
 
+  echo "<section>";
   echo "<h2>subscribed comics with unread strips</h2>\n";
   echo "<ul>\n";
 
@@ -168,7 +170,9 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
+  echo "</section>";
 
+  echo "<section>";
   echo "<h2>new comics</h2>\n";
   echo "<ul>\n";
 
@@ -184,7 +188,9 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
+  echo "</section>";
 
+  echo "<section>";
   echo "<h2>subscribed comics, no unread strips</h2>\n";
   echo "<ul>\n";
 
@@ -205,7 +211,9 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
+  echo "</section>";
 
+  echo "<section>";
   echo "<h2>unsubscribed comics</h2>\n";
   echo "<ul>\n";
 
@@ -222,8 +230,9 @@ function list_all_comics($comics)
   }
 
   echo "</ul>\n";
+  echo "</section>";
   change_login();
-  echo "<p><br><small><a href=\"$myhref?recache=1\">rescan comics</a></small></p>\n";
+  echo "<section><br><small><a href=\"$myhref?recache=1\">rescan comics</a></small></section>\n";
 }
 
 function get_index($me)
@@ -281,6 +290,7 @@ function show_strip($me, $id)
     $id = $premax;
   }
 
+  echo "<article>";
   printf('<h2>%s <small><small>[%s/%s] ',
 	 $me['name'], $id, $premax);
   printf('[<a href="%s">online</a>]',
@@ -289,7 +299,7 @@ function show_strip($me, $id)
 	 $titles[$id]);
 
   // upper navigation
-  echo "<table><tr><td align=\"left\">";
+  echo "<nav>";
   if ($id > 0) {
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\" id=\"linkprev\">[&lt;]</a>\n";
@@ -302,7 +312,7 @@ function show_strip($me, $id)
   } else {
     echo "<a href=\"$myhref\" id=\"linknext\">[comics]</a>\n";
   }
-  echo "<br>\n";
+  echo "</nav>\n";
 
   // picture
   if ($id < $premax) {
@@ -323,14 +333,14 @@ function show_strip($me, $id)
     $fp = fopen("$file", "r");
 
     if ($fp) {
-      echo "<p>\n";
+      echo "<section>\n";
       while (! feof($fp)) {
-	echo fgets($fp, 8192); // max 8k per line
+        echo fgets($fp, 8192); // max 8k per line
       }
-      echo "</p>\n";
+      echo "</section>\n";
 
       if (! fclose($fp)) {
-	echo "<p><b>Error closing liner's notes!</b></p>\n";
+        echo "<p><b>Error closing liner's notes!</b></p>\n";
       }
     } else {
       echo "<p><b>Error closing liner's notes!</b></p>\n";
@@ -338,7 +348,7 @@ function show_strip($me, $id)
   }
 
   // lower navigation
-  echo "<br><br>";
+  echo "<nav><br>";
   if ($id > 0) {
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\">[&lt;]</a>\n";
@@ -349,9 +359,9 @@ function show_strip($me, $id)
     echo "<a href=\"$nextref\">[&gt;]</a>\n";
     echo "<a href=\"$lastref\">[&gt;&gt;]</a>\n";
   }
-  echo "</td></tr><tr><td>\n";
-  echo "<small><a href=\"$unsubref\">[unsubscribe]</a></small>\n";
-  echo "</td></tr></table>\n";
+  echo "</nav>\n";
+  echo "<section><small><a href=\"$unsubref\">[unsubscribe]</a></small></section>\n";
+  echo "</article>";
 }
 
 function show_comic($me)
@@ -364,10 +374,11 @@ function show_comic($me)
   $revrev = 1 - $rev;
   $tag = $me['tag'];
 
+  echo "<section>";
   echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
   printf("<h2>%s</h2>\n",
 	 $me['name']);
-  echo "<p><a href=\"$myhref?comic=$comic&tag=$tag&rev=$revrev\">[reverse]</a></p>\n";
+  echo "<nav><a href=\"$myhref?comic=$comic&tag=$tag&rev=$revrev\">[reverse]</a></nav>\n";
   echo "<ul>\n";
 
   if ($rev) {
@@ -381,7 +392,8 @@ function show_comic($me)
   }
 
   echo "</ul>\n";
-  echo "<p><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></p>\n";
+  echo "<nav><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></nav>\n";
+  echo "</section>";
 }
 
 
@@ -427,7 +439,9 @@ close_db();
 
 ?>
 
-    <hr>
-    <address><small>brought to you by the <a href="http://github.com/mmitch/webcomics">webcomics</a> script</small></address>
+    <footer>
+      <hr>
+      <address>brought to you by the <a href="http://github.com/mmitch/webcomics">webcomics</a> script</address>
+    </footer>
   </body>
 </html>
