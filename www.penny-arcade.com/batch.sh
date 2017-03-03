@@ -17,9 +17,9 @@ DE=$(date +%d)
 
 echo reading from ${YS}-${MS}-${DS} up to ${YE}-${ME}-${DE}
 
-PAGEBASE="http://www.penny-arcade.com/comic/"
-PICBASE="http://art.penny-arcade.com/photos/"
-PICBASE2="http://www.penny-arcade.com/images/"
+PAGEBASE="https://www.penny-arcade.com/comic/"
+PICBASE="https://art.penny-arcade.com/photos/"
+PICBASE2="https://www.penny-arcade.com/images/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 YS=$(echo ${YS} | sed 's/^0*//')
@@ -39,7 +39,7 @@ while true; do
 	echo 'nok (no comic)'
     else
 
-	PATTERN="src=\"http://(art\\.)?penny-arcade(\\.smugmug)?\\.com/photos/"
+	PATTERN="src=\"https://(art\\.)?penny-arcade(\\.smugmug)?\\.com/photos/"
 	STRIPTITLE=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
 	FILENAME=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
 	FULLURL=${PICBASE}${FILENAME}
