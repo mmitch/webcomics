@@ -39,7 +39,7 @@ while true; do
 	echo 'nok (no comic)'
     else
 
-	PATTERN="src=\"https://(art\\.)?penny-arcade(\\.smugmug)?\\.com/(photos|Comics/Pa-comics)/"
+	PATTERN="src=\"https://((art\\.)?penny-arcade(\\.smugmug)?|photos\\.smugmug)\\.com/(photos|Comics/Pa-comics)/"
 	STRIPTITLE=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*alt="//' -e 's/".*$//')
 	FILENAME=$(grep -E "${PATTERN}" ${TMPFILE} | sed -e 's/^.*src="//' -e 's/".*$//')
 	FULLURL=${PICBASE}${FILENAME}
