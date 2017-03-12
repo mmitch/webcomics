@@ -10,7 +10,7 @@ Every directory that contains webcomic data needs these two files:
 1)  index file
 
 To speed up the acces to the specific strips within one webcomic (and
-to enable the inclusion of stip titles (e.g. Megatokyo)) index files
+to enable the inclusion of strip titles (e.g. Megatokyo)) index files
 are used.
 
 The scripts for generating these indexes are already available.  After
