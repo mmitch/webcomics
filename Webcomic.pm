@@ -1,20 +1,21 @@
 package Webcomic;
 
-use Any::Moose;
+use Moo;
+use MooX::Types::MooseLike::Base qw/Str HashRef CodeRef/;
 use Webcomic::Tag;
 use Cwd;
 use LWP::UserAgent;
 use HTML::TokeParser;
 
 has 'url' => ( is => 'ro',
-               isa => 'Str',
+               isa => Str,
                required => 1 );
 
 has 'tags' => ( is => 'rw',
-                isa => 'HashRef[CodeRef]' );
+                isa => HashRef[CodeRef] );
 
 has 'end' => ( is => 'ro',
-               isa => 'CodeRef',
+               isa => CodeRef,
                default => sub { \&_file_exists } );
 
 sub _download {
@@ -71,6 +72,6 @@ sub basename {
     return (split(/.*\//, $image))[1];
 }
 
-no Any::Moose;
+no Moo;
 
 __PACKAGE__->meta->make_immutable;

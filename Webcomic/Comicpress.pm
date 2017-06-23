@@ -1,6 +1,6 @@
 package Webcomic::Comicpress;
 
-use Any::Moose;
+use Moo;
 
 extends 'Webcomic';
 
@@ -27,6 +27,6 @@ sub _tags {
            };
 }
 
-no Any::Moose;
+no Moo;
 
 __PACKAGE__->meta->make_immutable;

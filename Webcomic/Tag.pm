@@ -1,6 +1,6 @@
 package Webcomic::Tag;
 
-use Any::Moose;
+use Moo;
 
 has 'tag' => ( is => 'ro',
                required => 1 );
@@ -47,6 +47,6 @@ sub next_link {
     return $self->parser()->get_tag('a')->[1]->{'href'};
 }
 
-no Any::Moose;
+no Moo;
 
 __PACKAGE__->meta->make_immutable;
