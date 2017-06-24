@@ -23,8 +23,7 @@ $css="/yuuhi.css";
 $database = 0; # 0==false==classic==cookies
 
 # When using a database, how to reach the database?
-$mysql_host = '';
-$mysql_user = '';
-$mysql_password = '';
-$mysql_database = '';
+$pdo_dsn = '';  # eg. 'mysql:host=localhost;dbname=webcomic'
+$pdo_user = '';
+$pdo_password = '';
 ?>

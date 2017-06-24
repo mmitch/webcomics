@@ -5,38 +5,21 @@
 
 function get_db_handle()
 {
-  global $mysql_host, $mysql_user, $mysql_password, $mysql_database, $mysql_connection;
+  global $pdo_dsn, $pdo_user, $pdo_password, $pdo_connection;
 
-  if ($mysql_connection) {
+  if ($pdo_connection) {
     return;
   }
 
   // these are the extended mysql functions (MySQL Improved Extension) for MySQL 4.1 or better!
-  $mysql_connection = mysql_connect($mysql_host, $mysql_user, $mysql_password)
-    or die('Could not connect: ' . mysql_error());
-  mysql_select_db($mysql_database) or die('Could not select database');
+  $pdo_connection = new PDO($pdo_dsn, $pdo_user, $pdo_password);
 }
-
-function quote_smart($value)
-// Quote variable to make safe (aus der PHP-dokumentation)
-{
-  // Stripslashes
-  if (get_magic_quotes_gpc()) {
-    $value = stripslashes($value);
-  }
-  // Quote if not a number or a numeric string
-  if (!is_numeric($value)) {
-    $value = "'" . mysql_real_escape_string($value) . "'";
-  }
-  return $value;
-}
-
 
 //################ Public functions for both modes
 
 function handle_cookies()
 {
-  global $user, $username, $id, $tag, $comic, $mysql_connection, $lastVisited;
+  global $user, $username, $id, $tag, $comic, $pdo_connection, $lastVisited;
 
   if (isset($user)) {
     setcookie('whoami', $user, time()+( 3600 * 24 * 365 * 5));
@@ -53,13 +36,11 @@ function handle_cookies()
 
   $readall = 1;
   if (isset($comic) && isset($id) && isset($tag)) {
-    $query = sprintf("INSERT INTO bookmark (user, comic, current) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE current = %s",
-		     quote_smart($username),
-		     quote_smart($tag),
-		     quote_smart($id),
-		     quote_smart($id)
-		     );
-    mysql_query($query, $mysql_connection) or die('Query failed: ' . mysql_error());
+    $stmt = $pdo_connection->prepare('INSERT INTO bookmark (user, comic, current) VALUES(:user, :comic, :current ) ON DUPLICATE KEY UPDATE current = :current');
+    $stmt->bindValue(':user',    $username, PDO::PARAM_STR);
+    $stmt->bindValue(':comic',   $tag,      PDO::PARAM_STR);
+    $stmt->bindValue(':current', $id,       PDO::PARAM_STR);
+    $stmt->execute();
 
     if ($id > 0) {
       $readall = 0;
@@ -67,19 +48,16 @@ function handle_cookies()
   }
 
   if ($readall) {
-    $query = sprintf("SELECT comic, current FROM bookmark WHERE user = %s",
-		     quote_smart($username)
-		     );
-
-    $result = mysql_query($query, $mysql_connection) or die('Query failed: ' . mysql_error());
+    $stmt = $pdo_connection->prepare('SELECT comic, current FROM bookmark WHERE user = :user');
+    $stmt->bindValue(':user', $username, PDO::PARAM_STR);
+    $stmt->execute();
 
     $lastVisited = array();
 
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $lastVisited[$row['comic']] = $row['current'];
     }
 
-    mysql_free_result($result);
   }
 }
 
@@ -107,10 +85,10 @@ function print_login()
 
 function close_db()
 {
-     global $mysql_connection;
+     global $pdo_connection;
 
-     if ($mysql_connection) {
-       mysql_close($mysql_connection);   
+     if ($pdo_connection) {
+       $pdo_connection = null;
      }
 }
 ?>
