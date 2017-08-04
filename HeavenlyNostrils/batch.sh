@@ -9,7 +9,7 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE="http://www.gocomics.com/heavenly-nostrils"
+PAGEBASE="http://www.gocomics.com/phoebe-and-her-unicorn"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPHTML=./html.tmp
 TMPPIC=./pic.tmp
@@ -20,7 +20,7 @@ while [[ "${LATEST}" ]] ; do
     
     HTMLURL="${PAGEBASE}/${LATEST:0:4}/${LATEST:4:2}/${LATEST:6:2}"
     wget -q -O "${TMPHTML}" --user-agent="${USERAGENT}" "${HTMLURL}"
-    PICURL=$(grep feature_item "${TMPHTML}" | sed -e 's/^.*src="//' -e 's/".*$//')
+    PICURL=$(grep data-image "${TMPHTML}"| sed -e 's/^.*="//' -e 's/".*$//')
     PICEXT=$(HEAD ${PICURL} | grep ^Content-Type: | sed -e 's,^.*/,,')
 
     case $PICEXT in
@@ -56,7 +56,7 @@ while [[ "${LATEST}" ]] ; do
 	fi
     fi
     
-    LATEST=$(grep 'class="next"' html.tmp | head -n1 | sed -e 's/^.*href="//' -e 's/".*$//' | tr -cd 0-9)
+    LATEST=$(grep 'fa-caret-right' "${TMPHTML}" | head -n1 | sed -e 's/^.*href="//' -e 's/".*$//' | tr -cd 0-9)
 
 done
 
