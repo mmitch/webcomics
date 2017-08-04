@@ -1,5 +1,10 @@
 #!/usr/bin/perl -w
 
+# broken because of new JavaScript navigation
+exit -1;
+
+__DATA__
+
 use strict;
 use lib '..';
 use Webcomic;
