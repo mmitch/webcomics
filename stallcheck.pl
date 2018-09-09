@@ -37,6 +37,7 @@ archive/2009/KeenSpot/CountYourSheep
 archive/2009/KeenSpot/Lounge
 archive/2009/KeenSpot/SinFest
 archive/2009/KeenSpot/TwoLumps
+archive/2009/Nodwick
 archive/2009/QuestionableContent
 archive/2009/SequentialArt
 archive/2009/requiem.seraphim-inn.com
@@ -50,9 +51,13 @@ archive/2009/www.nichtlustig.de
 archive/2009/www.penny-arcade.com
 archive/2009/www.sakurai-cartoons.de
 archive/2009/www.shortpacked.com
+archive/2009/www.thedevilspanties.com
 archive/2009/www.userfriendly.org
 archive/2009/xkcd
 archive/2009/yafgc.shipsinker.com
+archive/2010/www.legostargalactica.net
+archive/2010/www.pvponline.com
+archive/IrregularWebcomic
 archive/www.applegeeks.com
 inverloch.seraph-inn.com
 manga.clone-army.org
