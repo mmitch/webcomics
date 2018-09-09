@@ -3,7 +3,7 @@
 # check for stalled comic scripts
 #
 # Copyright (C) 2009  Christian Garbs <mitch@cgarbs.de>
-# licensed unter GNU PL v2 or later
+# licensed unter GNU GPL v2 or later
 #
 use strict;
 
@@ -76,7 +76,6 @@ www.pbfcomics.com
 www.queenofwands.net
 www.ruthe.de
 www.w00t-comic.net
-
 );
 
 
@@ -89,7 +88,7 @@ while (my $line = <COMICS>) {
     $line =~ s:/COMIC::;
     push @dirs, $line unless exists $whitelist{$line};
 }
-close COMICS or die "can't close find: $!";
+close COMICS;
 
 
 # check directories
