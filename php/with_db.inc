@@ -65,7 +65,7 @@ function change_login()
 {
   global $myhref;
 
-  echo '<section><form action="'.$myhref.'" method=\"post\">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></section>';
+  echo '<section><form action="'.$myhref.'" method="post">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></section>';
   echo "\n";
 }
 
