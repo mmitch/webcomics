@@ -153,16 +153,16 @@ function list_all_comics($comics)
     $unread = array_shift($unreadcount);
     $val = $comics[$key];
     $tag = $val['tag'];
-    printf('<li><a href="%s?comic=%s&tag=%s&id=%s"%s>%s</a>',
+    printf('<li><a href="%s?comic=%s&amp;tag=%s&amp;id=%s"%s>%s</a>',
 	   $myhref, $key, $tag, $lastVisited[$tag], $first, $val['name']);
     $first = '';
     echo " ($unread new)";
     if ($unread > 1) {
       if ($unread <= 32) {
-	printf(' <small><a href="%s?comic=%s&tag=%s&id=%s&startid=%s">show all new</a></small>',
+	printf(' <small><a href="%s?comic=%s&amp;tag=%s&amp;id=%s&amp;startid=%s">show all new</a></small>',
 	       $myhref, $key, $tag, ($lastVisited[$tag] + $unread), $lastVisited[$tag]);
       } else {
-	printf(' <small><a href="%s?comic=%s&tag=%s&id=%s&startid=%s">show next 32</a></small>',
+	printf(' <small><a href="%s?comic=%s&amp;tag=%s&amp;id=%s&amp;startid=%s">show next 32</a></small>',
 	       $myhref, $key, $tag, ($lastVisited[$tag] + 32), $lastVisited[$tag]);
       }
     }
@@ -180,9 +180,9 @@ function list_all_comics($comics)
   while ( list ($key, $val) = each($comics) ) {
     $tag = $val['tag'];
     if (! isset($lastVisited[$tag])) {
-      printf('<li><a href="%s?comic=%s&tag=%s&id=0">%s</a> ',
+      printf('<li><a href="%s?comic=%s&amp;tag=%s&amp;id=0">%s</a> ',
 	     $myhref, $key, $tag, $val['name']);
-      echo "(<a href=\"$myhref?comic=$key&tag=$tag&id=-1\">don't subscribe</a>)";
+      echo "(<a href=\"$myhref?comic=$key&amp;tag=$tag&amp;id=-1\">don't subscribe</a>)";
       echo "</li>\n";
     }
   }
@@ -203,7 +203,7 @@ function list_all_comics($comics)
       $filename = $val['file'].'/index';
       $total = trim(`wc -l < $filename`) - 1;
       if ($lastVisited[$tag] >= $total) {
-	printf('<li><a href="%s?comic=%s&tag=%s&id=%s">%s</a>',
+	printf('<li><a href="%s?comic=%s&amp;tag=%s&amp;id=%s">%s</a>',
 	       $myhref, $key, $tag, $lastVisited[$tag], $val['name']);
         echo "</li>\n";
       }
@@ -222,7 +222,7 @@ function list_all_comics($comics)
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
       if ($lastVisited[$tag] < 0) {
-	printf('<li><a href="%s?comic=%s&tag=%s&id=0">%s</a>',
+	printf('<li><a href="%s?comic=%s&amp;tag=%s&amp;id=0">%s</a>',
 	       $myhref, $key, $tag, $val['name']);
         echo "</li>\n";
       }
@@ -280,11 +280,11 @@ function show_strip($me, $id)
   $tag = $me['tag'];
 
   $premax = $max-1;
-  $unsubref="$myhref?comic=$comic&tag=$tag&id=-1";
-  $firstref="$myhref?comic=$comic&tag=$tag&id=0";
-  $prevref="$myhref?comic=$comic&tag=$tag&id=".($id-1);
-  $nextref="$myhref?comic=$comic&tag=$tag&id=".($id+1);
-  $lastref="$myhref?comic=$comic&tag=$tag&id=$premax";
+  $unsubref="$myhref?comic=$comic&amp;tag=$tag&amp;id=-1";
+  $firstref="$myhref?comic=$comic&amp;tag=$tag&amp;id=0";
+  $prevref="$myhref?comic=$comic&amp;tag=$tag&amp;id=".($id-1);
+  $nextref="$myhref?comic=$comic&amp;tag=$tag&amp;id=".($id+1);
+  $lastref="$myhref?comic=$comic&amp;tag=$tag&amp;id=$premax";
 
   if ($id >= $max) {
     $id = $premax;
@@ -304,7 +304,7 @@ function show_strip($me, $id)
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\" id=\"linkprev\">[&lt;]</a>\n";
   }
-  echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
+  echo "<a href=\"$myhref?comic=$comic&amp;tag=$tag\">[list]</a>\n";
   if ($id < $premax) {
     echo "<a href=\"$myhref\">[comics]</a>\n";
     echo "<a href=\"$nextref\" id=\"linknext\">[&gt;]</a>\n";
@@ -353,7 +353,7 @@ function show_strip($me, $id)
     echo "<a href=\"$firstref\">[&lt;&lt;]</a>\n";
     echo "<a href=\"$prevref\">[&lt;]</a>\n";
   }
-  echo "<a href=\"$myhref?comic=$comic&tag=$tag\">[list]</a>\n";
+  echo "<a href=\"$myhref?comic=$comic&amp;tag=$tag\">[list]</a>\n";
   echo "<a href=\"$myhref\">[comics]</a>\n";
   if ($id < $premax) {
     echo "<a href=\"$nextref\">[&gt;]</a>\n";
@@ -378,21 +378,21 @@ function show_comic($me)
   echo "<p><a href=\"$myhref\">[comicliste]</a></p>\n";
   printf("<h2>%s</h2>\n",
 	 $me['name']);
-  echo "<nav><a href=\"$myhref?comic=$comic&tag=$tag&rev=$revrev\">[reverse]</a></nav>\n";
+  echo "<nav><a href=\"$myhref?comic=$comic&amp;tag=$tag&amp;rev=$revrev\">[reverse]</a></nav>\n";
   echo "<ul>\n";
 
   if ($rev) {
     for ($i = 0; $i < $max; $i++) {
-      echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
+      echo "<li><a href=\"$myhref?comic=$comic&amp;tag=$tag&amp;id=$i\">$titles[$i]</a></li>\n";
     }
   } else {
     for ($i = $max-1; $i >= 0 ; $i--) {
-      echo "<li><a href=\"$myhref?comic=$comic&tag=$tag&id=$i\">$titles[$i]</a></li>\n";
+      echo "<li><a href=\"$myhref?comic=$comic&amp;tag=$tag&amp;id=$i\">$titles[$i]</a></li>\n";
     }
   }
 
   echo "</ul>\n";
-  echo "<nav><a href=\"$myhref?comic=$comic&rev=$revrev\">[reverse]</a></nav>\n";
+  echo "<nav><a href=\"$myhref?comic=$comic&amp;rev=$revrev\">[reverse]</a></nav>\n";
   echo "</section>";
 }
 
