@@ -28,6 +28,14 @@ while true; do
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" "${PICBASE}/${FILE}"
 	
 	if [ -s ${FILE} ]; then
+
+	    if [[ ! $(file -b --mime-type ${FILE}) =~ ^image/ ]]; then
+		echo EMERGENCY STOP to prevent runaway download
+		echo FILE IS NO IMAGE and server is too stupid to send HTTP 404
+		rm ${FILE}
+		exit ${EXITCODE}
+	    fi
+	    
 	    echo OK
 	    chmod -w ${FILE}
 	    EXITCODE=0
