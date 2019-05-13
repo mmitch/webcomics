@@ -22,7 +22,7 @@ function handle_cookies()
   global $user, $username, $id, $tag, $comic, $pdo_connection, $lastVisited;
 
   if (isset($user)) {
-    setcookie('whoami', $user, time()+( 3600 * 24 * 365 * 5));
+    setcookie('whoami', $user, time()+( 3600 * 24 * 365 * 5), '', '', FALSE, TRUE);
     $username = $user;
   }
 
@@ -65,7 +65,7 @@ function change_login()
 {
   global $myhref;
 
-  echo '<section><form action="'.$myhref.'" method="post">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></section>';
+  echo '<section><form action="'.$myhref.'" method="get">Change login: <input type="text" name="user" /><input type="submit" name="submit" value="Change!" /></form></section>';
   echo "\n";
 }
 
