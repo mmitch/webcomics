@@ -6,7 +6,10 @@
 // Initialization
 function init()
 {
-    document.getElementById('linknext').focus()
+    var elementToFocus = document.getElementById('linknext');
+    if (elementToFocus) {
+	elementToFocus.focus()
+    }
 
     addEventHandler('touchstart', handleTouchStart);
     addEventHandler('touchmove', handleTouchMove);
