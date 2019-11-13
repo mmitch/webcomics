@@ -18,7 +18,7 @@ while true; do
 
     # SKIP VERY SPECIAL COMICS
     case ${LATEST} in
-	1350|1416|1525|1608|1663)
+	1350|1416|1525|1608|1663|2198)
 	    echo "skipping ${LATEST}..."
 	    LATEST=$((${LATEST} + 1))
 	    continue
