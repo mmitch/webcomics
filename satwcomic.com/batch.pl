@@ -21,7 +21,7 @@ $comic->tags({'a' => sub { my ($tag, $info) = @_;
                              if ($tag->has_property('class', 'comicdesc')) {
                                  $tag = $tag->next('small');
                                  my ($d, $m, $y) = ($tag->get_text() =~ /(\d{1,2})\w+ (\d{1,2}) (\d{4})/);
-                                 my $date = sprintf("%d%02d%02d", $y, $m, $d);
+                                 my $date = sprintf("%04d%02d%02d", $y, $m, $d);
                                  $info->{'filename'} = "$date-" . $info->{'filename'};
                                  $info->{'end'} = 1;
                              }
