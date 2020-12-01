@@ -65,7 +65,7 @@ while true; do
 	fi
     fi
     
-    if [ "{NEXTURL}" = ${PAGEBASE} ]; then
+    if [ "${NEXTURL}" = ${PAGEBASE} ] || [ "${NEXTURL}" = "${PAGEBASE}/" ]; then
 	echo at end: stop.
 	rm -f "$TMPFILE"
 	exit ${EXITCODE}
