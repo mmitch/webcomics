@@ -2,13 +2,13 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '^[0-9]{6}\.url' | tail -n 1 | cut -c 1-6  | sed 's/^0*//')
-if [ -z ${LATEST} ]; then
+LATEST=$(ls | grep -E '^[0-9]{6}\.url' | tail -n 1 | cut -c 1-6  | sed 's/^0*//')
+if [ -z "${LATEST}" ]; then
     LATEST=1  # first strip ever
     NEXTURL=http://oglaf.com/cumsprite/
 else
     LINK=$(printf %06d.url ${LATEST})
-    read NEXTURL < ${LINK}
+    read -r NEXTURL < "${LINK}"
 fi
 
 echo reading from ${LATEST}
@@ -28,7 +28,7 @@ while true; do
     PAGEURL="${NEXTURL}"
     TITLENAME="$(echo "$PAGEURL" | cut -d / -f 4,5 | sed -e 's,/$,,')"
     
-    echo -ne "${PAGEURL}\t "
+    echo -ne "${PAGEURL}\\t "
     
     wget -qO${TMPFILE} --user-agent="${USERAGENT}" "${PAGEURL}"
     
@@ -45,33 +45,33 @@ while true; do
 #	    ;;
 #    esac
 
-    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+    if [ -e "${FILE}" ] && [ ! -w "${FILE}" ]; then
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} "${PICURL}"
+	wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -qO"${FILE}" "${PICURL}"
 
-	if [ -n "${NEXTURL}" -a -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
-	    echo "${TITLENAME}<br><small>${TITLETEXT}<br><small>${ALTTEXT}</small></small>" > ${TEXT}
-	    echo "${PAGEURL}" > ${LINK}
-	    chmod -w ${FILE}
+	if [ -n "${NEXTURL}" ] && [ -s "${FILE}" ] && [ "$(file -b --mime-type "${FILE}")" != 'text/html' ]; then
+	    echo "${TITLENAME}<br><small>${TITLETEXT}<br><small>${ALTTEXT}</small></small>" > "${TEXT}"
+	    echo "${PAGEURL}" > "${LINK}"
+	    chmod -w "${FILE}"
 	    echo OK
 	    EXITCODE=0
 	else
-	    test -w ${FILE} && rm ${FILE}
+	    test -w "${FILE}" && rm "${FILE}"
 	    echo nok
 	    rm -f "$TMPFILE"
 	    exit ${EXITCODE}
 	fi
     fi
     
-    if [ ${NEXTURL} = ${PAGEBASE} ]; then
+    if [ "{NEXTURL}" = ${PAGEBASE} ]; then
 	echo at end: stop.
 	rm -f "$TMPFILE"
 	exit ${EXITCODE}
     fi
     
-    LATEST=$((${LATEST} + 1))
+    LATEST=$(( LATEST + 1))
 
 done
 
