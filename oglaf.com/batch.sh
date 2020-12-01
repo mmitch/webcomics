@@ -32,10 +32,10 @@ while true; do
     
     wget -qO${TMPFILE} --user-agent="${USERAGENT}" "${PAGEURL}"
     
-    ALTTEXT="$(grep ^alt= ${TMPFILE} | cut -d \" -f 2)"
-    TITLETEXT="$(grep ^title= ${TMPFILE} | cut -d \" -f 2)"
-    PICURL="$(fgrep '<img id="strip"' ${TMPFILE} | sed -e 's/^.*<img id="strip"//' | cut -d \" -f 2)"
-    NEXTURL="${PAGEBASE}$(grep '<div id="nx"' ${TMPFILE} | sed -e 's/"><div id="nx".*$//' -e 's/^.*"//')"
+    ALTTEXT="$(grep '^\s*alt=' ${TMPFILE} | cut -d \" -f 2)"
+    TITLETEXT="$(grep '^\s*title=' ${TMPFILE} | cut -d \" -f 2)"
+    PICURL="$(grep -F '<img id="strip"' ${TMPFILE} | sed -e 's/^.*<img id="strip"//' | cut -d \" -f 2)"
+    NEXTURL="${PAGEBASE}$(sed 's/<a /\n<a /g'  ${TMPFILE} | grep '<a[^>]*rel="next"' | sed -e 's/^.*href="//' -e 's/".*$//')"
 
 #    case ${LATEST} in
 #	186|209)
