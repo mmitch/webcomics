@@ -9,7 +9,7 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE="http://xkcd.com/"
+PAGEBASE="https://xkcd.com/"
 PICBASE="//imgs.xkcd.com/comics/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=./tmp.html
@@ -43,7 +43,7 @@ while true; do
     # test for big image (original filename contains "_small")
     if [[ ${FILENAME} == *_small.* ]] ; then
 	FILENAME_SHORT="${FILENAME/_small./.}"
-	if wget -qO/dev/null http:"${PICBASE}${FILENAME}" ; then
+	if wget -qO/dev/null https:"${PICBASE}${FILENAME}" ; then
 	    FILENAME="${FILENAME_SHORT}"
 	    echo -n "...using big variant... "
 	fi
@@ -58,7 +58,7 @@ while true; do
 	echo skipping
     else
 
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" http:"${PICBASE}${FILENAME}"
+	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" https:"${PICBASE}${FILENAME}"
 	
 	if [ -s ${FILE} ]; then
 	    echo OK
