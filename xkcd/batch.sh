@@ -2,8 +2,8 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{3}[0-9]?-.*.[jp][pn]g' | sort -n | tail -n 1 | cut -f 1 -d - | sed 's/^0*//')
-if [ -z ${LATEST} ]; then
+LATEST=$(for file in *.{jpg,png,gif}; do echo "$file"; done | sort -n | tail -n 1 | cut -f 1 -d - | sed 's/^0*//')
+if [ -z "${LATEST}" ]; then
     LATEST=1  # first strip ever
 fi
 
@@ -20,7 +20,7 @@ while true; do
     case ${LATEST} in
 	1350|1416|1525|1608|1663|2198)
 	    echo "skipping ${LATEST}..."
-	    LATEST=$((${LATEST} + 1))
+	    LATEST=$((LATEST + 1))
 	    continue
 	    ;;
     esac
@@ -54,15 +54,15 @@ while true; do
 
     FILE="$(printf "%03d-%s" "${LATEST}" "${FILE}")"
 
-    if [ -e ${FILE} -a ! -w ${FILE} ]; then
+    if [ -e "${FILE}" ] && [ ! -w "${FILE}" ]; then
 	echo skipping
     else
 
 	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO"${FILE}" https:"${PICBASE}${FILENAME}"
 	
-	if [ -s ${FILE} ]; then
+	if [ -s "${FILE}" ]; then
 	    echo OK
-	    chmod -w ${FILE}
+	    chmod -w "${FILE}"
 	    if [ "${LONGTEXT}" ] ; then 
 		echo "${TITLE}<br><br>${LONGTEXT}" > "${FILE%.???}.txt"
 		else
@@ -70,13 +70,13 @@ while true; do
 	    fi
 	    EXITCODE=0
 	else
-	    test -w ${FILE} && rm ${FILE}
+	    test -w "${FILE}" && rm "${FILE}"
 	    echo nok
 	    exit ${EXITCODE}
 	fi
     fi
     
-    LATEST=$((${LATEST} + 1))
+    LATEST=$((LATEST + 1))
 
 done
 
