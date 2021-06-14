@@ -13,7 +13,7 @@ PAGEBASE="http://inverloch.seraph-inn.com/viewcomic.php?page="
 PICBASE="http://inverloch.seraph-inn.com/pages/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
-while true; do
+while [ $LATEST -lt 765 ]; do
 
     echo -n "fetching ${LATEST}: "
     
@@ -41,4 +41,3 @@ while true; do
     LATEST=$((${LATEST} + 1))
 
 done
-
