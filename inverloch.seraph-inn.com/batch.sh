@@ -9,8 +9,8 @@ fi
 
 echo "reading from ${LATEST}"
 
-PAGEBASE="http://inverloch.seraph-inn.com/viewcomic.php?page="
-PICBASE="http://inverloch.seraph-inn.com/pages/"
+PAGEBASE="https://www.seraph-inn.com/view.php?story=inverloch&page="
+PICBASE="https://www.seraph-inn.com/pages/inverloch/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while [ "$LATEST" -lt 765 ]; do
