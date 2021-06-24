@@ -9,8 +9,8 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE="http://www.darklegacycomics.com/"
-USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
+PAGEBASE="https://www.darklegacycomics.com/"
+USERAGENT="Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0"
 TMPFILE=tmp.html
 
 while true; do
@@ -38,7 +38,7 @@ while true; do
 	wget -qO"${TMPFILE}" --user-agent="${USERAGENT}" ${HTMLURL}
 
 	TITLE="$(grep -A1 '<title>' ${TMPFILE} | tail -n1)"
-	SOURCE_FILE="$(grep '<img class="comic-image"' ${TMPFILE} | head -n 1 | sed -e 's/^.*src="//' -e 's/".*//')"
+	SOURCE_FILE="$(grep -A1 'div id="gallery"'  ${TMPFILE} | grep 'img src="' | head -n 1 | sed -e 's/^.*src="//' -e 's/".*//')"
 
 	if [ "${SOURCE_FILE:0:7}" != "http://" ]; then
 	    SOURCE_FILE="${PAGEBASE}${SOURCE_FILE}"
