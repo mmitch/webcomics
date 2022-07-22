@@ -19,7 +19,7 @@ while true; do
     
     HTMLURL="${PAGEBASE}/strip/${LATEST}"
 
-    TITLE=$(wget -qO- "${HTMLURL}" | grep '<div id="title">' | sed -e 's:"</div>.*$::' -e 's/^.*<div id="title">"//')
+    TITLE=$(wget -qO- "${HTMLURL}" | grep -A3 '<div id="title">' | sed 's/^\s*//' | tr -d \\n | sed -e 's:"<span.*$::' -e 's/^<div id="title">"//')
 
     FILE="${LATEST}.png"
 
