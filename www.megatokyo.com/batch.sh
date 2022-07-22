@@ -2,7 +2,7 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '^[0-9]+\.(jpg|gif)$' | sort -n | cut -d . -f 1 | tail -1)
+LATEST=$(ls | egrep '^[0-9]+\.(jpg|gif|png)$' | sort -n | cut -d . -f 1 | tail -1)
 if [ -z ${LATEST} ]; then
     LATEST=0001  # first strip ever
 fi
