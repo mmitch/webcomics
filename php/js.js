@@ -44,24 +44,14 @@ function navigate_next()
 // Keyboard navigation
 function keypress(e)
 {
-    var keynum;
-
-    if ( e.which ) // Netscape/Firefox/Opera
-    {
-	keynum = e.which;
-    }
-    else if ( window.event ) // IE
-    {
-	keynum = e.keyCode;
-    } 
-
-    if ( keynum == 37 )
-    {
+    switch (e.key) {
+    case "ArrowLeft":
 	navigate_prev();
-    }
-    else if ( keynum == 39 )
-    {
+	break;
+
+    case "ArrowRight":
 	navigate_next();
+	break;
     }
 }
 
