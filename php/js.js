@@ -46,10 +46,12 @@ function keypress(e)
 {
     switch (e.key) {
     case "ArrowLeft":
+    case "a":
 	navigate_prev();
 	break;
 
     case "ArrowRight":
+    case "d":
 	navigate_next();
 	break;
     }
