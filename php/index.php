@@ -137,7 +137,7 @@ function list_all_comics($comics)
   reset ($comics);
   $unreadkey = array();
   $unreadcount = array();
-  while ( list ($key, $val) = each($comics) ) {
+  foreach ($comics as $key => $val) {
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
       $filename = $val['file'].'/index';
@@ -149,7 +149,7 @@ function list_all_comics($comics)
     }
   }
   array_multisort($unreadcount, $unreadkey);
-  while ( list (, $key) = each($unreadkey) ) {
+  foreach ($unreadkey as $key) { // stupid name, it's the values that are iterated
     $unread = array_shift($unreadcount);
     $val = $comics[$key];
     $tag = $val['tag'];
@@ -177,7 +177,7 @@ function list_all_comics($comics)
   echo "<ul>\n";
 
   reset ($comics);
-  while ( list ($key, $val) = each($comics) ) {
+  foreach ($comics as $key => $val) {
     $tag = $val['tag'];
     if (! isset($lastVisited[$tag])) {
       printf('<li><a href="%s?comic=%s&amp;tag=%s&amp;id=0">%s</a> ',
@@ -197,7 +197,7 @@ function list_all_comics($comics)
   $first = 1;
 
   reset ($comics);
-  while ( list ($key, $val) = each($comics) ) {
+  foreach ($comics as $key => $val) {
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
       $filename = $val['file'].'/index';
@@ -218,7 +218,7 @@ function list_all_comics($comics)
   echo "<ul>\n";
 
   reset ($comics);
-  while ( list ($key, $val) = each($comics) ) {
+  foreach ($comics as $key => $val) {
     $tag = $val['tag'];
     if (isset($lastVisited[$tag])) {
       if ($lastVisited[$tag] < 0) {
