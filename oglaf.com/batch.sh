@@ -5,7 +5,7 @@ EXITCODE=2
 LATEST=$(ls | grep -E '^[0-9]{6}\.url' | tail -n 1 | cut -c 1-6  | sed 's/^0*//')
 if [ -z "${LATEST}" ]; then
     LATEST=1  # first strip ever
-    NEXTURL=http://oglaf.com/cumsprite/
+    NEXTURL=https://www.oglaf.com/cumsprite/
 else
     LINK=$(printf %06d.url ${LATEST})
     read -r NEXTURL < "${LINK}"
@@ -13,7 +13,7 @@ fi
 
 echo reading from ${LATEST}
 
-PAGEBASE=http://oglaf.com
+PAGEBASE=https://www.oglaf.com
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 TMPFILE=tmp.html
 
