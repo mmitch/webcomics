@@ -2,28 +2,26 @@
 
 EXITCODE=2
 
-LATEST=$(ls | egrep '[0-9]{3}[0-9]*-lfg[0-9]{4}.gif' | tail -n 1 | cut -d- -f 1  | sed 's/^0*//')
-if [ -z ${LATEST} ]; then
+LATEST=$(find . -maxdepth 1 -type f -regex '.*\.\(gif\|jpg\)' | cut -c 3- | sort -n | tail -n 1 | cut -d- -f 1  | sed 's/^0*//')
+if [ -z "${LATEST}" ]; then
     LATEST=1  # first strip ever
 fi
 
-echo reading from ${LATEST}
+echo "reading from ${LATEST}"
 
-PAGEBASE="http://www.lfgcomic.com/page/"
+PAGEBASE="https://www.lfg.co/read/comic/"
 USERAGENT="Mozilla/4.0 (compatible; MSIE 5.0; Linux) Opera 5.0  [en]"
 
 while true; do
 
     echo -n "fetching ${LATEST}: "
     
-    FILENAME=$(printf lfg%04d.gif ${LATEST})
+    FILEPREFIX=$(printf %03d-lfg%04d "${LATEST}" "${LATEST}")
 
-    echo -n "${FILENAME} "
-
-    FILE=$(printf %03d-lfg%04d.gif ${LATEST} ${LATEST})
-
-    if [ -e ${FILE} -a ! -w ${FILE} ]; then
-	echo skipping
+    if [ -e "${FILEPREFIX}".gif ] && ! [ -w "${FILEPREFIX}".gif ]; then
+	echo "skipping ${FILEPREFIX}.gif"
+    elif [ -e "${FILEPREFIX}".jpg ] && ! [ -w "${FILEPREFIX}".jpg ]; then
+	echo "skipping ${FILEPREFIX}.jpg"
     else
 
 	# WTF - jumping page numbers?!
@@ -37,21 +35,26 @@ while true; do
 	esac
 
 	HTMLURL=${PAGEBASE}${NUMBER}/
-	SOURCE_FILE="$(wget -qO- --user-agent="${USERAGENT}" ${HTMLURL} | grep -A1 '<div id="comic">' | tail -n 1 | sed -e 's/^.*src="//' -e 's/".*//')"
-	wget --user-agent="${USERAGENT}" --referer=${HTMLURL} -qO${FILE} "${SOURCE_FILE}"
+	SOURCE_FILE="$(wget -qO- --user-agent="${USERAGENT}" "${HTMLURL}" | grep -A1 '<div id="comic-img">' | tail -n 1 | sed -e 's/^.*src="//' -e 's/".*//')"
+	
+	echo -n "${SOURCE_FILE##*/} "
+	
+	EXTENSION=${SOURCE_FILE##*.}
+	FILE="${FILEPREFIX}.${EXTENSION}"
+	wget --user-agent="${USERAGENT}" --referer="${HTMLURL}" -q -O"${FILE}" "${SOURCE_FILE}"
 
-	if [ -s ${FILE} -a $(file -b --mime-type ${FILE}) != 'text/html' ]; then
+	if [ -s "${FILE}" ] && [ "$(file -b --mime-type "${FILE}")" != 'text/html' ]; then
 	    echo OK
-	    chmod -w ${FILE}
+	    chmod -w "${FILE}"
 	    EXITCODE=0
 	else
-	    test -w ${FILE} && rm ${FILE}
+	    test -w "${FILE}" && rm "${FILE}"
 	    echo nok
 	    exit ${EXITCODE}
 	fi
     fi
-    
-    LATEST=$((${LATEST} + 1))
 
+    LATEST=$(( LATEST + 1 ))
+    
 done
 
