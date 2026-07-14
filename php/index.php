@@ -68,6 +68,9 @@ function create_cache()
 
       // parse COMIC file
       $file = rtrim(fgets($find, 8192)); // max 8k per line
+      if (! $file) {
+          continue; // skip in empty lines
+      }
       $newcomic = array();
       $fp = fopen($file, "r");
       $tag = 0;
